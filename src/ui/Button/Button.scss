@@ -1,0 +1,22 @@
+.button {
+    cursor: pointer;
+    display: inline-block;
+    padding: .5rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: #CACBCD;
+    color: #434344;
+    font-weight: 700;
+    outline: none;
+    border-radius: .3rem;
+    border: none;
+    transition: all .1s;
+
+    &:active {
+        transform: translateY(.1rem);
+    }
+
+    &:hover {
+        background-color: #b8b9bb;
+    }
+}
