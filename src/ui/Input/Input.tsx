@@ -14,7 +14,12 @@ const Input: React.FC<IInputProps> = ({label}) => {
                 type="text" 
                 placeholder={label}
             />
-            <label className="input__label" htmlFor="input">{label}</label>
+            <label 
+                className="input__label" 
+                htmlFor="input"
+            >
+                {label}
+            </label>
         </div>
     );
 }
