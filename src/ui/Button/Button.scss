@@ -4,8 +4,8 @@
     padding: .7rem 1.5rem;
     font-family: inherit;
     font-size: var(--font-size-default);
-    background-color: #CACBCD;
-    color: var(--color-grey-dark);
+    background-color: var(--clr-grey-light-2);
+    color: var(--clr-grey-dark);
     font-weight: 700;
     outline: none;
     border-radius: var(--border-radius);
@@ -21,38 +21,38 @@
     }
 
     &-primary {
-        background-color: #3498db;
+        background-color: var(--clr-primary-light);
         color: #fff;
 
         &:hover {
-            background-color: #2980b9;
+            background-color: var(--clr-primary-dark);
         }
     }
 
     &-danger {
-        background-color: #e74c3c;
+        background-color: var(--clr-danger-light);
         color: #fff;
 
         &:hover {
-            background-color: #c0392b;
+            background-color: var(--clr-danger-dark);
         }
     }
 
     &-success {
-        background-color: #2ecc71;
+        background-color: var(--clr-success-light);
         color: #fff;
 
         &:hover {
-            background-color: #27ae60;
+            background-color: var(--clr-success-dark);
         }
     }
 
     &-warning {
-        background-color: #f1c40f;
+        background-color: var(--clr-warning-light);
         color: #fff;
 
         &:hover {
-            background-color: #f39c12;
+            background-color: var(--clr-warning-light);
         }
     }
 }

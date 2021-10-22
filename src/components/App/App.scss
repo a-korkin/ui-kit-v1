@@ -24,9 +24,22 @@
 
 :root {
     // COLORS
-    --color-grey-light: rgb(208, 208, 208);
-    --color-grey-dark-1: #434344;
-    --color-grey-dark-2: #b8b9bb;
+    --clr-primary-light: #3498db;
+    --clr-primary-dark: #2980b9;
+
+    --clr-danger-light: #e74c3c;
+    --clr-danger-dark: #c0392b;
+
+    --clr-success-light: #2ecc71;
+    --clr-success-dark: #27ae60;
+
+    --clr-warning-light: #f1c40f;
+    --clr-warning-dark: #f39c12;
+
+    --clr-grey-light-1: rgb(208, 208, 208);
+    --clr-grey-light-2: #cacbcd;
+    --clr-grey-dark-1: #434344;
+    --clr-grey-dark-2: #b8b9bb;
 
     // FONTS
     --font-size-default: 1.6rem;

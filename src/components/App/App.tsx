@@ -13,9 +13,7 @@ const App: React.FC = () => {
                 <Button>Submit</Button>
             </div>
             <br />
-            <div>
-                <Input label="Search" />
-            </div>
+            <Input label="Search" />
         </div>
         </>
     );
