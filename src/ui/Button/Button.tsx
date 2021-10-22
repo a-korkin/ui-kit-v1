@@ -7,7 +7,7 @@ interface IButtonProps {
 
 const Button: React.FC<IButtonProps> = ({children}) => {
     return (
-        <button className="button">{children}</button>
+        <button className="btn btn-warning">{children}</button>
     );
 }
 

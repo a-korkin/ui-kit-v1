@@ -1,4 +1,4 @@
-.button {
+.btn {
     cursor: pointer;
     display: inline-block;
     padding: .5rem 1rem;
@@ -18,5 +18,41 @@
 
     &:hover {
         background-color: #b8b9bb;
+    }
+
+    &-primary {
+        background-color: #3498db;
+        color: #fff;
+
+        &:hover {
+            background-color: #2980b9;
+        }
+    }
+
+    &-danger {
+        background-color: #e74c3c;
+        color: #fff;
+
+        &:hover {
+            background-color: #c0392b;
+        }
+    }
+
+    &-success {
+        background-color: #2ecc71;
+        color: #fff;
+
+        &:hover {
+            background-color: #27ae60;
+        }
+    }
+
+    &-warning {
+        background-color: #f1c40f;
+        color: #fff;
+
+        &:hover {
+            background-color: #f39c12;
+        }
     }
 }
