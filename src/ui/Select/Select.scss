@@ -11,23 +11,23 @@
     border-width: 0 2px 0 2px;
     border-style: solid;
     border-color: #394a6d;
-}
 
-.select__trigger {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 22px;
-    font-size: 20px;
-    color: #3b3b3b;
-    height: 60px;
-    line-height: 60px;
-    background: #fff;
-    cursor: pointer;
-    border-width: 2px 0 2px 0;
-    border-style: solid;
-    border-color: #394a6d;
+    &__trigger {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        font-size: 20px;
+        color: #3b3b3b;
+        height: 60px;
+        line-height: 60px;
+        background: #fff;
+        cursor: pointer;
+        border-width: 2px 0 2px 0;
+        border-style: solid;
+        border-color: #394a6d;
+    }
 }
 
 .custom-options {
@@ -62,44 +62,44 @@
     line-height: 60px;
     cursor: pointer;
     transition: all .5s;
-}
 
-.custom-option:hover {
-    cursor: pointer;
-    background-color: #b2b2b2;
-}
+    &:hover {
+        cursor: pointer;
+        background-color: #b2b2b2;
+    }
 
-.custom-option.selected {
-    color: #fff;
-    background-color: #305c91;
+    &.selected {
+        color: #fff;
+        background-color: #305c91;
+    }
 }
 
 .arrow {
     position: relative;
     height: 15px;
     width: 15px;
-}
 
-.arrow::before,
-.arrow::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 0.15rem;
-    height: 100%;
-    transition: all .5s;
-}
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 0.15rem;
+        height: 100%;
+        transition: all .5s;
+    }
 
-.arrow::before {
-    left: -5px;
-    transform: rotate(45deg);
-    background-color: #394a6d;
-}
-
-.arrow::after {
-    left: 5px;
-    transform: rotate(-45deg);
-    background-color: #394a6d;
+    &::before {
+        left: -5px;
+        transform: rotate(45deg);
+        background-color: #394a6d;
+    }
+    
+    &::after {
+        left: 5px;
+        transform: rotate(-45deg);
+        background-color: #394a6d;
+    }
 }
 
 .open .arrow::before {
