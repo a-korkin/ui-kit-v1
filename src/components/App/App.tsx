@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../../ui/Button";
 import Input from "../../ui/Input";
+import Select from "../../ui/Select";
 
 import "./App.scss";
 
@@ -12,8 +13,8 @@ const App: React.FC = () => {
             <div>
                 <Button>Submit</Button>
             </div>
-            <br />
             <Input label="Search" />
+            <Select />
         </div>
         </>
     );
