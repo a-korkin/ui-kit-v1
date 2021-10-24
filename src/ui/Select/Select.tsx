@@ -1,44 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
+import Option from "./Option";
 import "./Select.scss";
 
 const Select: React.FC = () => {
+    const options = ["automobiles", "animations", "technology", "art", "sports", "news", "music"];
+    const [active, setActive] = useState<boolean>(false);
+    const [selectedValue, setSelectedValue] = useState<string>("Select category");
+
+    const selectedClickHandler = () => {
+        setActive(!active);
+    }
+
+    const optionClickHandler = (id: string) => {
+        setActive(false);
+        setSelectedValue(id);
+    }
+
     return (
         <div className="select-box">
-            
-            <div className="options-container active">
-                <div className="option">
-                    <input type="radio" name="category" id="automobiles" className="radio" />
-                    <label htmlFor="automobiles">Automobiles</label>
-                </div>
-                <div className="option">
-                    <input type="radio" name="category" id="animations" className="radio" />
-                    <label htmlFor="animations">Film & animations</label>
-                </div>
-                <div className="option">
-                    <input type="radio" name="category" id="technology" className="radio" />
-                    <label htmlFor="technology">Science & technology</label>
-                </div>
-                <div className="option">
-                    <input type="radio" name="category" id="art" className="radio" />
-                    <label htmlFor="art">Art</label>
-                </div>
-                <div className="option">
-                    <input type="radio" name="category" id="sports" className="radio" />
-                    <label htmlFor="sports">Sports</label>
-                </div>
-                <div className="option">
-                    <input type="radio" name="category" id="news" className="radio" />
-                    <label htmlFor="news">News</label>
-                </div>
-                <div className="option">
-                    <input type="radio" name="category" id="music" className="radio" />
-                    <label htmlFor="music">Music</label>
-                </div>
+
+            <div className={active ? "options-container active" : "options-container"}>
+                {
+                    options.map((option) => 
+                        <Option 
+                            id={option} 
+                            name="category" 
+                            value={option.toUpperCase()}
+                            onClick={optionClickHandler}
+                        />
+                    )
+                }
             </div>
 
-            <div className="selected">
-                Select video category
+            <div className="selected" onClick={selectedClickHandler}>
+                {selectedValue}
                 <FaAngleDown />
             </div>
         </div>
