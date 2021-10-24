@@ -11,6 +11,8 @@ interface IDropDownProps {
 const DropDown: React.FC<IDropDownProps> = ({label, options}) => {
     const [term, setTerm] = useState<string>("");
     const [active, setActive] = useState<boolean>(false);
+    const [opts, setOpts] = useState(options);
+    
     const clickSearchHandler = () => {
         setActive(!active);
     }
@@ -18,6 +20,12 @@ const DropDown: React.FC<IDropDownProps> = ({label, options}) => {
     const optionClickHandler = (id: string, value: string) => {
         setTerm(value);
         setActive(!active);
+    }
+
+    const searchChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTerm(e.target.value);
+        const _opts = new Map([...Array.from(options)].filter(([k, v]) => v.includes(e.target.value)));
+        setOpts(_opts);
     }
 
     return (
@@ -31,7 +39,7 @@ const DropDown: React.FC<IDropDownProps> = ({label, options}) => {
                     id={label} 
                     placeholder={label}
                     value={term}
-                    onChange={e => setTerm(e.target.value)}
+                    onChange={e => searchChangeHandler(e)}
                 />
                 <label 
                     className="select__label" 
@@ -42,45 +50,15 @@ const DropDown: React.FC<IDropDownProps> = ({label, options}) => {
             </div> 
             <div className={active ? "options active" : "options"}>
                 {
-                    Array.from(options).map(([key, value]) => 
+                    Array.from(opts).map(([key, value]) => 
                         <Option 
+                            key={key}
                             id={key} 
                             name="category" 
                             value={value}
-                            onClick={optionClickHandler} />)
+                            onClick={optionClickHandler} 
+                        />)
                 }
-                {/* <div className="options__item">
-                    <input className="options__item-input" type="radio" name="category" id="1" />
-                    <label className="options__item-label" htmlFor="1">music</label>
-                </div>
-                <div className="options__item">
-                    <input className="options__item-input" type="radio" name="category" id="2" />
-                    <label className="options__item-label" htmlFor="2">video</label>
-                </div>
-                <div className="options__item">
-                    <input className="options__item-input" type="radio" name="category" id="3" />
-                    <label className="options__item-label" htmlFor="3">television</label>
-                </div>
-                <div className="options__item">
-                    <input className="options__item-input" type="radio" name="category" id="4" />
-                    <label className="options__item-label" htmlFor="4">autos</label>
-                </div>
-                <div className="options__item">
-                    <input className="options__item-input" type="radio" name="category" id="5" />
-                    <label className="options__item-label" htmlFor="5">science</label>
-                </div>
-                <div className="options__item">
-                    <input className="options__item-input" type="radio" name="category" id="6" />
-                    <label className="options__item-label" htmlFor="6">technology</label>
-                </div>
-                <div className="options__item">
-                    <input className="options__item-input" type="radio" name="category" id="7" />
-                    <label className="options__item-label" htmlFor="7">antropology</label>
-                </div>
-                <div className="options__item">
-                    <input className="options__item-input" type="radio" name="category" id="8" />
-                    <label className="options__item-label" htmlFor="8">chemistry</label>
-                </div> */}
             </div>
         </div>
     );
