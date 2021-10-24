@@ -4,13 +4,19 @@ import Option from "./Option";
 import "./Select.scss";
 
 interface ISelectProps {
+    name: string;
     options: Map<string, string>;
+    searchable?: boolean;
 }
 
-const Select: React.FC<ISelectProps> = ({options}) => {
-    
+const Select: React.FC<ISelectProps> = ({name, options, searchable}) => {
     const [active, setActive] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>("Select category");
+
+    const switchClasses = (): string => {
+        const search_cls = searchable ? "searchable" : "";
+        return active ? `options-container active ${search_cls}` : `options-container ${search_cls}`;
+    }
 
     const selectedClickHandler = () => {
         setActive(!active);
@@ -24,13 +30,13 @@ const Select: React.FC<ISelectProps> = ({options}) => {
     return (
         <div className="select-box">
 
-            <div className={active ? "options-container active" : "options-container"}>
+            <div className={switchClasses()}>
                 {
                     Array.from(options).map(([key, value]) => 
                         <Option 
                             key={key}
                             id={key} 
-                            name="category" 
+                            name={name} 
                             value={value}
                             onClick={optionClickHandler}
                         />
@@ -42,6 +48,18 @@ const Select: React.FC<ISelectProps> = ({options}) => {
                 {selectedValue}
                 <span className="selected__icon"><FaAngleDown /></span> 
             </div>
+
+            {searchable &&
+                <div className="search-box">
+                    <input 
+                        type="text" 
+                        name="search_select" 
+                        id="search_select" 
+                        className="search-box__input"
+                        placeholder="Search"
+                    />
+                </div>
+            }
         </div>
     );
 }

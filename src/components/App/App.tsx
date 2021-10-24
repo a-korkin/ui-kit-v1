@@ -24,7 +24,8 @@ const App: React.FC = () => {
                 <Button>Submit</Button>
             </div>
             <Input label="Search" />
-            <Select options={options} />
+            <Select options={options} name="category" />
+            <Select options={options} name="other_category" searchable={true} />
         </div>
         </>
     );

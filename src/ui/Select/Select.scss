@@ -3,6 +3,7 @@
     width: 100%;
     flex-direction: column;
     font-size: var(--font-size-default);
+    position: relative;
 }
 
 .options-container {
@@ -19,6 +20,10 @@
         min-height: 24rem;
         opacity: 1;
         overflow-y: scroll;
+    }
+    
+    &.searchable {
+        margin-top: 4.5rem;
     }
 
     &.active + .selected svg {
@@ -40,7 +45,7 @@
         padding: .7rem 1.2rem;
 
         &:hover {
-            background: var(--clr-grey-light-1);
+            background: var(--clr-grey-light-0);
         }
 
         &__radio {
@@ -54,14 +59,14 @@
 }
 
 .selected {
-    border-radius: var(--border-radius);
     cursor: pointer;
+    border-radius: var(--border-radius);
     margin-bottom: .8rem;
     position: relative;
     border: .1rem solid var(--clr-grey-light-1);
     order: 0;
     padding: .7rem 1.2rem;
-
+    
     &__icon svg {
         position: absolute;
         font-size: 2rem;
@@ -69,5 +74,23 @@
         right: 1rem;
         top: 1rem;
         transition: all .4s;
+    }
+}
+
+.search-box {
+    
+    &__input {
+        width: 100%;
+        padding: .7rem 1.2rem;
+        font-family: inherit;
+        font-size: var(--font-size-default);
+        position: absolute;
+        border-radius: .3rem .3rem 0 0;
+        z-index: 10;
+        border: .1rem solid var(--clr-grey-light-1);
+
+        &:focus {
+            outline: none;
+        }
     }
 }
