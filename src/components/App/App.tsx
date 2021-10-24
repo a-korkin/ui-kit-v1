@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../../ui/Button";
+import DropDown from "../../ui/DropDown";
 import Input from "../../ui/Input";
 import Select from "../../ui/Select";
 
@@ -24,8 +25,9 @@ const App: React.FC = () => {
                 <Button>Submit</Button>
             </div>
             <Input label="Search" />
-            <Select options={options} name="category" />
-            <Select options={options} name="other_category" searchable={true} />
+            <DropDown label="Select" options={options} />
+            {/* <Select options={options} name="category" /> */}
+            {/* <Select options={options} name="other_category" searchable={true} /> */}
         </div>
         </>
     );
