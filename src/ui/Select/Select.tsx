@@ -3,8 +3,12 @@ import { FaAngleDown } from "react-icons/fa";
 import Option from "./Option";
 import "./Select.scss";
 
-const Select: React.FC = () => {
-    const options = ["automobiles", "animations", "technology", "art", "sports", "news", "music"];
+interface ISelectProps {
+    options: Map<string, string>;
+}
+
+const Select: React.FC<ISelectProps> = ({options}) => {
+    
     const [active, setActive] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>("Select category");
 
@@ -12,9 +16,9 @@ const Select: React.FC = () => {
         setActive(!active);
     }
 
-    const optionClickHandler = (id: string) => {
+    const optionClickHandler = (id: string, value: string) => {
         setActive(false);
-        setSelectedValue(id);
+        setSelectedValue(value);
     }
 
     return (
@@ -22,11 +26,12 @@ const Select: React.FC = () => {
 
             <div className={active ? "options-container active" : "options-container"}>
                 {
-                    options.map((option) => 
+                    Array.from(options).map(([key, value]) => 
                         <Option 
-                            id={option} 
+                            key={key}
+                            id={key} 
                             name="category" 
-                            value={option.toUpperCase()}
+                            value={value}
                             onClick={optionClickHandler}
                         />
                     )
@@ -35,7 +40,7 @@ const Select: React.FC = () => {
 
             <div className="selected" onClick={selectedClickHandler}>
                 {selectedValue}
-                <FaAngleDown />
+                <span className="selected__icon"><FaAngleDown /></span> 
             </div>
         </div>
     );

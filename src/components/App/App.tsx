@@ -6,6 +6,16 @@ import Select from "../../ui/Select";
 import "./App.scss";
 
 const App: React.FC = () => {
+    const options = new Map<string, string>([
+        ["1", "automobiles"],
+        ["2", "animations"],
+        ["3", "technology"],
+        ["4", "art"],
+        ["5", "sports"],
+        ["6", "news"],
+        ["7", "music"]
+    ]);
+
     return (
         <>
         <h1>UI kit App</h1>
@@ -14,7 +24,7 @@ const App: React.FC = () => {
                 <Button>Submit</Button>
             </div>
             <Input label="Search" />
-            <Select />
+            <Select options={options} />
         </div>
         </>
     );

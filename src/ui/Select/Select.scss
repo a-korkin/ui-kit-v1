@@ -1,74 +1,73 @@
 .select-box {
     display: flex;
-    width: 40rem;
+    width: 100%;
     flex-direction: column;
     font-size: var(--font-size-default);
+}
 
-    .options-container {
-        background-color: #2f3640;
-        color: #f5f6fa;
-        width: 100%;
+.options-container {
+    width: 100%;
+    transition: all .4s;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    order: 1;
+    border: .1rem solid var(--clr-grey-light-1);
+
+    &.active {
+        min-height: 24rem;
+        opacity: 1;
+        overflow-y: scroll;
+    }
+
+    &.active + .selected svg {
+        transform: rotate(180deg);
+    }
+
+    &::-webkit-scrollbar {
+        width: 0.8rem;
+        background: var(--clr-grey-dark-2);
+        border-radius: .3rem;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: var(--clr-grey-light-1);
+        border-radius: .3rem;
+    }
+
+    .option{
+        cursor: pointer;
+        padding: .7rem 1.2rem;
+
+        &:hover {
+            background: var(--clr-grey-light-1);
+        }
+
+        &__radio {
+            display: none;
+        }
+
+        &__label {
+            cursor: pointer;
+        }
+    }
+}
+
+.selected {
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-bottom: .8rem;
+    position: relative;
+    border: .1rem solid var(--clr-grey-light-1);
+    order: 0;
+    padding: .7rem 1.2rem;
+
+    &__icon svg {
+        position: absolute;
+        font-size: 2rem;
+        color: currentColor;
+        right: 1rem;
+        top: 1rem;
         transition: all .4s;
-        border-radius: 8px;
-        overflow: hidden;
-        max-height: 0;
-        opacity: 0;
-        order: 1;
-
-        &.active {
-            min-height: 24rem;
-            opacity: 1;
-            overflow-y: scroll;
-        }
-
-        &.active + .selected svg {
-            transform: rotate(180deg);
-        }
-
-        &::-webkit-scrollbar {
-            width: 0.8rem;
-            background: #0d141f;
-            border-radius: 0 .8rem .8rem 0;
-        }
-        &::-webkit-scrollbar-thumb {
-            background: #525861;
-            border-radius: 0 .8rem .8rem 0;
-        }
-    }
-
-    .selected {
-        background: #2f3640;
-        border-radius: .8rem;
-        margin-bottom: .8rem;
-        color: #f5f6fa;
-        position: relative;
-        order: 0;
-
-        & > svg {
-            position: absolute;
-            font-size: 2rem;
-            color: currentColor;
-            right: 1rem;
-            top: 1rem;
-            transition: all .4s;
-        }
-    }
-
-    .option,
-    .selected {
-        padding: 1.2rem 2.4rem;
-        cursor: pointer;
-    }
-
-    .option:hover {
-        background: #414b57;
-    }
-
-    label {
-        cursor: pointer;
-    }
-
-    .option .radio {
-        display: none;
     }
 }
