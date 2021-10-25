@@ -50,6 +50,11 @@
             }
         }
 
+        &.active {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
         &.active + .multi-select__options {
             opacity: 1;
             display: block;
@@ -69,6 +74,9 @@
         display: none;
         border: .1rem solid var(--clr-grey-light-1);
         border-radius: var(--border-radius);
+        border-top: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
         transition: opacity .3s;
 
         &:empty {

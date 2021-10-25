@@ -1,0 +1,42 @@
+.checkbox {
+    font-size: var(--font-size-default);
+
+    input {
+        display: none;
+        appearance: 0;
+
+        &:checked + .checkbox__label-icon {
+            opacity: 1;
+        }
+    }
+
+    &__label {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+
+        &::before {
+            content: "";
+            display: inline-block;
+            height: 3rem;
+            width: 3rem;
+            border: .1rem solid var(--clr-grey-light-1);
+            border-radius: var(--border-radius);
+        }
+
+        &-icon {
+            position: absolute;
+            top: .8rem;
+            left: .8rem;
+            color: currentColor;
+            opacity: 0;
+            transition: all .1s;
+        }
+
+        &-text {
+            margin-left: 1rem;
+        }
+    }
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../../ui/Button";
+import CheckBox from "../../ui/CheckBox";
 import Input from "../../ui/Input";
 import MultiSelect from "../../ui/MultiSelect";
 import Select from "../../ui/Select";
@@ -27,6 +28,7 @@ const App: React.FC = () => {
             <Input label="Search" />
             <Select options={options} label="Select" />
             <MultiSelect />
+            <CheckBox />
         </div>
         </>
     );
