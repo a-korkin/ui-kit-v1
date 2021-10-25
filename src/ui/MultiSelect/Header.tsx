@@ -32,7 +32,9 @@ const Header: React.FC<IHeaderProps> = ({options, onRemoveClick}) => {
                         id={id}
                     >
                         {value}
-                        <GrFormClose onClick={e => onRemoveClick(id, value)} />
+                        <span className="icon-close">
+                            <GrFormClose onClick={e => onRemoveClick(id, value)} />
+                        </span>
                     </div> 
                 )
             }
