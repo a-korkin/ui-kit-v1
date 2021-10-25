@@ -1,0 +1,54 @@
+.toggle {
+    font-size: var(--font-size-default);
+    // display: flex;
+    // justify-items: center;
+    // align-items: center;
+    position: relative;
+
+    input {
+        display: none;
+        appearance: 0;
+
+        &:checked + .toggle__label::after {
+            left: 2.5rem;
+        }
+        
+        &:checked +.toggle__label::before {
+            background-color: var(--clr-primary-light);
+        }
+    }
+
+    &__label {
+        cursor: pointer;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        
+        &::before {
+            content: "";
+            display: inline-block;
+            width: 5rem;
+            height: 2.5rem;
+            border: .1rem solid var(--clr-grey-light-1);
+            border-radius: 30rem;
+            background-color: var(--clr-grey-dark-2);
+        }
+
+        &::after {
+            content: "";
+            display: inline-block;
+            width: 2.3rem;
+            height: 2.3rem;
+            border-radius: 50%;
+            background-color: #fff;
+            position: absolute;
+            top: .1rem;
+            left: .1rem;
+            transition: all .2s;
+        }
+
+        &-text {
+            margin-left: 1rem;
+        }
+    }
+}

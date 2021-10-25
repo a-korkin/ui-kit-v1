@@ -5,6 +5,7 @@ import CheckBox from "../../ui/CheckBox";
 import Input from "../../ui/Input";
 import MultiSelect from "../../ui/MultiSelect";
 import Select from "../../ui/Select";
+import Toggle from "../../ui/Toggle";
 
 import "./App.scss";
 
@@ -29,7 +30,8 @@ const App: React.FC = () => {
             <Input label="Search" />
             <Select options={options} label="Select" />
             <MultiSelect options={options} label="Multiselect" />
-            <CheckBox checked={true} label="Checkbox" />
+            <CheckBox id="checkbox" checked={false} label="Checkbox" />
+            <Toggle id="toggle" checked={false} label="Toggle" />
         </div>
         </>
     );
