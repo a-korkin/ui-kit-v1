@@ -46,6 +46,7 @@ const MultiSelect: React.FC = () => {
 
     return (
         <div className="multi-select">
+            <label className="multi-select__label">Multiselect</label>
             <Header 
                 options={selected} 
                 onRemoveClick={clickRemoveHandler} 

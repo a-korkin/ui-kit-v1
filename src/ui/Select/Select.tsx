@@ -28,11 +28,6 @@ const Select: React.FC<ISelectProps> = ({label, options}) => {
         setOpts(_opts);
     }
 
-    // const focusInputHandler = (e: React.FocusEvent<HTMLInputElement>) => {
-    //     if (!active)
-    //         setActive(true);
-    // }
-
     window.onclick = (event: MouseEvent) => {
         if ((event.target as Element).tagName.toLowerCase() === "html") {
             setActive(false);            
@@ -50,6 +45,7 @@ const Select: React.FC<ISelectProps> = ({label, options}) => {
                     id={label} 
                     placeholder={label}
                     value={term}
+                    autoComplete="off"
                     onChange={e => searchChangeHandler(e)}
                     // onFocus={focusInputHandler}
                 />

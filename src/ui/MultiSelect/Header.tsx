@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GrFormClose } from 'react-icons/gr';
+import { FaAngleDown } from "react-icons/fa";
 import { IDictionary } from "../../models";
 
 interface IHeaderProps {
@@ -10,14 +11,19 @@ interface IHeaderProps {
 const Header: React.FC<IHeaderProps> = ({options, onRemoveClick}) => {
     const [active, setActive] = useState<boolean>();
 
-    const clickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-        setActive(true);
+    const clickHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
+        setActive(!active);
+    }
+
+    window.onclick = (event: MouseEvent) => {
+        if ((event.target as Element).tagName.toLowerCase() === "html") {
+            setActive(false);            
+        }
     }
 
     return (
         <div 
-            className={active ? "multi-select__header active" : "multi-select__header"} 
-            onClick={e => clickHandler(e)}>
+            className={active ? "multi-select__header active" : "multi-select__header"}>
             {
                 options.map(({id, value}) => 
                     <div 
@@ -30,6 +36,7 @@ const Header: React.FC<IHeaderProps> = ({options, onRemoveClick}) => {
                     </div> 
                 )
             }
+            <span className="icon" onClick={e => clickHandler(e)}><FaAngleDown /></span>
         </div>
     );
 }
