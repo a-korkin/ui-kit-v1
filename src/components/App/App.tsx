@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../ui/Button";
 import DropDown from "../../ui/DropDown";
 import Input from "../../ui/Input";
-import Select from "../../ui/Select";
+// import Select from "../../ui/Select";
 
 import "./App.scss";
 

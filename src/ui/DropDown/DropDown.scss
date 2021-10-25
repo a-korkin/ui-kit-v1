@@ -1,5 +1,6 @@
 .select {
     width: 100%;
+    position: relative;
     
     &__search {
         display: flex;
@@ -34,7 +35,7 @@
         }
 
         &.active + .select__input {
-            border-bottom: none;
+            // border-bottom: none;
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
         }
@@ -61,11 +62,15 @@
         overflow-y: scroll;
         opacity: 0;
         transition: all .2s;
-        
+        position: absolute;
+        z-index: 10;
+        background-color: #fff;
+        width: 100%;
 
         &.active {
             opacity: 1;
-            border-top: none;
+            // border-top: none;
+            border-top: .1rem solid transparent;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
@@ -88,9 +93,11 @@
             &:hover {
                 background: var(--clr-grey-light-0);
             }
+
             &-input {
                 display: none;
             }
+
             &-label {
                 cursor: pointer;
                 font-size: var(--font-size-default);

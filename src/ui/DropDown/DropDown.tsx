@@ -28,8 +28,14 @@ const DropDown: React.FC<IDropDownProps> = ({label, options}) => {
         setOpts(_opts);
     }
 
+    window.onclick = (event: MouseEvent) => {
+        if ((event.target as Element).tagName.toLowerCase() === "html") {
+            setActive(false);            
+        }
+    }
+
     return (
-        <div className="select">
+        <div className="select" id="666"> 
             <div className="select__search" onClick={clickSearchHandler}>
                 <span className={active ? "selected_icon active" : "selected_icon"}><FaAngleDown /></span>
                 <input 
