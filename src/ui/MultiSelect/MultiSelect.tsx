@@ -6,7 +6,7 @@ import { IDictionary } from "../../models";
 import "./MultiSelect.scss";
 
 const MultiSelect: React.FC = () => {
-    const[options, setOptions] = useState<IDictionary[]>([
+    const [options, setOptions] = useState<IDictionary[]>([
         {id: "1", value: "Item1"},
         {id: "2", value: "Item2"},
         {id: "3", value: "Item3"},
@@ -20,7 +20,7 @@ const MultiSelect: React.FC = () => {
         {id: "11", value: "Item11"},
         {id: "12", value: "Item12"},
     ]);
-    const[selected, setSelected] = useState<IDictionary[]>([]);
+    const [selected, setSelected] = useState<IDictionary[]>([]);
         
     const clickOptionHandler = (id: string, value: string) => {
         setSelected(prev => {

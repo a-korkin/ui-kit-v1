@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GrFormClose } from 'react-icons/gr';
 import { IDictionary } from "../../models";
 
@@ -8,8 +8,16 @@ interface IHeaderProps {
 }
 
 const Header: React.FC<IHeaderProps> = ({options, onRemoveClick}) => {
+    const [active, setActive] = useState<boolean>();
+
+    const clickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+        setActive(true);
+    }
+
     return (
-        <div className="multi-select__header">
+        <div 
+            className={active ? "multi-select__header active" : "multi-select__header"} 
+            onClick={e => clickHandler(e)}>
             {
                 options.map(({id, value}) => 
                     <div 
