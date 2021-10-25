@@ -4,63 +4,76 @@ import Option from "./Option";
 import "./Select.scss";
 
 interface ISelectProps {
-    name: string;
+    label: string;
     options: Map<string, string>;
-    searchable?: boolean;
 }
 
-const Select: React.FC<ISelectProps> = ({name, options, searchable}) => {
+const Select: React.FC<ISelectProps> = ({label, options}) => {
+    const [term, setTerm] = useState<string>("");
     const [active, setActive] = useState<boolean>(false);
-    const [selectedValue, setSelectedValue] = useState<string>("Select category");
-
-    const switchClasses = (): string => {
-        const search_cls = searchable ? "searchable" : "";
-        return active ? `options-container active ${search_cls}` : `options-container ${search_cls}`;
-    }
-
-    const selectedClickHandler = () => {
+    const [opts, setOpts] = useState(options);
+    
+    const clickSearchHandler = () => {
         setActive(!active);
     }
 
     const optionClickHandler = (id: string, value: string) => {
-        setActive(false);
-        setSelectedValue(value);
+        setTerm(value);
+        setActive(!active);
+    }
+
+    const searchChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTerm(e.target.value);
+        const _opts = new Map([...Array.from(options)].filter(([k, v]) => v.includes(e.target.value)));
+        setOpts(_opts);
+    }
+
+    // const focusInputHandler = (e: React.FocusEvent<HTMLInputElement>) => {
+    //     if (!active)
+    //         setActive(true);
+    // }
+
+    window.onclick = (event: MouseEvent) => {
+        if ((event.target as Element).tagName.toLowerCase() === "html") {
+            setActive(false);            
+        }
     }
 
     return (
-        <div className="select-box">
-
-            <div className={switchClasses()}>
+        <div className="select"> 
+            <div className="select__search" onClick={clickSearchHandler}>
+                <span className={active ? "selected_icon active" : "selected_icon"}><FaAngleDown /></span>
+                <input 
+                    className="select__input" 
+                    type="text" 
+                    name="select_search"
+                    id={label} 
+                    placeholder={label}
+                    value={term}
+                    onChange={e => searchChangeHandler(e)}
+                    // onFocus={focusInputHandler}
+                />
+                <label 
+                    className="select__label" 
+                    htmlFor="select_search"
+                >
+                    {label}
+                </label>
+            </div> 
+            <div className={active ? "options active" : "options"}>
                 {
-                    Array.from(options).map(([key, value]) => 
+                    Array.from(opts).map(([key, value]) => 
                         <Option 
                             key={key}
                             id={key} 
-                            name={name} 
+                            name="category" 
                             value={value}
-                            onClick={optionClickHandler}
-                        />
-                    )
+                            onClick={optionClickHandler} 
+                        />)
                 }
             </div>
-
-            <div className="selected" onClick={selectedClickHandler}>
-                {selectedValue}
-                <span className="selected__icon"><FaAngleDown /></span> 
-            </div>
-
-            {searchable &&
-                <div className="search-box">
-                    <input 
-                        type="text" 
-                        name="search_select" 
-                        id="search_select" 
-                        className="search-box__input"
-                        placeholder="Search"
-                    />
-                </div>
-            }
         </div>
     );
 }
+
 export default Select;

@@ -1,0 +1,49 @@
+.multi-select {
+    width: 30rem;
+    font-size: var(--font-size-default);
+
+    &__header {
+        border: .1rem solid var(--clr-grey-light-1);
+        padding: .7rem 1.2rem;
+        border-radius: var(--border-radius);
+        min-height: 4rem;
+        display: flex;
+        flex-wrap: wrap;
+
+        & > .selected-item {
+            background-color: var(--clr-grey-dark-2);
+            padding: .1rem .2rem;
+            border-radius: .2rem;
+            position: relative;
+
+            &:not(:last-child) {
+                margin-right: 1.3rem;
+            }
+            
+
+            & > svg {
+                display: inline-block;
+                position: absolute;
+                top: .4rem;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    &__options {
+        border: .1rem solid var(--clr-grey-light-1);
+        border-radius: var(--border-radius);
+        
+        &-item {
+            padding: .7rem 1.2rem;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--clr-grey-light-0);
+            }
+        }
+    }
+}

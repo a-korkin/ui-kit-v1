@@ -1,96 +1,108 @@
-.select-box {
-    display: flex;
+.select {
     width: 100%;
-    flex-direction: column;
-    font-size: var(--font-size-default);
     position: relative;
-}
-
-.options-container {
-    width: 100%;
-    transition: all .4s;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    order: 1;
-    border: .1rem solid var(--clr-grey-light-1);
-
-    &.active {
-        min-height: 24rem;
-        opacity: 1;
-        overflow-y: scroll;
-    }
     
-    &.searchable {
-        margin-top: 4.5rem;
+    &__search {
+        display: flex;
+        flex-direction: column;
+        position: relative;
     }
-
-    &.active + .selected svg {
-        transform: rotate(180deg);
-    }
-
-    &::-webkit-scrollbar {
-        width: 0.8rem;
-        background: var(--clr-grey-dark-2);
-        border-radius: .3rem;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: var(--clr-grey-light-1);
-        border-radius: .3rem;
-    }
-
-    .option{
-        cursor: pointer;
-        padding: .7rem 1.2rem;
-
-        &:hover {
-            background: var(--clr-grey-light-0);
-        }
-
-        &__radio {
-            display: none;
-        }
-
-        &__label {
-            cursor: pointer;
-        }
-    }
-}
-
-.selected {
-    cursor: pointer;
-    border-radius: var(--border-radius);
-    margin-bottom: .8rem;
-    position: relative;
-    border: .1rem solid var(--clr-grey-light-1);
-    order: 0;
-    padding: .7rem 1.2rem;
-    
-    &__icon svg {
-        position: absolute;
-        font-size: 2rem;
-        color: currentColor;
-        right: 1rem;
-        top: 1rem;
-        transition: all .4s;
-    }
-}
-
-.search-box {
     
     &__input {
-        width: 100%;
-        padding: .7rem 1.2rem;
         font-family: inherit;
         font-size: var(--font-size-default);
-        position: absolute;
-        border-radius: .3rem .3rem 0 0;
-        z-index: 10;
+        width: 100%;
+        flex: 1;
+        padding: .7rem 1.2rem;
+        outline: none;
         border: .1rem solid var(--clr-grey-light-1);
+        border-radius: var(--border-radius);
+        background: transparent;
+    }
 
-        &:focus {
-            outline: none;
+    .selected_icon {
+        font-size: 2rem;
+        position: absolute;
+        padding-top: 1rem;
+        top: 2rem;
+        right: 1rem;
+        color: currentColor;
+        cursor: pointer;
+        transition: all .2s;
+
+        &.active {
+            transform: rotate(180deg);
+        }
+
+        &.active + .select__input {
+            // border-bottom: none;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    &__label {
+        color: #000;
+        display: block;
+        order: -1;
+        margin-left: 1.2rem;
+        font-size: var(--font-size-default);
+        transition: all .3s;
+    }
+
+    &__input:placeholder-shown + &__label {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+
+    .options {
+        border: .1rem solid var(--clr-grey-light-1);
+        border-radius: var(--border-radius);
+        max-height: 24rem;
+        overflow-y: scroll;
+        opacity: 0;
+        display: none;
+        transition: all .2s;
+        position: absolute;
+        z-index: 10;
+        background-color: #fff;
+        width: 100%;
+
+        &.active {
+            opacity: 1;
+            display: block;
+            border-top: .1rem solid transparent;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        &::-webkit-scrollbar {
+            width: .8rem;
+            background-color: var(--clr-grey-dark-2);
+            border-radius: .3rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--clr-grey-light-1);
+            border-radius: .3rem;
+        }
+        
+        &__item {
+            padding: .7rem 1rem;
+            cursor: pointer;
+
+            &:hover {
+                background: var(--clr-grey-light-0);
+            }
+
+            &-input {
+                display: none;
+            }
+
+            &-label {
+                cursor: pointer;
+                font-size: var(--font-size-default);
+            }
         }
     }
 }

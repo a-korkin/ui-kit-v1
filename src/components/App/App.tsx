@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "../../ui/Button";
-import DropDown from "../../ui/DropDown";
 import Input from "../../ui/Input";
-// import Select from "../../ui/Select";
+import MultiSelect from "../../ui/MultiSelect";
+import Select from "../../ui/Select";
 
 import "./App.scss";
 
@@ -25,9 +25,8 @@ const App: React.FC = () => {
                 <Button>Submit</Button>
             </div>
             <Input label="Search" />
-            <DropDown label="Select" options={options} />
-            {/* <Select options={options} name="category" /> */}
-            {/* <Select options={options} name="other_category" searchable={true} /> */}
+            <Select options={options} label="Select" />
+            <MultiSelect />
         </div>
         </>
     );

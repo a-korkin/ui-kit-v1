@@ -9,11 +9,10 @@ interface IOptionProps {
 
 const Option: React.FC<IOptionProps> = ({id, name, value, onClick}) => {
     return (
-        <div className="option" onClick={e => onClick(id, value)}>
-            <input type="radio" name={name} id={id} className="option__radio" />
-            <label className="option__label" htmlFor={name}>{value}</label>
+        <div className="options__item" onClick={e => onClick(id, value)}>
+            <input className="options__item-input" type="radio" name={name} id={id} />
+            <label className="options__item-label" htmlFor={id}>{value}</label>
         </div>
-
     );
 }
 
