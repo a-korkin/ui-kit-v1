@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
+import { IDictionary } from "../../models";
 import Option from "./Option";
 import "./Select.scss";
 
 interface ISelectProps {
     label: string;
-    options: Map<string, string>;
+    options: IDictionary[];
 }
 
 const Select: React.FC<ISelectProps> = ({label, options}) => {
@@ -24,7 +25,7 @@ const Select: React.FC<ISelectProps> = ({label, options}) => {
 
     const searchChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTerm(e.target.value);
-        const _opts = new Map([...Array.from(options)].filter(([k, v]) => v.includes(e.target.value)));
+        const _opts = options.filter(({value}) => value.includes(e.target.value));
         setOpts(_opts);
     }
 
@@ -58,10 +59,10 @@ const Select: React.FC<ISelectProps> = ({label, options}) => {
             </div> 
             <div className={active ? "options active" : "options"}>
                 {
-                    Array.from(opts).map(([key, value]) => 
+                    opts.map(({id, value}) => 
                         <Option 
-                            key={key}
-                            id={key} 
+                            key={id}
+                            id={id} 
                             name="category" 
                             value={value}
                             onClick={optionClickHandler} 

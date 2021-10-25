@@ -12,6 +12,7 @@ const Input: React.FC<IInputProps> = ({label}) => {
                 id="input" 
                 className="input__field" 
                 type="text" 
+                autoComplete="off"
                 placeholder={label}
             />
             <label 

@@ -1,4 +1,5 @@
 import React from "react";
+import { IDictionary } from "../../models";
 import Button from "../../ui/Button";
 import CheckBox from "../../ui/CheckBox";
 import Input from "../../ui/Input";
@@ -8,15 +9,15 @@ import Select from "../../ui/Select";
 import "./App.scss";
 
 const App: React.FC = () => {
-    const options = new Map<string, string>([
-        ["1", "automobiles"],
-        ["2", "animations"],
-        ["3", "technology"],
-        ["4", "art"],
-        ["5", "sports"],
-        ["6", "news"],
-        ["7", "music"]
-    ]);
+    const options: IDictionary[] = [
+        {id: "1", value: "automobiles"},
+        {id: "2", value: "animations"},
+        {id: "3", value: "technology"},
+        {id: "4", value: "art"},
+        {id: "5", value: "sports"},
+        {id: "6", value: "news"},
+        {id: "7", value: "music"}
+    ];
 
     return (
         <>
@@ -27,8 +28,8 @@ const App: React.FC = () => {
             </div>
             <Input label="Search" />
             <Select options={options} label="Select" />
-            <MultiSelect />
-            <CheckBox />
+            <MultiSelect options={options} label="Multiselect" />
+            <CheckBox checked={true} label="Checkbox" />
         </div>
         </>
     );
