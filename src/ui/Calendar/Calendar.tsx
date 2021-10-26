@@ -1,13 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { IDate } from "../../models";
 
 import "./Calendar.scss";
 
-const Calendar: React.FC = () => {
+interface ICalendarProps {
+    currentDate: Date;
+}
+
+const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
+    const months: Map<number, string> = new Map([
+        [1, "January"],
+        [2, "February"],
+        [3, "March"],
+        [4, "April"],
+        [6, "May"],
+        [6, "June"],
+        [7, "July"],
+        [8, "August"],
+        [9, "September"],
+        [10, "October"],
+        [11, "November"],
+        [12, "December"],
+    ]);
+
+    const _date: IDate = {
+        year: currentDate.getFullYear(),
+        month: {id: currentDate.getMonth() + 1, name: months.get(currentDate.getMonth() + 1)},
+        day: currentDate.getDate()
+    }
+    
+    const [date, setDate] = useState<IDate>(_date);
+
+    const changeYearHandler = (e: React.MouseEvent<HTMLSpanElement>, type: string) => {
+        switch (type) {
+            case "add":
+                setDate(prevState => ({...prevState, year: prevState.year + 1}));
+                break;
+            default:
+                setDate(prevState => ({...prevState, year: prevState.year - 1}));
+                break;
+        }
+    }
+
     return (
         <div className="calendar">
             <div className="calendar__year-month">
-                <div className="month">February</div>
-                <div className="year"><span>&#60;</span> 2021 <span>&#62;</span></div>
+                <div className="month">{date.month.name}</div>
+                <div className="year">
+                    <button onClick={e => changeYearHandler(e, "remove")}><FaAngleLeft /></button>
+                    <span>{date.year}</span>
+                    <button onClick={e => changeYearHandler(e, "add")}><FaAngleRight /></button>
+                </div>
             </div>
             <div className="calendar__week">
                 <div className="calendar__week-item">Mon</div>
@@ -38,7 +82,7 @@ const Calendar: React.FC = () => {
                 <div className="calendar__days-item">17<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">18<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">19<span></span><span></span><span></span><span></span></div>
-                <div className="calendar__days-item">20<span></span><span></span><span></span><span></span></div>
+                <div className="calendar__days-item active">20<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">21<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">22<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">23<span></span><span></span><span></span><span></span></div>

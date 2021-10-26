@@ -1,5 +1,5 @@
 import React from "react";
-import { IDictionary } from "../../models";
+import { IDate, IDictionary } from "../../models";
 import Button from "../../ui/Button";
 import Calendar from "../../ui/Calendar";
 import CheckBox from "../../ui/CheckBox";
@@ -33,7 +33,7 @@ const App: React.FC = () => {
             <MultiSelect options={options} label="Multiselect" />
             <CheckBox id="checkbox" checked={false} label="Checkbox" />
             <Toggle id="toggle" checked={false} label="Toggle" />
-            <Calendar />
+            <Calendar currentDate={new Date(Date.now())} />
         </div>
         </>
     );
