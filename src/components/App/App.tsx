@@ -1,6 +1,7 @@
 import React from "react";
 import { IDictionary } from "../../models";
 import Button from "../../ui/Button";
+import Calendar from "../../ui/Calendar";
 import CheckBox from "../../ui/CheckBox";
 import Input from "../../ui/Input";
 import MultiSelect from "../../ui/MultiSelect";
@@ -32,6 +33,7 @@ const App: React.FC = () => {
             <MultiSelect options={options} label="Multiselect" />
             <CheckBox id="checkbox" checked={false} label="Checkbox" />
             <Toggle id="toggle" checked={false} label="Toggle" />
+            <Calendar />
         </div>
         </>
     );
