@@ -1,5 +1,5 @@
 import React from "react";
-import { IDate, IDictionary } from "../../models";
+import { IDictionary } from "../../models";
 import Button from "../../ui/Button";
 import Calendar from "../../ui/Calendar";
 import CheckBox from "../../ui/CheckBox";

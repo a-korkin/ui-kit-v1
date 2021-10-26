@@ -24,13 +24,39 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
         [12, "December"],
     ]);
 
+    const daysInMonth: Map<number, number> = new Map([
+        [1, 31],
+        [2, 28],
+        [3, 31],
+        [4, 30],
+        [5, 31],
+        [6, 30],
+        [7, 31],
+        [8, 31],
+        [9, 30],
+        [10, 31],
+        [11, 30],
+        [12, 31]
+    ]);
+
     const _date: IDate = {
         year: currentDate.getFullYear(),
         month: {id: currentDate.getMonth() + 1, name: months.get(currentDate.getMonth() + 1)},
         day: currentDate.getDate()
     }
+
+    const createDays = (count: number): number[] => {
+        let days: number[] = [];
+
+        for (let i = 1; i <= count; i++) {
+            days.push(i);
+        }
+        return days;
+    }
     
     const [date, setDate] = useState<IDate>(_date);
+    const [days, setDays] = useState<number[]>(createDays(daysInMonth.get(_date.month.id) ?? 30));
+    const [activeDay, setActiveDay] = useState<number>(_date.day);
 
     const changeYearHandler = (e: React.MouseEvent<HTMLSpanElement>, type: string) => {
         switch (type) {
@@ -63,7 +89,18 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
                 <div className="calendar__week-item">Sun</div>
             </div>
             <div className="calendar__days">
-                <div className="calendar__days-item">1<span></span><span></span><span></span><span></span></div>
+                {
+                    days.map(day => 
+                        <div 
+                            key={day} 
+                            className={activeDay === day ? "calendar__days-item active" : "calendar__days-item"}
+                            onClick={e => setActiveDay(day)}
+                        >
+                            {day}<span></span><span></span><span></span><span></span>
+                        </div>)
+                }
+
+                {/* <div className="calendar__days-item" onClick={activeDayHandler}>1<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">2<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">3<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">4<span></span><span></span><span></span><span></span></div>
@@ -92,7 +129,7 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
                 <div className="calendar__days-item">27<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">28<span></span><span></span><span></span><span></span></div>
                 <div className="calendar__days-item">29<span></span><span></span><span></span><span></span></div>
-                <div className="calendar__days-item">30<span></span><span></span><span></span><span></span></div>
+                <div className="calendar__days-item">30<span></span><span></span><span></span><span></span></div> */}
             </div>
         </div>
     );
