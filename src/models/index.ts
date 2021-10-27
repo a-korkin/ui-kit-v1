@@ -5,11 +5,13 @@ export interface IDictionary {
 
 export interface IMonth {
     id: number;
-    name?: string;
+    name: string;
+    days: number;
+    code: number;
 }
 
 export interface IDate {
     year: number;
-    month: IMonth;
+    month?: IMonth;
     day: number;
 }
