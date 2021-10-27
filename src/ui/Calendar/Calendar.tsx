@@ -8,40 +8,32 @@ interface ICalendarProps {
     currentDate: Date;
 }
 
-const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
-    const months: Map<number, string> = new Map([
-        [1, "January"],
-        [2, "February"],
-        [3, "March"],
-        [4, "April"],
-        [5, "May"],
-        [6, "June"],
-        [7, "July"],
-        [8, "August"],
-        [9, "September"],
-        [10, "October"],
-        [11, "November"],
-        [12, "December"],
-    ]);
+interface Month {
+    id: number;
+    name: string;
+    days: number;
+    code: number;
+}
 
-    const daysInMonth: Map<number, number> = new Map([
-        [1, 31],
-        [2, 28],
-        [3, 31],
-        [4, 30],
-        [5, 31],
-        [6, 30],
-        [7, 31],
-        [8, 31],
-        [9, 30],
-        [10, 31],
-        [11, 30],
-        [12, 31]
-    ]);
+const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
+    const months: Month[] = [
+        { id: 1, name: "January", days: 31, code: 1 },
+        { id: 2, name: "February", days: 28, code: 4 },
+        { id: 3, name: "March", days: 31, code: 4 },
+        { id: 4, name: "April", days: 30, code: 0 },
+        { id: 5, name: "May", days: 31, code: 2 },
+        { id: 6, name: "June", days: 30, code: 5 },
+        { id: 7, name: "July", days: 31, code: 0 },
+        { id: 8, name: "August", days: 31, code: 3 },
+        { id: 9, name: "September", days: 30, code: 6 },
+        { id: 10, name: "October", days: 31, code: 1 },
+        { id: 11, name: "November", days: 30, code: 4 },
+        { id: 12, name: "December", days: 31, code: 6 }
+    ];
 
     const _date: IDate = {
         year: currentDate.getFullYear(),
-        month: {id: currentDate.getMonth() + 1, name: months.get(currentDate.getMonth() + 1)},
+        month: {id: currentDate.getMonth() + 1, name: months.find(w => w.id === currentDate.getMonth() + 1)?.name},
         day: currentDate.getDate()
     }
 
@@ -55,7 +47,7 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
     }
     
     const [date, setDate] = useState<IDate>(_date);
-    const [days, setDays] = useState<number[]>(createDays(daysInMonth.get(_date.month.id) ?? 30));
+    const [days, setDays] = useState<number[]>(createDays(months.find(w => w.id === _date.month.id)?.days ?? 30));
     const [activeDay, setActiveDay] = useState<number>(_date.day);
     const [activeMonth, setActiveMonth] = useState<boolean>(false);
 
@@ -72,23 +64,43 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
 
     const changeMonthHandler = (e: React.MouseEvent<HTMLButtonElement>, key: number) => {
         setDate(prevState => ({
-            ...prevState, month: {id: key, name: months.get(key)}
+            ...prevState, month: {id: key, name: months.find(w => w.id === key)?.name}
         }));
         setActiveMonth(false);
-        setDays(createDays(daysInMonth.get(key) ?? 30));
+        setDays(createDays(months.find(w => w.id === key)?.days ?? 30));
     }
+
+    const getDayOfWeek = (day: number) => {
+        const week: Map<number, string> = new Map([
+            [0, "Sat"],
+            [1, "Sun"],
+            [2, "Mon"],
+            [3, "Tue"],
+            [4, "Wed"],
+            [5, "Thu"],
+            [6, "Fri"]
+        ]);
+
+
+        const yearTwo = parseInt(date.year.toString().slice(-2));
+        const yearCode = (6 + yearTwo + parseInt((yearTwo / 4).toString())) % 7;
+        const dayOfWeek = (day + 1 + yearCode) % 7;
+        console.log(week.get(dayOfWeek));
+    }
+
+    getDayOfWeek(date.day);
 
     return (
         <div className="calendar">
             <div className={activeMonth ? "calendar__months active" : "calendar__months"}>
                 {
-                    Array.from(months).map(([key, value]) => 
+                    months.map(({id, name}) =>     
                         <button 
                             className="calendar__months-item" 
-                            key={key}
-                            onClick={e => changeMonthHandler(e, key)}
+                            key={id}
+                            onClick={e => changeMonthHandler(e, id)}
                         >
-                            {value}
+                            {name}
                         </button>)
                 }
             </div>
