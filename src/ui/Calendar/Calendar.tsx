@@ -70,10 +70,25 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
         setDays(createDays(months.find(w => w.id === key)?.days ?? 30));
     }
 
-    const firstDayOfMonth = () => {
-        // код месяца
+    const getDayOfWeek = (day: number) => {
+        const week: Map<number, string> = new Map([
+            [0, "Sat"],
+            [1, "Sun"],
+            [2, "Mon"],
+            [3, "Tue"],
+            [4, "Wed"],
+            [5, "Thu"],
+            [6, "Fri"]
+        ]);
 
+
+        const yearTwo = parseInt(date.year.toString().slice(-2));
+        const yearCode = (6 + yearTwo + parseInt((yearTwo / 4).toString())) % 7;
+        const dayOfWeek = (day + 1 + yearCode) % 7;
+        console.log(week.get(dayOfWeek));
     }
+
+    getDayOfWeek(date.day);
 
     return (
         <div className="calendar">
