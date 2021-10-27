@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Input.scss";
 
 interface IInputProps {
     label: string;
+    value: string;
+    onChanged: (val: string) => void;
 }
 
-const Input: React.FC<IInputProps> = ({label}) => {
+const Input: React.FC<IInputProps> = ({label, value, onChanged}) => {
+    const [term, setTerm] = useState<string>(value);
+
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = e.target.value;
+        onChanged(val);
+        setTerm(val);
+    }
+
     return (
         <div className="input">
             <input
@@ -14,6 +24,8 @@ const Input: React.FC<IInputProps> = ({label}) => {
                 type="text" 
                 autoComplete="off"
                 placeholder={label}
+                value={term}
+                onChange={e => onChangeHandler(e)}
             />
             <label 
                 className="input__label" 

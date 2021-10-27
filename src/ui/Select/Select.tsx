@@ -7,9 +7,10 @@ import "./Select.scss";
 interface ISelectProps {
     label: string;
     options: IDictionary[];
+    onChanged: (val: IDictionary) => void;
 }
 
-const Select: React.FC<ISelectProps> = ({label, options}) => {
+const Select: React.FC<ISelectProps> = ({label, options, onChanged}) => {
     const [term, setTerm] = useState<string>("");
     const [active, setActive] = useState<boolean>(false);
     const [opts, setOpts] = useState(options);
@@ -21,6 +22,9 @@ const Select: React.FC<ISelectProps> = ({label, options}) => {
     const optionClickHandler = (id: string, value: string) => {
         setTerm(value);
         setActive(!active);
+        const selected = options.find(w => w.id === id);
+        if (selected)
+            onChanged(selected);
     }
 
     const searchChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

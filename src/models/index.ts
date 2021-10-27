@@ -15,3 +15,11 @@ export interface IDate {
     month?: IMonth;
     day: number;
 }
+
+export interface IAppState {
+    input: string;
+    select: IDictionary;
+    multiSelect: IDictionary[],
+    checkbox: boolean;
+    toggle: boolean;
+}
