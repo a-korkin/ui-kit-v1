@@ -42,7 +42,7 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
         return days;
     }
 
-    const getDayOfWeek = (day: number, year: number, month: number): number[] => {
+    const getDayOfWeek = (day: number, month: number, year: number): number[] => {
         const yearFtwo = parseInt(year.toString().substring(0, 2));
         let century = 6;
         switch (yearFtwo) {
@@ -76,34 +76,24 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
         return createDays(dayOfWeek, true);
     }
 
-    const isLeapYear = (year: number): boolean => {
-        let isLeap = false;
+    const isLeapYear = (year: number): boolean => new Date(year, 1, 29).getMonth() === 1;
 
-        // Если год не делится на 4, значит он обычный.
-        // Иначе надо проверить не делится ли год на 100.
-        // Если не делится, значит это не столетие и можно сделать вывод, что год високосный.
-        // Если делится на 100, значит это столетие и его следует проверить его делимость на 400.
-        // Если год делится на 400, то он високосный.
-        // Иначе год обычный.
-
-        if (year % 4 !== 0) {
-            isLeap = false;
-        } 
-        
-        if (year % 100 !== 0) {
-            isLeap = true;
-        } else {
-            // if (year % 400 !== 0)
+    const getDays = (year: number, month: number): number[] => {
+        let countDaysInMonth = months.find(w => w.id === month)?.days ?? 30;
+        if (month === 2 && isLeapYear(year)) {
+            countDaysInMonth = 29;
         }
 
-        return isLeap;
+        const days: number[] = [
+            ...getDayOfWeek(1, month, year), 
+            ...createDays(countDaysInMonth)
+        ];
+
+        return days;
     }
     
     const [date, setDate] = useState<IDate>(_date);
-    const [days, setDays] = useState<number[]>([
-        ...getDayOfWeek(1, date.year, date.month?.id ?? 1), 
-        ...createDays(months.find(w => w.id === _date.month?.id ?? 1)?.days ?? 30)]);
-
+    const [days, setDays] = useState<number[]>(getDays(date.year, date.month?.id ?? 1));
     const [activeDay, setActiveDay] = useState<number>(_date.day);
     const [activeMonth, setActiveMonth] = useState<boolean>(false);
 
@@ -111,13 +101,13 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
         switch (type) {
             case "add":
                 setDate(prevState => {
-                    setDays([...getDayOfWeek(1, prevState.year + 1, date.month?.id ?? 1), ...createDays(months.find(w => w.id === date.month?.id ?? 1)?.days ?? 30)]);
+                    setDays(getDays(prevState.year + 1, date.month?.id ?? 1));
                     return {...prevState, year: prevState.year + 1};
                 })
                 break;
             case "remove":
                 setDate(prevState => {
-                    setDays([...getDayOfWeek(1, prevState.year - 1, date.month?.id ?? 1), ...createDays(months.find(w => w.id === date.month?.id ?? 1)?.days ?? 30)]);
+                    setDays(getDays(prevState.year - 1, date.month?.id ?? 1));
                     return {...prevState, year: prevState.year - 1};
                 });
                 break;
@@ -129,7 +119,7 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
             ...prevState, month: months.find(w => w.id === key)
         }));
         setActiveMonth(false);
-        setDays([...getDayOfWeek(1, date.year, key), ...createDays(months.find(w => w.id === key)?.days ?? 30)]);
+        setDays(getDays(date.year, months.find(w => w.id === key)?.id ?? 1));
     }
 
     return (
