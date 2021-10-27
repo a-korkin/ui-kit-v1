@@ -120,7 +120,8 @@
                 }
             }
 
-            &:hover:not(.active) {
+            &:hover:not(.active),
+            &:hover:not(.disable) {
                 span {
                     position: absolute;
                     background-color: var(--clr-grey-dark-1);

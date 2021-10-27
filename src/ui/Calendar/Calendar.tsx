@@ -37,27 +37,50 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
         day: currentDate.getDate()
     }
 
-    const createDays = (count: number): number[] => {
+    const createDays = (count: number, empty: boolean = false): number[] => {
         let days: number[] = [];
 
         for (let i = 1; i <= count; i++) {
-            days.push(i);
+            if (!empty)
+                days.push(i);
+            else 
+                days.push(i * -1);
         }
         return days;
     }
+
+    const getDayOfWeek = (day: number, year: number, month: number): number[] => {
+        const yearTwo = parseInt(year.toString().slice(-2));
+        const yearCode = (6 + yearTwo + parseInt((yearTwo / 4).toString())) % 7;
+        const monthCode = months.find(w => w.id === month)?.code ?? 0;
+        let dayOfWeek = (day + monthCode + yearCode) % 7;
+
+        if (dayOfWeek < 2)
+            dayOfWeek += 5;
+        else 
+            dayOfWeek -= 2;
+
+        return createDays(dayOfWeek, true);
+    }
     
     const [date, setDate] = useState<IDate>(_date);
-    const [days, setDays] = useState<number[]>(createDays(months.find(w => w.id === _date.month.id)?.days ?? 30));
+    const [days, setDays] = useState<number[]>([...getDayOfWeek(1, date.year, date.month.id), ...createDays(months.find(w => w.id === _date.month.id)?.days ?? 30)]);
     const [activeDay, setActiveDay] = useState<number>(_date.day);
     const [activeMonth, setActiveMonth] = useState<boolean>(false);
 
     const changeYearHandler = (e: React.MouseEvent<HTMLSpanElement>, type: string) => {
         switch (type) {
             case "add":
-                setDate(prevState => ({...prevState, year: prevState.year + 1}));
+                setDate(prevState => {
+                    setDays([...getDayOfWeek(1, prevState.year + 1, date.month.id), ...createDays(months.find(w => w.id === date.month.id)?.days ?? 30)]);
+                    return {...prevState, year: prevState.year + 1};
+                })
                 break;
             case "remove":
-                setDate(prevState => ({...prevState, year: prevState.year - 1}));
+                setDate(prevState => {
+                    setDays([...getDayOfWeek(1, prevState.year - 1, date.month.id), ...createDays(months.find(w => w.id === date.month.id)?.days ?? 30)]);
+                    return {...prevState, year: prevState.year - 1};
+                });
                 break;
         }
     }
@@ -67,28 +90,8 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
             ...prevState, month: {id: key, name: months.find(w => w.id === key)?.name}
         }));
         setActiveMonth(false);
-        setDays(createDays(months.find(w => w.id === key)?.days ?? 30));
+        setDays([...getDayOfWeek(1, date.year, key), ...createDays(months.find(w => w.id === key)?.days ?? 30)]);
     }
-
-    const getDayOfWeek = (day: number) => {
-        const week: Map<number, string> = new Map([
-            [0, "Sat"],
-            [1, "Sun"],
-            [2, "Mon"],
-            [3, "Tue"],
-            [4, "Wed"],
-            [5, "Thu"],
-            [6, "Fri"]
-        ]);
-
-
-        const yearTwo = parseInt(date.year.toString().slice(-2));
-        const yearCode = (6 + yearTwo + parseInt((yearTwo / 4).toString())) % 7;
-        const dayOfWeek = (day + 1 + yearCode) % 7;
-        console.log(week.get(dayOfWeek));
-    }
-
-    getDayOfWeek(date.day);
 
     return (
         <div className="calendar">
@@ -123,15 +126,28 @@ const Calendar: React.FC<ICalendarProps> = ({currentDate}) => {
             </div>
             <div className="calendar__days">
                 {
-                    days.map(day => 
-                        <div 
-                            key={day} 
-                            className={activeDay === day ? "calendar__days-item active" : "calendar__days-item"}
-                            onClick={e => setActiveDay(day)}
-                        >
-                            {day}
-                            <span></span><span></span><span></span><span></span>
-                        </div>)
+                    days.map(day => {
+                        let classes = "calendar__days-item";
+                        if (day <= 0) 
+                            classes += " disable";
+                        else if (activeDay === day)
+                            classes += " active";
+
+                        return (
+                            <div 
+                                key={day} 
+                                className={classes}
+                                onClick={e => setActiveDay(day)}
+                            >
+                                {day <= 0 ? "" : day}
+                                {day > 0 &&
+                                    <>
+                                    <span></span><span></span><span></span><span></span>
+                                    </>
+                                }
+                            </div>
+                        );
+                    })
                 }
             </div>
         </div>
