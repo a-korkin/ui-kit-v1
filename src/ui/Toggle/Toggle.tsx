@@ -6,10 +6,16 @@ interface IToggleProps {
     id: string;
     checked: boolean;
     label: string;
+    onChanged: (value: boolean) => void;
 }
 
-const Toggle: React.FC<IToggleProps> = ({id, checked, label}) => {
+const Toggle: React.FC<IToggleProps> = ({id, checked, label, onChanged}) => {
     const [isCheck, setCheck] = useState<boolean>(checked);
+
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCheck(!isCheck);
+        onChanged(!isCheck);
+    }
 
     return (
         <div className="toggle">
@@ -18,7 +24,7 @@ const Toggle: React.FC<IToggleProps> = ({id, checked, label}) => {
                 name={id} 
                 id={id} 
                 checked={isCheck} 
-                onChange={e => setCheck(!isCheck)} 
+                onChange={e => onChangeHandler(e)} 
             />
             <label htmlFor={id} className="toggle__label">
                 <span className="toggle__label-text">

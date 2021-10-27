@@ -42,6 +42,14 @@ const App: React.FC = () => {
         setState({...state, multiSelect: value});
     }
 
+    const onCheckBoxChangeHandler = (value: boolean) => {
+        setState({...state, checkbox: value});
+    }
+
+    const onToggleChangeHandler = (value: boolean) => {
+        setState({...state, toggle: value});
+    }
+
     const viewState = (e: React.MouseEvent<HTMLDivElement>) => {
         console.log(state);
     }
@@ -56,8 +64,8 @@ const App: React.FC = () => {
             <Input label="Search" value={state.input} onChanged={onInputChangeHandler} />
             <Select options={options} label="Select" onChanged={onSelectChangeHandler} />
             <MultiSelect options={options} label="Multiselect" onChanged={onMultiSelectChangeHandler} />
-            <CheckBox id="checkbox" checked={false} label="Checkbox" />
-            <Toggle id="toggle" checked={false} label="Toggle" />
+            <CheckBox id="checkbox" checked={false} label="Checkbox" onChanged={onCheckBoxChangeHandler} />
+            <Toggle id="toggle" checked={false} label="Toggle" onChanged={onToggleChangeHandler} />
             <Calendar currentDate={new Date(Date.now())} />
         </div>
         </>

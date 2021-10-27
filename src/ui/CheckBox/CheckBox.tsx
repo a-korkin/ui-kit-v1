@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
 import "./CheckBox.scss";
@@ -7,10 +7,16 @@ interface ICheckBoxProps {
     id: string;
     checked: boolean;
     label: string;
+    onChanged: (value: boolean) => void;
 }
 
-const CheckBox: React.FC<ICheckBoxProps> = ({id, checked, label}) => {
+const CheckBox: React.FC<ICheckBoxProps> = ({id, checked, label, onChanged}) => {
     const [isCheck, setCheck] = useState<boolean>(checked);
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setCheck(!isCheck);
+        onChanged(!isCheck);
+    }
 
     return (
         <div className="checkbox">
@@ -20,7 +26,7 @@ const CheckBox: React.FC<ICheckBoxProps> = ({id, checked, label}) => {
                     name={id} 
                     id={id} 
                     checked={isCheck} 
-                    onChange={e => setCheck(!isCheck)} 
+                    onChange={e => onChangeHandler(e)} 
                 />
                 <span className="checkbox__label-icon">
                     <FaCheck />

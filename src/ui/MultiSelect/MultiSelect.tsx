@@ -25,7 +25,7 @@ const MultiSelect: React.FC<IMultiSelectProps> = ({options, label, onChanged}) =
                     ...prev.slice(prev.findIndex(a => a.id === id) + 1)];
         });
 
-        onChanged(selected);
+        onChanged([...selected, {id, value}]);
     }
 
     const clickRemoveHandler = (id: string, value: string) => {
