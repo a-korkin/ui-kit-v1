@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IDictionary, IAppState } from "../../models";
 import Button from "../../ui/Button";
-// import Calendar from "../../ui/Calendar";
+import Loading from "../../ui/Loading";
 import CheckBox from "../../ui/CheckBox";
 import DatePicker from "../../ui/DatePicker";
 import Input from "../../ui/Input";
@@ -66,6 +66,9 @@ const App: React.FC = () => {
         <div className="container">
             <div onClick={e => viewState(e)}>
                 <Button>Submit</Button>
+            </div>
+            <div>
+                <Button><Loading /></Button>
             </div>
             <Input label="Search" value={state.input} onChange={onInputChangeHandler} />
             <Input label="Mask" value={state.input} mask="999-999-999_99" onChange={onInputChangeHandler} />
