@@ -3,6 +3,7 @@ import { IDictionary, IAppState } from "../../models";
 import Button from "../../ui/Button";
 import Calendar from "../../ui/Calendar";
 import CheckBox from "../../ui/CheckBox";
+import DatePicker from "../../ui/DatePicker";
 import Input from "../../ui/Input";
 import MultiSelect from "../../ui/MultiSelect";
 import Select from "../../ui/Select";
@@ -62,12 +63,13 @@ const App: React.FC = () => {
                 <Button>Submit</Button>
             </div>
             <Input label="Search" value={state.input} onChange={onInputChangeHandler} />
-            <Input label="Mask" value={state.input} mask="999" onChange={onInputChangeHandler} />
+            <Input label="Mask" value={state.input} mask="999-999-999_99" onChange={onInputChangeHandler} />
             <Select options={options} label="Select" onChange={onSelectChangeHandler} />
             <MultiSelect options={options} label="Multiselect" onChange={onMultiSelectChangeHandler} />
             <CheckBox id="checkbox" checked={false} label="Checkbox" onChange={onCheckBoxChangeHandler} />
             <Toggle id="toggle" checked={false} label="Toggle" onChange={onToggleChangeHandler} />
-            <Calendar currentDate={new Date(Date.now())} />
+            {/* <Calendar currentDate={new Date(Date.now())} /> */}
+            <DatePicker label="Date" />
         </div>
         </>
     );

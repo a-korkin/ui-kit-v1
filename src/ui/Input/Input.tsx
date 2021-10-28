@@ -15,14 +15,26 @@ const Input: React.FC<IInputProps> = ({label, value, mask, onChange}) => {
         const maskChars = mask.split("");
         const strChars = str.split("");
         let result = "";        
+        const digit = new RegExp(/\d/);
 
-        for (let i = 0; i <= maskChars.length; i++) {
-            // if (strChars[i]) {
-            //     console.log(`${maskChars[i]} - ${strChars[i]}: ${maskChars[i] === strChars[i]}`);   
-            // }
+        let j = 0;
+        for (let i = 0; i <= strChars.length; i++) {
+            if (strChars[i] && maskChars[j]) {
+                if (strChars[i] === "-") continue;
 
-            if (strChars[i] && maskChars[i] === strChars[i]) {
-                result += strChars[i];
+                console.log(`${strChars[i]}, ${maskChars[j]}`);
+
+                if (maskChars[j] === "9") {
+                    if (digit.test(strChars[i])) {
+                        result += strChars[i];
+                    }
+                } else if (maskChars[j] === "-") {
+                    result += maskChars[j] + strChars[i];
+                    j++;
+                } else {
+                    result += maskChars[j] + strChars[i];
+                }
+                j++;
             }
         }
 
@@ -30,16 +42,8 @@ const Input: React.FC<IInputProps> = ({label, value, mask, onChange}) => {
     }
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // const val = e.target.value;
         let val = e.target.value;
         if (mask) {
-            // const reg = new RegExp(/^\d{3}/);
-            // console.log(reg.test(val));
-            // console.log(val.match(reg));
-            // console.log(mask);
-            // onChange(val);
-            // setTerm(val);
-
             val = maskChecker(mask, val);
         }
         onChange(val);
