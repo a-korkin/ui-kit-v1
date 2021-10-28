@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { IDate, IMonth } from "../../models";
 
@@ -24,12 +24,6 @@ const Calendar: React.FC<ICalendarProps> = ({value, onChange}) => {
         { id: 10, name: "November", days: 30, code: 4 },
         { id: 11, name: "December", days: 31, code: 6 }
     ];
-
-    // const _date: IDate = {
-    //     year: value.getFullYear(),
-    //     month: months.find(w => w.id === value.getMonth() + 1),
-    //     day: value.getDate()
-    // }
 
     const createDays = (count: number, empty: boolean = false): number[] => {
         let days: number[] = [];
@@ -92,42 +86,32 @@ const Calendar: React.FC<ICalendarProps> = ({value, onChange}) => {
 
         return days;
     }
+
+    const convertDate = (date: Date): IDate => {
+        const result: IDate = {
+            year: date.getFullYear(),
+            month: months.find(w => w.id === date.getMonth()),
+            day: date.getDate()
+        };
+        return result;
+    }
     
-    // const [date, setDate] = useState<IDate>(_date);
-    // const [date, setDate] = useState<IDate>({
-    //     year: value.getFullYear(), 
-    //     month: months.find(w => w.id === value.getMonth()),
-    //     day: value.getDate()
-    // });
-
-    const [date, setDate] = useState<Date>(value);
-
-    // const [days, setDays] = useState<number[]>(getDays(date.year, date.month?.id ?? 1));
+    const [date, setDate] = useState<IDate>(convertDate(value));
     const [days, setDays] = useState<number[]>(getDays(value.getFullYear(), value.getMonth()));
-    // const [activeDay, setActiveDay] = useState<number>(_date.day);
-
-    // const [activeDay, setActiveDay] = useState<number>(value.getDate());
-
     const [activeMonth, setActiveMonth] = useState<boolean>(false);
-
-    console.log(value);
     
     const changeYearHandler = (e: React.MouseEvent<HTMLSpanElement>, type: string) => {
         switch (type) {
             case "add":
                 setDate(prevState => {
-                    // setDays(getDays(prevState.year + 1, date.month?.id ?? 1));
-                    // return {...prevState, year: prevState.year + 1};
-                    setDays(getDays(date.getFullYear() + 1, date.getMonth()))
-                    return {...prevState, year: date.getFullYear() + 1};
+                    setDays(getDays(date.year + 1, date.month?.id ?? 1))
+                    return {...prevState, year: date.year + 1};
                 })
                 break;
             case "remove":
                 setDate(prevState => {
-                    // setDays(getDays(prevState.year - 1, date.month?.id ?? 1));
-                    // return {...prevState, year: prevState.year - 1};
-                    setDays(getDays(date.getFullYear() - 1, date.getMonth() ?? 1));
-                    return {...prevState, year: date.getFullYear() - 1};
+                    setDays(getDays(date.year - 1, date.month?.id ?? 1));
+                    return {...prevState, year: date.year - 1};
                 });
                 break;
         }
@@ -138,19 +122,21 @@ const Calendar: React.FC<ICalendarProps> = ({value, onChange}) => {
             ...prevState, month: months.find(w => w.id === key)
         }));
         setActiveMonth(false);
-        // setDays(getDays(date.year, months.find(w => w.id === key)?.id ?? 1));
-        setDays(getDays(date.getFullYear(), months.find(w => w.id === key)?.id ?? 1));
+        setDays(getDays(date.year, months.find(w => w.id === key)?.id ?? 1));
     }
 
     const changeDayHandler = (e: React.MouseEvent<HTMLDivElement>, day: number) => {
-        // setActiveDay(day);
         setDate(prevState => ({
             ...prevState, day: day
         }));
-        // const newDate = new Date(date.year, (date.month?.id ?? 1), day)
-        const newDate = new Date(date.getFullYear(), date.getMonth(), day)
+
+        const newDate = new Date(date.year, date.month?.id ?? 1, day);
         onChange(newDate);
     }
+
+    useEffect(() => {
+        setDate(convertDate(value));
+    }, [value]);
 
     return (
         <div className="calendar">
@@ -167,13 +153,10 @@ const Calendar: React.FC<ICalendarProps> = ({value, onChange}) => {
                 }
             </div>
             <div className="calendar__year-month">
-                {/* <button className="month" onClick={e => setActiveMonth(!activeMonth)}>{date.month?.name}</button> */}
-                <button className="month" onClick={e => setActiveMonth(!activeMonth)}>{months.find(w => w.id === date.getMonth())?.name}</button>
-                {/* <button className="month" onClick={e => setActiveMonth(!activeMonth)}>{months.find(w => w.id === value.getMonth())?.name}</button> */}
+                <button className="month" onClick={e => setActiveMonth(!activeMonth)}>{date.month?.name}</button>
                 <div className="year">
                     <button onClick={e => changeYearHandler(e, "remove")}><FaAngleLeft /></button>
-                    {/* <span>{date.year}</span> */}
-                    <span>{date.getFullYear()}</span>
+                    <span>{date.year}</span>
                     <button onClick={e => changeYearHandler(e, "add")}><FaAngleRight /></button>
                 </div>
             </div>
@@ -192,8 +175,7 @@ const Calendar: React.FC<ICalendarProps> = ({value, onChange}) => {
                         let classes = "calendar__days-item";
                         if (day <= 0) 
                             classes += " disable";
-                        // else if (date.day === day)
-                        else if (date.getDate() === day)
+                        else if (date.day === day)
                             classes += " active";
 
                         return (

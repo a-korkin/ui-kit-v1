@@ -26,8 +26,6 @@ const DatePicker: React.FC<IDatePicker> = ({label, value, onChange}) => {
         let result = "";        
         const digit = new RegExp(/\d/);
 
-        // const dataReg = new RegExp(/[0-3]{1}[0-9]{1}\.[0-1]{1}[0-9]{1}\.\d{4}/);
-
         let j = 0;
         for (let i = 0; i <= strChars.length; i++) {
             if (strChars[i] && maskChars[j]) {
