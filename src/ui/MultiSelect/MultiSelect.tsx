@@ -8,10 +8,10 @@ import "./MultiSelect.scss";
 interface IMultiSelectProps {
     options: IDictionary[];
     label: string;
-    onChanged: (selected: IDictionary[]) => void;
+    onChange: (selected: IDictionary[]) => void;
 }
 
-const MultiSelect: React.FC<IMultiSelectProps> = ({options, label, onChanged}) => {
+const MultiSelect: React.FC<IMultiSelectProps> = ({options, label, onChange}) => {
     const [opts, setOpts] = useState<IDictionary[]>(options);
     const [selected, setSelected] = useState<IDictionary[]>([]);
         
@@ -25,7 +25,7 @@ const MultiSelect: React.FC<IMultiSelectProps> = ({options, label, onChanged}) =
                     ...prev.slice(prev.findIndex(a => a.id === id) + 1)];
         });
 
-        onChanged([...selected, {id, value}]);
+        onChange([...selected, {id, value}]);
     }
 
     const clickRemoveHandler = (id: string, value: string) => {

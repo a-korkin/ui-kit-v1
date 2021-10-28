@@ -6,15 +6,15 @@ interface IToggleProps {
     id: string;
     checked: boolean;
     label: string;
-    onChanged: (value: boolean) => void;
+    onChange: (value: boolean) => void;
 }
 
-const Toggle: React.FC<IToggleProps> = ({id, checked, label, onChanged}) => {
+const Toggle: React.FC<IToggleProps> = ({id, checked, label, onChange}) => {
     const [isCheck, setCheck] = useState<boolean>(checked);
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCheck(!isCheck);
-        onChanged(!isCheck);
+        onChange(!isCheck);
     }
 
     return (

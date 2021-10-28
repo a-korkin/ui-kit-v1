@@ -7,15 +7,15 @@ interface ICheckBoxProps {
     id: string;
     checked: boolean;
     label: string;
-    onChanged: (value: boolean) => void;
+    onChange: (value: boolean) => void;
 }
 
-const CheckBox: React.FC<ICheckBoxProps> = ({id, checked, label, onChanged}) => {
+const CheckBox: React.FC<ICheckBoxProps> = ({id, checked, label, onChange}) => {
     const [isCheck, setCheck] = useState<boolean>(checked);
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setCheck(!isCheck);
-        onChanged(!isCheck);
+        onChange(!isCheck);
     }
 
     return (

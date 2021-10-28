@@ -61,11 +61,12 @@ const App: React.FC = () => {
             <div onClick={e => viewState(e)}>
                 <Button>Submit</Button>
             </div>
-            <Input label="Search" value={state.input} onChanged={onInputChangeHandler} />
-            <Select options={options} label="Select" onChanged={onSelectChangeHandler} />
-            <MultiSelect options={options} label="Multiselect" onChanged={onMultiSelectChangeHandler} />
-            <CheckBox id="checkbox" checked={false} label="Checkbox" onChanged={onCheckBoxChangeHandler} />
-            <Toggle id="toggle" checked={false} label="Toggle" onChanged={onToggleChangeHandler} />
+            <Input label="Search" value={state.input} onChange={onInputChangeHandler} />
+            <Input label="Mask" value={state.input} mask="999" onChange={onInputChangeHandler} />
+            <Select options={options} label="Select" onChange={onSelectChangeHandler} />
+            <MultiSelect options={options} label="Multiselect" onChange={onMultiSelectChangeHandler} />
+            <CheckBox id="checkbox" checked={false} label="Checkbox" onChange={onCheckBoxChangeHandler} />
+            <Toggle id="toggle" checked={false} label="Toggle" onChange={onToggleChangeHandler} />
             <Calendar currentDate={new Date(Date.now())} />
         </div>
         </>
