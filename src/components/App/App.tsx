@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IDictionary, IAppState } from "../../models";
 import Button from "../../ui/Button";
-import Calendar from "../../ui/Calendar";
+// import Calendar from "../../ui/Calendar";
 import CheckBox from "../../ui/CheckBox";
 import DatePicker from "../../ui/DatePicker";
 import Input from "../../ui/Input";
@@ -17,7 +17,8 @@ const App: React.FC = () => {
         select: {} as IDictionary,
         multiSelect: [],
         checkbox: false,
-        toggle: false
+        toggle: false,
+        date: new Date(Date.now())
     };
     const [state, setState] = useState<IAppState>(initialState);
 
@@ -51,6 +52,10 @@ const App: React.FC = () => {
         setState({...state, toggle: value});
     }
 
+    const onDateChangeHanler = (value: Date) => {
+        setState({...state, date: value});
+    }
+
     const viewState = (e: React.MouseEvent<HTMLDivElement>) => {
         console.log(state);
     }
@@ -69,7 +74,7 @@ const App: React.FC = () => {
             <CheckBox id="checkbox" checked={false} label="Checkbox" onChange={onCheckBoxChangeHandler} />
             <Toggle id="toggle" checked={false} label="Toggle" onChange={onToggleChangeHandler} />
             {/* <Calendar currentDate={new Date(Date.now())} /> */}
-            <DatePicker label="Date" />
+            <DatePicker label="Date" value={state.date} onChange={onDateChangeHanler} />
         </div>
         </>
     );

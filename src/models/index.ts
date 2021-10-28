@@ -22,4 +22,5 @@ export interface IAppState {
     multiSelect: IDictionary[],
     checkbox: boolean;
     toggle: boolean;
+    date: Date;
 }
