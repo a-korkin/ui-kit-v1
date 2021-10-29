@@ -71,10 +71,10 @@ const App: React.FC = () => {
 
     return (
         <>
-        <h1>UI kit App</h1>
         <div className="container">
             <Sidebar />
             <main className="content">
+                <h1>UI kit App</h1>
                 <div onClick={e => viewState(e)}>
                     <Button>Submit</Button>
                 </div>

@@ -1,75 +1,71 @@
 import React from "react";
+import { FaAngleRight } from "react-icons/fa";
 
 import "./Sidebar.scss";
 
 const Sidebar: React.FC = () => {
     return (
         <div className="sidebar">
-            Sidebar
             <nav className="nav">
-                <input type="checkbox" name="menu" id="menu" />
-                <label htmlFor="menu">&#9776;</label>
+                <input type="checkbox" className="nav__input" name="menu" id="menu" />
+                <label className="nav__label" htmlFor="menu">&#9776;</label>
 
                 <div className="menu">
                     <div className="menu__item">
-                        <input type="checkbox" name="A" id="A" />
-                        <label htmlFor="A">Services</label>
+                        <input className="menu__item-input" type="checkbox" name="A" id="A" />
+                        <label className="menu__item-label" htmlFor="A"><FaAngleRight />Services</label>
 
-                        <ul>
-                            <li><a href="#">Branding</a></li>
-                            <li><a href="#">Web/App development</a></li>
-                            <li><a href="#">Internet Marketing and SEO</a></li>
+                        <ul className="item__list">
+                            <li><a className="item-link" href="#">Branding</a></li>
+                            <li><a className="item-link" href="#">Web/App development</a></li>
+                            <li><a className="item-link" href="#">Internet Marketing and SEO</a></li>
                         </ul>
                     </div>
 
                     <div className="menu__item">
-                        <input type="checkbox" name="B" id="B" />
-                        <label htmlFor="B">Jobs</label>
-                        <ul>
+                        <input className="menu__item-input" type="checkbox" name="B" id="B" />
+                        <label className="menu__item-label" htmlFor="B"><FaAngleRight />Jobs</label>
+                        <ul className="item__list">
                             <li>
-                                <div className="menu__item-sub">
-                                    <input type="checkbox" name="BA" id="BA" />
-                                    <label htmlFor="BA">UI/UX</label>
+                                <div className="menu__item">
+                                    <input className="menu__item-input" type="checkbox" name="BA" id="BA" />
+                                    <label className="menu__item-label" htmlFor="BA"><FaAngleRight />UI/UX</label>
 
-                                    <ul>
-                                        <li><a href="#">UI/UX Designer</a></li>
-                                    </ul>
-                                    <ul>
-                                        <li><a href="#">UI Designer</a></li>
-                                    </ul>
-                                    <ul>
-                                        <li><a href="#">UX Designer</a></li>
+                                    <ul className="item__list">
+                                        <li><a className="item-link" href="#">UI/UX Designer</a></li>
+                                        <li><a className="item-link" href="#">UI Designer</a></li>
+                                        <li><a className="item-link" href="#">UX Designer</a></li>
                                     </ul>
                                 </div>
                             </li>
                             <li>
-                                <div className="menu__item-sub">
-                                    <input type="checkbox" name="BB" id="BB" />
-                                    <label htmlFor="BB">Development</label>
+                                <div className="menu__item">
+                                    <input className="menu__item-input" type="checkbox" name="BB" id="BB" />
+                                    <label className="menu__item-label" htmlFor="BB"><FaAngleRight />Development</label>
 
-                                    <ul>
-                                        <li><a href="#">FrontEnd</a></li>
-                                    </ul>
-                                    <ul>
-                                        <li><a href="#">BackEnd</a></li>
+                                    <ul className="item__list">
+                                        <li><a className="item-link" href="#">FrontEnd</a></li>
+                                        <li><a className="item-link" href="#">BackEnd</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            <li><a href="#">Graphic</a></li>
-                            <li><a href="#">Logo Designer</a></li>
+                            <li><a className="item-link" href="#">Graphic</a></li>
+                            <li><a className="item-link" href="#">Logo Designer</a></li>
                         </ul>
                     </div>
 
                     <div className="menu__item">
-                        <input type="checkbox" name="C" id="C" />
-                        <label htmlFor="C"></label>
+                        <input className="menu__item-input" type="checkbox" name="C" id="C" />
+                        <label className="menu__item-label" htmlFor="C"><FaAngleRight />About</label>
 
-                        <ul>
-                            <li><a href="#">Our team</a></li>
-                            <li><a href="#">Clents</a></li>
-                            <li><a href="#">Our work</a></li>
+                        <ul className="item__list">
+                            <li><a className="item-link" href="#">Our team</a></li>
+                            <li><a className="item-link" href="#">Clents</a></li>
+                            <li><a className="item-link" href="#">Our work</a></li>
                         </ul>
                     </div>
+
+                   
                 </div>
             </nav>
         </div>
