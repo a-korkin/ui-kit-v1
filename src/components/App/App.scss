@@ -76,6 +76,8 @@ h1 {
     display: grid;
     grid-template-columns: [sidebar-start] 20vw [sidebar-end content-start] auto [content-end];
     grid-template-rows: 5rem auto;
+    min-height: 100vh;
+    // height: calc(100vh);
 }
 
 .top-panel {
