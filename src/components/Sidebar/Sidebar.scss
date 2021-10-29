@@ -2,23 +2,29 @@
     background-color: var(--clr-grey-light-0);
     font-size: var(--font-size-default);
     grid-column: sidebar-start / sidebar-end;
-    // grid-row: 2 / -1;
-    // position: fixed;
-    // top: 10rem;
-    // bottom: 0;
-    // left: 0;
+    grid-row: 2 / span 1;
     overflow-y: auto;
     overflow-x: auto;
     line-height: 3rem;
-    // width: 20vw;
     transition: all .2s;
     visibility: visible;
     opacity: 1;
+    height: 50rem;
+
+    &::-webkit-scrollbar {
+        width: .8rem;
+        background-color: var(--clr-grey-dark-2);
+        border-radius: .3rem;
+
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--clr-grey-light-1);
+        border-radius: .3rem;
+    }
 
     &.collapse {
-        // width: 0;
         opacity: 0;
-        // display: none;
         height: 0;
         visibility: hidden;
         grid-column: sidebar-start / sidebar-start;

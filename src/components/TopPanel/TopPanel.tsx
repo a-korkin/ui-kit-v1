@@ -19,7 +19,12 @@ const TopPanel: React.FC<ITopPanelProps> = ({collapse, onCollapseChange}) => {
                     id="menu" 
                     onChange={e => onCollapseChange(!collapse)} 
                 />
-                <label className="menu-burger__label" htmlFor="menu">&#9776;</label>
+                <label 
+                    className="menu-burger__label" 
+                    htmlFor="menu" 
+                >
+                    <span></span>
+                </label>
             </div>
         </div>
     );
