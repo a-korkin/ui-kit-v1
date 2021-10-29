@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Input.scss";
 
 interface IInputProps {
+    id: string;
     label: string;
     value: string;
     mask?: string;
-    onChange: (val: string) => void;
+    onChange: (id: string, val: string) => void;
 }
 
-const Input: React.FC<IInputProps> = ({label, value, mask, onChange}) => {
+const Input: React.FC<IInputProps> = ({id, label, value, mask, onChange}) => {
     const [term, setTerm] = useState<string>(value);
+
+    useEffect(() => {
+        setTerm(value);
+    }, [value]);
 
     const maskChecker = (mask: string, str: string): string => {
         const maskChars = mask.split("");
@@ -21,8 +26,6 @@ const Input: React.FC<IInputProps> = ({label, value, mask, onChange}) => {
         for (let i = 0; i <= strChars.length; i++) {
             if (strChars[i] && maskChars[j]) {
                 if (strChars[i] === "-") continue;
-
-                console.log(`${strChars[i]}, ${maskChars[j]}`);
 
                 if (maskChars[j] === "9") {
                     if (digit.test(strChars[i])) {
@@ -41,29 +44,29 @@ const Input: React.FC<IInputProps> = ({label, value, mask, onChange}) => {
         return result;
     }
 
-    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
         let val = e.target.value;
         if (mask) {
             val = maskChecker(mask, val);
         }
-        onChange(val);
+        onChange(id, val);
         setTerm(val);
     }
 
     return (
         <div className="input">
             <input
-                id="input" 
+                id={id} 
                 className="input__field" 
                 type="text" 
                 autoComplete="off"
                 placeholder={label}
                 value={term}
-                onChange={e => onChangeHandler(e)}
+                onChange={e => onChangeHandler(e, id)}
             />
             <label 
                 className="input__label" 
-                htmlFor="input"
+                htmlFor={id}
             >
                 {label}
             </label>

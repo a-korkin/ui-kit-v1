@@ -11,6 +11,8 @@ interface IDatePicker {
 }
 
 const DatePicker: React.FC<IDatePicker> = ({label, value, onChange}) => {
+    const [error, setError] = useState<boolean>(false);
+
     const dateToStr = (date: Date): string => {
         const day = date.getDate().toString().padStart(2, "0");
         const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -57,12 +59,25 @@ const DatePicker: React.FC<IDatePicker> = ({label, value, onChange}) => {
         val = maskChecker("99.99.9999", e.target.value);
         setDateStr(val);
         if (val.length === 10) {
-            const newDate = new Date(parseInt(val.slice(-4)), parseInt(val.substring(3, 5)) - 1, parseInt(val.substring(0, 2)));
+            const year = parseInt(val.slice(-4));
+            const month = parseInt(val.substring(3, 5)) - 1;
+            const day = parseInt(val.substring(0, 2));
+
+            const newDate = new Date(year, month, day);
+            if (newDate.getMonth() !== month ||
+                newDate.getDate() !== day ||
+                newDate.getFullYear() !== year) {
+                setError(true);
+            } else {
+                setError(false);
+            }
+
             setDate(newDate);
         }
     }
 
     const changeDateHandler = (date: Date) => {
+        setError(false);
         setDate(date);
         setActive(!active);
         setDateStr(dateToStr(date));
@@ -73,7 +88,7 @@ const DatePicker: React.FC<IDatePicker> = ({label, value, onChange}) => {
         <div className={active ? "input input--date" : "input input--date hide"}>
             <input
                 id="input" 
-                className="input__field" 
+                className={error ? "input__field error": "input__field"} 
                 type="text" 
                 autoComplete="off"
                 placeholder="xx.xx.xxxx"

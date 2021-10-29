@@ -27,6 +27,7 @@
     --clr-primary-light: #3498db;
     --clr-primary-dark: #2980b9;
 
+    --clr-danger: rgb(255, 0, 0);
     --clr-danger-light: #e74c3c;
     --clr-danger-dark: #c0392b;
 
@@ -73,8 +74,15 @@ h1 {
 
 .container {
     display: grid;
+    
+    // justify-content: center;
+    // align-content: center;
+    // grid-gap: 1rem;
+}
+
+.content {
+    display: grid;
     justify-content: center;
     align-content: center;
     grid-gap: 1rem;
-    // background-color: #1abc9c;
 }

@@ -18,6 +18,7 @@ export interface IDate {
 
 export interface IAppState {
     input: string;
+    maskInput: string;
     select: IDictionary;
     multiSelect: IDictionary[],
     checkbox: boolean;

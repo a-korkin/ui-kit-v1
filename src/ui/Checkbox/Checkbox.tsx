@@ -1,16 +1,16 @@
 import React, { ChangeEvent, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
-import "./CheckBox.scss";
+import "./Checkbox.scss";
 
-interface ICheckBoxProps {
+interface ICheckboxProps {
     id: string;
     checked: boolean;
     label: string;
     onChange: (value: boolean) => void;
 }
 
-const CheckBox: React.FC<ICheckBoxProps> = ({id, checked, label, onChange}) => {
+const Checkbox: React.FC<ICheckboxProps> = ({id, checked, label, onChange}) => {
     const [isCheck, setCheck] = useState<boolean>(checked);
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,4 +39,4 @@ const CheckBox: React.FC<ICheckBoxProps> = ({id, checked, label, onChange}) => {
     );
 }
 
-export default CheckBox;
+export default Checkbox;
