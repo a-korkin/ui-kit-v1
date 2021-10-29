@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaAngleRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 import "./Sidebar.scss";
 
@@ -15,12 +16,15 @@ const Sidebar: React.FC<ISidebarProps> = ({collapse}) => {
                 <div className="menu">
                     <div className="menu__item">
                         <input className="menu__item-input" type="checkbox" name="A" id="A" />
-                        <label className="menu__item-label menu__item--clickable" htmlFor="A"><FaAngleRight />Services</label>
+                        <label className="menu__item-label menu__item--clickable" htmlFor="A"><FaAngleRight />Buttons</label>
 
                         <ul className="item__list">
-                            <li className="menu__item--clickable"><a className="item-link" href="#">Branding</a></li>
-                            <li className="menu__item--clickable"><a className="item-link" href="#">Web/App development</a></li>
-                            <li className="menu__item--clickable"><a className="item-link" href="#">Internet Marketing and SEO</a></li>
+                            <li className="menu__item--clickable">
+                                <Link to="/buttons" className="item-link">Buttons</Link>
+                            </li>
+                            {/* <li className="menu__item--clickable"><a className="item-link" href="#">Buttons</a></li> */}
+                            {/* <li className="menu__item--clickable"><a className="item-link" href="#">Web/App development</a></li>
+                            <li className="menu__item--clickable"><a className="item-link" href="#">Internet Marketing and SEO</a></li> */}
                         </ul>
                     </div>
 

@@ -12,6 +12,7 @@ import Sidebar from "../Sidebar";
 import TopPanel from "../TopPanel";
 
 import "./App.scss";
+import AppRouter from "../AppRouter";
 
 const App: React.FC = () => {
     const initialState: IAppState = {
@@ -76,8 +77,9 @@ const App: React.FC = () => {
             <TopPanel collapse={collapse} onCollapseChange={setCollapse} />
             <Sidebar collapse={collapse} />
             <main className={collapse ? "content collapse" : "content"}>
-                <h1>UI kit App</h1>
-                <div onClick={e => viewState(e)}>
+                {/* <h1>UI kit App</h1> */}
+                <AppRouter />
+                {/* <div onClick={e => viewState(e)}>
                     <Button>Submit</Button>
                 </div>
                 <div>
@@ -89,7 +91,7 @@ const App: React.FC = () => {
                 <MultiSelect options={options} label="Multiselect" onChange={onMultiSelectChangeHandler} />
                 <CheckBox id="checkbox" checked={false} label="Checkbox" onChange={onCheckBoxChangeHandler} />
                 <Toggle id="toggle" checked={false} label="Toggle" onChange={onToggleChangeHandler} />
-                <DatePicker label="Date" value={state.date} onChange={onDateChangeHanler} />
+                <DatePicker label="Date" value={state.date} onChange={onDateChangeHanler} /> */}
             </main>
         </div>
     );
