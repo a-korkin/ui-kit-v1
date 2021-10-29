@@ -1,18 +1,29 @@
 .sidebar {
-    background-color: orangered;
+    background-color: var(--clr-grey-light-0);
     font-size: var(--font-size-default);
     grid-column: sidebar-start / sidebar-end;
-    grid-row: 1 / -1;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    overflow-y: scroll;
-    
-    .nav {
-        width: 20vw;
-    }
+    // grid-row: 2 / -1;
+    // position: fixed;
+    // top: 10rem;
+    // bottom: 0;
+    // left: 0;
+    overflow-y: auto;
+    overflow-x: auto;
+    line-height: 3rem;
+    // width: 20vw;
+    transition: all .2s;
+    visibility: visible;
+    opacity: 1;
 
+    &.collapse {
+        // width: 0;
+        opacity: 0;
+        // display: none;
+        height: 0;
+        visibility: hidden;
+        grid-column: sidebar-start / sidebar-start;
+    }
+    
     .nav__label {
         cursor: pointer;
     }

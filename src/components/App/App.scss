@@ -75,14 +75,21 @@ h1 {
 
 .container {
     display: grid;
-    grid-template-columns: [sidebar-start] 20vw [sidebar-end full-start] 1fr [full-end];
-    grid-template-rows: 1fr;
+    grid-template-columns: [sidebar-start] 20vw [sidebar-end content-start] 1fr [content-end];
+}
+
+.top-panel {
+    grid-column: sidebar-start / content-end;
 }
 
 .content {
-    grid-column: full-start / full-end;
+    grid-column: content-start / content-end;
     display: grid;
     justify-content: center;
     align-content: center;
     grid-gap: 1rem;
+
+    &.collapse {
+        grid-column: sidebar-start / content-end;
+    }
 }

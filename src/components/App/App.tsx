@@ -8,9 +8,10 @@ import Input from "../../ui/Input";
 import MultiSelect from "../../ui/MultiSelect";
 import Select from "../../ui/Select";
 import Toggle from "../../ui/Toggle";
+import Sidebar from "../Sidebar";
+import TopPanel from "../TopPanel";
 
 import "./App.scss";
-import Sidebar from "../Sidebar";
 
 const App: React.FC = () => {
     const initialState: IAppState = {
@@ -23,6 +24,7 @@ const App: React.FC = () => {
         date: new Date(Date.now())
     };
     const [state, setState] = useState<IAppState>(initialState);
+    const [collapse, setCollapse] = useState<boolean>(false);
 
     const options: IDictionary[] = [
         {id: "1", value: "automobiles"},
@@ -70,10 +72,10 @@ const App: React.FC = () => {
     }
 
     return (
-        <>
         <div className="container">
-            <Sidebar />
-            <main className="content">
+            <TopPanel collapse={collapse} onCollapseChange={setCollapse} />
+            <Sidebar collapse={collapse} />
+            <main className={collapse ? "content collapse" : "content"}>
                 <h1>UI kit App</h1>
                 <div onClick={e => viewState(e)}>
                     <Button>Submit</Button>
@@ -90,7 +92,6 @@ const App: React.FC = () => {
                 <DatePicker label="Date" value={state.date} onChange={onDateChangeHanler} />
             </main>
         </div>
-        </>
     );
 }
 

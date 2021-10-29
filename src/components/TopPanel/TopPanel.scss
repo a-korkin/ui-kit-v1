@@ -1,0 +1,16 @@
+.top-panel {
+    background-color: orangered;
+    padding: 1rem;
+
+    .menu-burger {
+        font-size: 3rem;
+
+        &__label {
+            cursor: pointer;
+        }
+
+        & input {
+            display: none;
+        }
+    }
+}

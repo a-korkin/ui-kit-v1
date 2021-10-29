@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 
 import "./Sidebar.scss";
 
-const Sidebar: React.FC = () => {
+interface ISidebarProps {
+    collapse: boolean;
+}
+
+const Sidebar: React.FC<ISidebarProps> = ({collapse}) => {
     return (
-        <div className="sidebar">
+        <div className={collapse ? "sidebar collapse" : "sidebar"}>
             <nav className="nav">
-                <input type="checkbox" className="nav__input" name="menu" id="menu" />
-                <label className="nav__label" htmlFor="menu">&#9776;</label>
 
                 <div className="menu">
                     <div className="menu__item">
