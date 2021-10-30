@@ -22,7 +22,6 @@ const Form: React.FC = () => {
         date: new Date(Date.now())
     };
     const [state, setState] = useState<IAppState>(initialState);
-    const [collapse, setCollapse] = useState<boolean>(false);
 
     const options: IDictionary[] = [
         {id: "1", value: "automobiles"},

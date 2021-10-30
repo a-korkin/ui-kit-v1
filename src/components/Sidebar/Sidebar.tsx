@@ -61,6 +61,13 @@ const Sidebar: React.FC<ISidebarProps> = ({collapse}) => {
                             <Link to="/form" className="item-link">Form</Link>
                         </label>
                     </div>
+
+                    <div className="menu__item">
+                        <input className="menu__item-input" type="checkbox" name="B" id="B" />
+                        <label className="menu__item-label menu__item--clickable" htmlFor="B">
+                            <Link to="/datagrid" className="item-link">DataGrid</Link>
+                        </label>
+                    </div>
                 </div>
             </nav>
         </div>

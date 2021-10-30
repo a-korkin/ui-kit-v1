@@ -1,0 +1,11 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, min-content);
+
+    &-column {
+        border: .1rem solid #ccc;
+        padding: 1rem;
+        resize: horizontal;
+        overflow: auto;
+    }
+}
