@@ -33,6 +33,20 @@ const Sidebar: React.FC<ISidebarProps> = ({collapse}) => {
                             <Link to="/inputs" className="item-link">Inputs</Link>
                         </label>
                     </div>
+
+                    <div className="menu__item">
+                        <input className="menu__item-input" type="checkbox" name="B" id="B" />
+                        <label className="menu__item-label menu__item--clickable" htmlFor="B">
+                            <Link to="/selects" className="item-link">Selects</Link>
+                        </label>
+                    </div>
+
+                    <div className="menu__item">
+                        <input className="menu__item-input" type="checkbox" name="B" id="B" />
+                        <label className="menu__item-label menu__item--clickable" htmlFor="B">
+                            <Link to="/datepickers" className="item-link">DatePickers</Link>
+                        </label>
+                    </div>
                 </div>
             </nav>
         </div>

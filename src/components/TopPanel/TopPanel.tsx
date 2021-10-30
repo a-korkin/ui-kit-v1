@@ -26,6 +26,8 @@ const TopPanel: React.FC<ITopPanelProps> = ({collapse, onCollapseChange}) => {
                     <span></span>
                 </label>
             </div>
+
+            <h1>UI-Kit App</h1>
         </div>
     );
 }
