@@ -43,6 +43,9 @@
     --clr-grey-dark-1: #434344;
     --clr-grey-dark-2: #b8b9bb;
 
+    --clr-wet-aspault: #34495e;
+    --clr-mignight-blue: #2c3e50;
+
     // FONTS
     --font-size-default: 1.6rem;
 
@@ -90,8 +93,9 @@ h1 {
     grid-row: 2 / span 1;
     display: grid;
     justify-content: center;
-    align-content: center;
+    align-content: start;
     grid-gap: 1rem;
+    margin-top: 2rem;
 
     &.collapse {
         grid-column: sidebar-start / content-end;

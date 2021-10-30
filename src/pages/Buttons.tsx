@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../ui/Button";
+import Loading from "../ui/Loading";
 import "./pages.scss";
 
 const Buttons: React.FC = () => {
@@ -10,6 +11,8 @@ const Buttons: React.FC = () => {
             <Button classes="btn btn-danger">Submit</Button>
             <Button classes="btn btn-warning">Submit</Button>
             <Button classes="btn btn-success">Submit</Button>
+            <Button classes="btn"><Loading /></Button>
+            <Button classes="btn" disabled={true}>Submit</Button>
         </div>
     );
 }

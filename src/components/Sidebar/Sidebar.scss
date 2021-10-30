@@ -1,5 +1,5 @@
 .sidebar {
-    background-color: var(--clr-grey-light-0);
+    background-color: var(--clr-mignight-blue);
     font-size: var(--font-size-default);
     grid-column: sidebar-start / sidebar-end;
     grid-row: 2 / span 1;
@@ -9,6 +9,14 @@
     transition: all .2s;
     visibility: visible;
     opacity: 1;
+    color: #fff;
+
+    a:visited,
+    a:link {
+        color: currentColor;
+        text-decoration: none;
+        width: 100%;
+    }
 
     &::-webkit-scrollbar {
         width: .8rem;
@@ -37,9 +45,12 @@
     }
 
     & .menu {
+        display: flex;
+        flex-direction: column;
+
         &__item {
             cursor: pointer;
-            padding: .5rem 1rem;
+            // padding: .5rem 1rem;
 
             &--clickable {
                 transition: all .1s;
@@ -47,10 +58,11 @@
 
             &--clickable:hover {
                 width: 100%;
-                background-color: orange;
+                background-color: var(--clr-wet-aspault);
             }
 
             &-label {
+                padding: .5rem 1rem;
                 text-transform: uppercase;
                 cursor: pointer;
                 display: flex;

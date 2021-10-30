@@ -13,6 +13,12 @@
     transition: all .1s;
     height: 3.6rem;
 
+    &:disabled {
+        background: var(--clr-grey-dark-2);
+        color: var(--clr-grey-light-2);
+        cursor: not-allowed;
+    }
+
     &:active {
         transform: translateY(.2rem);
     }

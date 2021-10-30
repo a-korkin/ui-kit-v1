@@ -1,15 +1,19 @@
 .loading {
-    height: 100%;
-    display: flex;
-    justify-items: center;
-    align-items: center;
-    animation: spin 1s linear infinite;
-    color: currentColor;
-    opacity: .3;
+    position: relative;
+    
+    & > svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: spin 1s linear infinite;
+        color: currentColor;
+        opacity: .3;
+    }
 }
 
 @keyframes spin {
     to {
-        transform: rotate(360deg);
+        transform: translate(-50%, -50%) rotate(360deg);
     }
 }

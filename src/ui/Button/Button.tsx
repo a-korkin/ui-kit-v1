@@ -3,11 +3,12 @@ import "./Button.scss";
 
 interface IButtonProps {
     classes: string;
+    disabled?: boolean;
 }
 
-const Button: React.FC<IButtonProps> = ({classes,children}) => {
+const Button: React.FC<IButtonProps> = ({classes, disabled, children}) => {
     return (
-        <button className={classes}>{children}</button>
+        <button className={classes} disabled={disabled}>{children}</button>
     );
 }
 
