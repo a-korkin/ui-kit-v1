@@ -80,7 +80,6 @@ h1 {
     grid-template-columns: [sidebar-start] 20vw [sidebar-end content-start] auto [content-end];
     grid-template-rows: 5rem auto;
     min-height: 100vh;
-    // height: calc(100vh);
 }
 
 .top-panel {
@@ -92,7 +91,7 @@ h1 {
     grid-column: content-start / content-end;
     grid-row: 2 / span 1;
     display: grid;
-    justify-content: center;
+    // justify-content: center;
     align-content: start;
     grid-gap: 1rem;
     margin-top: 2rem;

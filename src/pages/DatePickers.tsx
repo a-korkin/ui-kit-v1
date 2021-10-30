@@ -7,11 +7,13 @@ const DatePickers: React.FC = () => {
     const [date, setDate] = useState<Date>(new Date(Date.now()));
     
     return (
-        <DatePicker 
-            label="Date" 
-            value={date} 
-            onChange={setDate} 
-        />
+        <div className="pages-datepicker">
+            <DatePicker 
+                label="Date" 
+                value={date} 
+                onChange={setDate} 
+            />
+        </div>
     );
 }
 
