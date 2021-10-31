@@ -29,5 +29,6 @@ export interface IAppState {
 export interface IColumn {
     id: number;
     order: number;
+    row: number;
     name: string;
 }
