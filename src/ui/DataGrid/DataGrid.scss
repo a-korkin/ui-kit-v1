@@ -8,4 +8,9 @@
         resize: horizontal;
         overflow: auto;
     }
+
+    &-column-data {
+        border: .1rem solid #ccc;
+        padding: 1rem;
+    }
 }

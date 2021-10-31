@@ -25,3 +25,9 @@ export interface IAppState {
     toggle: boolean;
     date: Date;
 }
+
+export interface IColumn {
+    id: number;
+    order: number;
+    name: string;
+}
