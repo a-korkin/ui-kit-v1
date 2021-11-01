@@ -5,10 +5,53 @@
     &-column {
         border: .1rem solid #ccc;
         padding: 1rem;
-        resize: horizontal;
-        overflow: auto;
+        // resize: horizontal;
+        // overflow: auto;
+        position: relative;
+
+        .resize-line {
+            display: inline-block;
+            width: 1rem;
+            height: 100%;
+            background-color: blue;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
     }
 
+    // &-column::-webkit-resizer {
+    //     background: transparent;
+
+    //     &::before {
+    //         content: "";
+    //         height: 10rem;
+    //         width: 1rem;
+    //         background-color: blue;
+    //     }
+    // }
+
+    // ::-webkit-resizer {
+
+        // background-image: url(http://i.imgur.com/hQZDwHs.png);
+        // height: 100%;
+
+        // background-color: blue;
+        // display: block;
+        // width: 3rem;
+        // height: 3rem;
+        // position: relative;
+
+        // &:after {
+        //     content: "";
+        //     width: 2rem;
+        //     height: 5rem;
+        //     background-color: orangered;
+        //     position: absolute;
+        //     top: 0;
+        // }
+    // }
+    
     &-column-data {
         border: .1rem solid #ccc;
         padding: 1rem;
