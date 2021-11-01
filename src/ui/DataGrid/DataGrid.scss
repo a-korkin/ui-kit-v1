@@ -5,7 +5,7 @@
     &-column {
         border: .1rem solid #ccc;
         padding: 1rem;
-        // resize: horizontal;
+        resize: horizontal;
         // overflow: auto;
         position: relative;
 
@@ -17,6 +17,7 @@
             position: absolute;
             top: 0;
             right: 0;
+            cursor: e-resize;
         }
     }
 

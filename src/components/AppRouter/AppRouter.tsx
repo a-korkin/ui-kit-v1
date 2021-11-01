@@ -7,17 +7,19 @@ import DatePickers from "../../pages/DatePickers";
 import Form from "../../pages/Form";
 import Inputs from "../../pages/Inputs";
 import Selects from "../../pages/Selects";
+import Test from "../../pages/Test";
 
 const AppRouter: React.FC = () => {
     return (
         <Switch>
-            <Route path="/buttons" component={Buttons} />
-            <Route path="/inputs" component={Inputs} />
-            <Route path="/selects" component={Selects} />
-            <Route path="/checkboxes" component={Checkboxes} />
-            <Route path="/datepickers" component={DatePickers} />
-            <Route path="/form" component={Form} />
-            <Route path="/datagrid" component={DataGridPage} />
+            <Route path="/" component={Test} exact={true} />
+            <Route path="/buttons" component={Buttons} exact={true} />
+            <Route path="/inputs" component={Inputs} exact={true} />
+            <Route path="/selects" component={Selects} exact={true} />
+            <Route path="/checkboxes" component={Checkboxes} exact={true} />
+            <Route path="/datepickers" component={DatePickers} exact={true} />
+            <Route path="/form" component={Form} exact={true} />
+            <Route path="/datagrid" component={DataGridPage} exact={true} />
         </Switch>
     );
 }

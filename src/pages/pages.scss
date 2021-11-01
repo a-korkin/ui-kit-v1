@@ -36,3 +36,18 @@
         justify-content: center;
     }
 }
+
+.test {
+    width: 10rem;
+    height: 10rem;
+    border: .2rem solid #000;
+    display: flex;
+    justify-content: end;
+
+    .scroll {
+        width: 2rem;
+        height: 100%;
+        background-color: orangered;
+        cursor: pointer;
+    }
+}
