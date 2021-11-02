@@ -30,19 +30,15 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             return c;
         }));
 
-        console.log(`droped: ${column.name} | current: ${currentColumn?.name}`);
-
-        // setDataColumns(dataColumns.map(c => {
-        //     if (c.col === column.col) {
-        //         return {...c, order: currentColumn?.col ?? 1};
-        //     }
-        //     if (c.col === currentColumn?.col ?? 1) {
-        //         return {...c, col: column.col};
-        //     }
-        //     return c;
-        // }));
-
-        console.log(orderColumns(column, currentColumn));
+        setDataColumns(dataColumns.map(c => {
+            if (c.col === column.col) {
+                return {...c, col: currentColumn?.col ?? 1};
+            }
+            if (c.col === currentColumn?.col ?? 1) {
+                return {...c, col: column.col};
+            }
+            return c;
+        }));
     }
 
     const sortColumns = (a: IColumn, b: IColumn): number => {
@@ -60,21 +56,16 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         }
     }
 
-    const orderColumns = (a: IColumn, b?: IColumn): IColumn[] => {
-        return dataColumns.map(c => {
-            if (c.col === a.col) {
-                return {...c, col: b?.col ?? 1};
-            } else if (c.col === a.col) {
-                return {...c, col: b?.col ?? 1};
-            }
-            return c;
-        })
+    const compareString = (a: IColumn, b: IColumn) => {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
     }
 
     const orderRows = (columns: IColumn[]): IColumn[] => {
         let newDataArray: IColumn[] = [];
         for (let i = 0; i < columns.length; i++) {
-            let row = data.filter(w => w.row === columns[i].row);
+            let row = dataColumns.filter(w => w.row === columns[i].row);
 
             for (let j = 0; j < row.length; j++) {
                 let cell = row[j];
@@ -96,14 +87,13 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
         switch (direction) {
             case SortDirections.ASC:
-                sortedCols = data.filter(w => w.col === column.col).sort();
-                setDataColumns(orderRows(sortedCols));
+                sortedCols = dataColumns.filter(w => w.col === column.col).sort(compareString);
                 break;
             case SortDirections.DESC:
-                sortedCols = data.filter(w => w.col === column.col).sort().reverse();
-                setDataColumns(orderRows(sortedCols));
+                sortedCols = dataColumns.filter(w => w.col === column.col).sort(compareString).reverse();
                 break;
         }
+        setDataColumns(orderRows(sortedCols));
     }
 
     return (
@@ -123,8 +113,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                 ))
             }
             {
-                // dataColumns.sort(sortDataColumns).map((column) => (
-                dataColumns.sort(o => o.row).map((column) => (
+                dataColumns.sort(sortDataColumns).map((column) => (
                     <div 
                         key={column.id}
                         className="grid-column-data"
