@@ -7,7 +7,6 @@ import DatePickers from "../../pages/DatePickers";
 import Form from "../../pages/Form";
 import Inputs from "../../pages/Inputs";
 import Selects from "../../pages/Selects";
-import Test from "../../pages/Test";
 
 const AppRouter: React.FC = () => {
     return (

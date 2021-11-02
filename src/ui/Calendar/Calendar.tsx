@@ -134,11 +134,11 @@ const Calendar: React.FC<ICalendarProps> = ({value, onChange}) => {
         onChange(newDate);
     }
 
-
+    const setConvertDate = useRef((value: Date) => (value: React.SetStateAction<IDate>) => {})  ;
 
     useEffect(() => {
-        setDate(convertDate(value));
-    }, []);
+        setConvertDate.current(value);
+    }, [setConvertDate, value]);
 
     return (
         <div className="calendar">
