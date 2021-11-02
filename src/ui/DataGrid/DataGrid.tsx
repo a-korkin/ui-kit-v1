@@ -93,10 +93,6 @@ const DataGrid: React.FC = () => {
         }
     }
 
-    const resizeColumnHandler = (column: IColumn) => {
-        // console.log(column);
-    }
-
     return (
         <div className="grid">
             {
@@ -104,9 +100,10 @@ const DataGrid: React.FC = () => {
                     <Column 
                         key={col.id} 
                         column={col} 
+                        width={100}
+                        height={50}
                         setCurrent={setCurrentColumn}
                         dropColumn={dropColumnHandler}
-                        resizeColumn={resizeColumnHandler}
                     />
                 ))
             }

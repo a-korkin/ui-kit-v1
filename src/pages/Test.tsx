@@ -1,5 +1,5 @@
 import React from "react";
-import { ResizableBox, Resizable } from "react-resizable";
+import { ResizableBox } from "react-resizable";
 
 import "./pages.scss";
 

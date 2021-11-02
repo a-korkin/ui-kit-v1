@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { IDate, IMonth } from "../../models";
 
@@ -86,7 +86,7 @@ const Calendar: React.FC<ICalendarProps> = ({value, onChange}) => {
 
         return days;
     }
-
+    
     const convertDate = (date: Date): IDate => {
         const result: IDate = {
             year: date.getFullYear(),
@@ -134,9 +134,11 @@ const Calendar: React.FC<ICalendarProps> = ({value, onChange}) => {
         onChange(newDate);
     }
 
+
+
     useEffect(() => {
         setDate(convertDate(value));
-    }, [value]);
+    }, []);
 
     return (
         <div className="calendar">
