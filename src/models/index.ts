@@ -28,7 +28,13 @@ export interface IAppState {
 
 export interface IColumn {
     id: number;
-    order: number;
+    col: number;
     row: number;
     name: string;
 }
+
+export enum SortDirections {
+    ASC = "ASC",
+    DESC = "DESC"
+}
+
