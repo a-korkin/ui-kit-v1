@@ -87,10 +87,15 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
         switch (direction) {
             case SortDirections.ASC:
-                sortedCols = dataColumns.filter(w => w.col === column.col).sort(compareString);
+                sortedCols = dataColumns
+                    .filter(w => w.col === column.col)
+                    .sort(compareString);
                 break;
             case SortDirections.DESC:
-                sortedCols = dataColumns.filter(w => w.col === column.col).sort(compareString).reverse();
+                sortedCols = dataColumns
+                    .filter(w => w.col === column.col)
+                    .sort(compareString)
+                    .reverse();
                 break;
         }
         setDataColumns(orderRows(sortedCols));

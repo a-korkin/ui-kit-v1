@@ -73,13 +73,15 @@ const Column: React.FC<IColumnProps> = ({column, width, height, sorted, setCurre
                 <div 
                     className={sortable && sorted ? "col-header-sort allow" : "col-header-sort"}>
                     <span 
-                        className={sortDirection === SortDirections.ASC ? "col-header-sort__icon active" : "col-header-sort__icon"}
+                        className={sortDirection === SortDirections.ASC ? 
+                            "col-header-sort__icon active" : "col-header-sort__icon"}
                         onClick={e => sortColumn(column, sortDirection ?? SortDirections.ASC)}
                     >
                         <FaSortUp />
                     </span>
                     <span 
-                        className={sortDirection === SortDirections.DESC ? "col-header-sort__icon active" : "col-header-sort__icon"}
+                        className={sortDirection === SortDirections.DESC ? 
+                            "col-header-sort__icon active" : "col-header-sort__icon"}
                         onClick={e => sortColumn(column, sortDirection ?? SortDirections.DESC)}
                     >
                         <FaSortDown />
