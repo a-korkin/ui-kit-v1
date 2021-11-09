@@ -1,9 +1,10 @@
 import React from "react";
-import { IColumn } from "../models";
-import DataGrid from "../ui/DataGrid";
+import { ICell } from "../models";
+// import DataGrid from "../ui/DataGrid";
+import DataGrid from "../ui/DataGrid2";
 
 const DataGridPage: React.FC = () => {
-    const headers: IColumn[] = [
+    const headers: ICell[] = [
         {id: 1, col: 1, row: 0, value: "Name"},
         {id: 2, col: 2, row: 0, value: "Email"},
         {id: 3, col: 3, row: 0, value: "Phone"},
@@ -12,7 +13,7 @@ const DataGridPage: React.FC = () => {
         {id: 6, col: 6, row: 0, value: "Salary"}
     ];
 
-    const data: IColumn[] = [
+    const data: ICell[] = [
         {id: 11, col: 1, row: 1, value: "Hedda De laYgleasis"},
         {id: 12, col: 2, row: 1, value: "hedda.delaygles@skinix.com"},
         {id: 13, col: 3, row: 1, value: "627-273-1865"},
@@ -72,7 +73,8 @@ const DataGridPage: React.FC = () => {
 
     return (
         <div className="pages-grid">
-            <DataGrid headers={headers} data={data} />
+            {/* <DataGrid headers={headers} data={data} /> */}
+            <DataGrid />
         </div>
     );
 }

@@ -32,7 +32,7 @@ export enum Types {
     date = "date"
 }
 
-export interface IColumn {
+export interface ICell {
     id: number;
     col: number;
     row: number;

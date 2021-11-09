@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import { IColumn, SortDirections } from "../../models";
+import { ICell, SortDirections } from "../../models";
 import { ResizableBox } from 'react-resizable';
 import { FaSortUp, FaSortDown} from "react-icons/fa";
 
-interface IColumnProps {
-    column: IColumn;
+interface ICellProps {
+    column: ICell;
     width: number;
     height: number;
     sorted: boolean;
-    setCurrent: (current: IColumn) => void;
-    dropColumn: (col: IColumn) => void;
-    sortColumn: (col: IColumn, direction: SortDirections) => void;
+    setCurrent: (current: ICell) => void;
+    dropColumn: (col: ICell) => void;
+    sortColumn: (col: ICell, direction: SortDirections) => void;
 }
 
-const Column: React.FC<IColumnProps> = ({column, width, height, sorted, setCurrent, dropColumn, sortColumn}) => {
+const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent, dropColumn, sortColumn}) => {
 
     const [sortable, setSortable] = useState<boolean>(false);
     const [sortDirection, setSortDirection] = useState<SortDirections>();
 
-    const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, col: IColumn) => {
+    const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
         setCurrent(col);
     }
 
@@ -34,7 +34,7 @@ const Column: React.FC<IColumnProps> = ({column, width, height, sorted, setCurre
         e.preventDefault();
     }
 
-    const dropHandler = (e: React.DragEvent<HTMLDivElement>, col: IColumn) => {
+    const dropHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
         e.preventDefault();
         dropColumn(col);
     }

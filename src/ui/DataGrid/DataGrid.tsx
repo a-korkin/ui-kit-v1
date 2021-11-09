@@ -1,26 +1,26 @@
 import React, { useState } from "react";
-import { IColumn, SortDirections } from "../../models";
+import { ICell, SortDirections } from "../../models";
 import Column from "./Column";
 import Checkbox from "../Checkbox";
 
 import "./DataGrid.scss";
 
 interface IDataGridProps {
-    headers: IColumn[];
-    data: IColumn[];
+    headers: ICell[];
+    data: ICell[];
 }
 
 const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     
-    const [currentColumn, setCurrentColumn] = useState<IColumn>();
+    const [currentColumn, setCurrentColumn] = useState<ICell>();
 
-    const [columns, setColumns] = useState<IColumn[]>(headers);
+    const [columns, setColumns] = useState<ICell[]>(headers);
 
-    const [dataColumns, setDataColumns] = useState<IColumn[]>(data);
+    const [dataColumns, setDataColumns] = useState<ICell[]>(data);
 
     const [sortedColumn, setSotredColumn] = useState<number>();
 
-    const dropColumnHandler = (column: IColumn) => {
+    const dropColumnHandler = (column: ICell) => {
         setColumns(columns.map(c => {
             if (c.col === column.col) {
                 return {...c, col: currentColumn?.col ?? 1};
@@ -42,14 +42,14 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         }));
     }
 
-    const sortColumns = (a: IColumn, b: IColumn): number => {
+    const sortColumns = (a: ICell, b: ICell): number => {
         if (a.col > b.col)
             return 1;
         else
             return -1;
     }
 
-    const sortDataColumns = (a: IColumn, b: IColumn): number => {
+    const sortDataColumns = (a: ICell, b: ICell): number => {
         if (a.row === b.row) {
             return a.col > b.col ? 1 : -1
         } else {
@@ -57,14 +57,14 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         }
     }
 
-    const compareString = (a: IColumn, b: IColumn) => {
+    const compareString = (a: ICell, b: ICell) => {
         if (a.value < b.value) return -1;
         if (a.value > b.value) return 1;
         return 0;
     }
 
-    const orderRows = (columns: IColumn[]): IColumn[] => {
-        let newDataArray: IColumn[] = [];
+    const orderRows = (columns: ICell[]): ICell[] => {
+        let newDataArray: ICell[] = [];
         for (let i = 0; i < columns.length; i++) {
             let row = dataColumns.filter(w => w.row === columns[i].row);
 
@@ -81,10 +81,10 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         return newDataArray;
     }
 
-    const sortColumnHandler = (column: IColumn, direction: SortDirections) => {
+    const sortColumnHandler = (column: ICell, direction: SortDirections) => {
         setSotredColumn(column.col);
 
-        let sortedCols: IColumn[] = [];
+        let sortedCols: ICell[] = [];
 
         switch (direction) {
             case SortDirections.ASC:
@@ -110,7 +110,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     <Column 
                         key={column.id} 
                         column={column} 
-                        width={100}
+                        width={200}
                         height={40}
                         sorted={column.col === sortedColumn}
                         setCurrent={setCurrentColumn}
