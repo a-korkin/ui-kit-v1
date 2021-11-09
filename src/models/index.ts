@@ -26,11 +26,17 @@ export interface IAppState {
     date: Date;
 }
 
+export enum Types {
+    string = "string",
+    boolean = "boolean",
+    date = "date"
+}
+
 export interface IColumn {
     id: number;
     col: number;
     row: number;
-    name: string;
+    value: any;
 }
 
 export enum SortDirections {

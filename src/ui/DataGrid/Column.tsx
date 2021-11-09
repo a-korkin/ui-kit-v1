@@ -69,7 +69,7 @@ const Column: React.FC<IColumnProps> = ({column, width, height, sorted, setCurre
                 onDrop={e => dropHandler(e, column)}
                 onClick={e => colClickHandler(e)}
             >
-                {column.name}
+                {column.value}
                 <div 
                     className={sortable && sorted ? "col-header-sort allow" : "col-header-sort"}>
                     <span 

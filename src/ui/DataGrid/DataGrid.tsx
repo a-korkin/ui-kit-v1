@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IColumn, SortDirections } from "../../models";
 import Column from "./Column";
+import Checkbox from "../Checkbox";
 
 import "./DataGrid.scss";
 
@@ -57,8 +58,8 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     }
 
     const compareString = (a: IColumn, b: IColumn) => {
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return 1;
+        if (a.value < b.value) return -1;
+        if (a.value > b.value) return 1;
         return 0;
     }
 
@@ -103,6 +104,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     return (
         <div className="grid">
+            {/* <Checkbox id="1" checked={false} label="" onChange={(t: boolean) => {console.log("test")}} /> */}
             {
                 columns.sort(sortColumns).map((column) => (
                     <Column 
@@ -123,7 +125,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                         key={column.id}
                         className="grid-column-data"
                     >
-                        {column.name}
+                        {column.value}
                     </div>
                 ))
             }
