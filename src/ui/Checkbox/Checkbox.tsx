@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
 import "./Checkbox.scss";
@@ -17,6 +17,10 @@ const Checkbox: React.FC<ICheckboxProps> = ({id, checked, label, onChange}) => {
         setCheck(!isCheck);
         onChange(!isCheck);
     }
+
+    useEffect(() => {
+        setCheck(checked);
+    }, [checked])
 
     return (
         <div className="checkbox">

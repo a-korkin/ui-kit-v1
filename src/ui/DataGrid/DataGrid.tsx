@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { ICell, SortDirections } from "../../models";
 import Column from "./Column";
 import Checkbox from "../Checkbox";
-// import Rows from "./Rows";
-
 import "./DataGrid.scss";
-import Cell from "./Cell";
 
 interface IDataGridProps {
     headers: ICell[];
@@ -116,53 +113,52 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                 return [...prevState, rowId];
             });
         }
-
-        console.log(selectedRows);
     }
 
     // выделить все
     const selectAllRows = () => {
-        setMainSelect(!mainSelect);
-
+        
         if (mainSelect) {
             setSelectedRows([]);
         } else {
-            setSelectedRows([1,5]);
+            const uniqueRows = Array.from(new Set(dataColumns.map(c => c.row)));
+            setSelectedRows([...uniqueRows]);
         }
+
+        setMainSelect(!mainSelect);
     }
 
-    // // создание ячейки
-    // const createDataCell = (cell: ICell) => {
-    //     if (cell.col === 1) {
-    //         const isChecked = selectedRows.includes(cell.row);
-    //         return (
-    //             <React.Fragment key={cell.id}>
-    //                 <div className="grid-column-data">
-    //                     <Checkbox 
-    //                         id={cell.id} 
-    //                         checked={isChecked} 
-    //                         label="" 
-    //                         onChange={(b: boolean) => {selectRow(isChecked, cell.row)}}
-    //                     />
-    //                 </div>
+    // создание ячейки
+    const createDataCell = (isChecked: boolean, cell: ICell) => {
+        if (cell.col === 1) {
+            return (
+                <React.Fragment key={cell.id}>
+                    <div className="grid-column-data">
+                        <Checkbox 
+                            id={cell.id} 
+                            checked={isChecked} 
+                            label="" 
+                            onChange={(b: boolean) => {selectRow(isChecked, cell.row)}}
+                        />
+                    </div>
 
-    //                 <div 
-    //                     className="grid-column-data"
-    //                 >
-    //                     {cell.value}
-    //                 </div>
-    //             </React.Fragment>
-    //         )
-    //     }
-    //     return(    
-    //         <div 
-    //             key={cell.id}
-    //             className="grid-column-data"
-    //         >
-    //             {cell.value}
-    //         </div>
-    //     )
-    // }
+                    <div 
+                        className="grid-column-data"
+                    >
+                        {cell.value}
+                    </div>
+                </React.Fragment>
+            )
+        }
+        return(    
+            <div 
+                key={cell.id}
+                className="grid-column-data"
+            >
+                {cell.value}
+            </div>
+        )
+    }
 
     // создание строк
     const createRows = (cells: ICell[], rowLength: number = 6) => {
@@ -176,15 +172,9 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     className={isChecked ? "grid-row selected" : "grid-row"}
                 >
                     {
-                        cells.slice(i, i + rowLength).map((c) => 
-                            <Cell 
-                                key={c.id} 
-                                cell={c} 
-                                isChecked={isChecked} 
-                                onCheck={(b: boolean) => {selectRow(isChecked, c.row)}} 
-                            />
-                            // createDataCell(r)
-                        )
+                        cells.slice(i, i + rowLength).map((cell) => {
+                            return createDataCell(isChecked, cell)
+                        })
                     }
                 </div>
             );
