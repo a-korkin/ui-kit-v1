@@ -105,21 +105,21 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const createDataCell = (cell: ICell) => {
         if (cell.col === 1) {
             return (
-                <>
-                <Checkbox 
-                    key={cell.id + 3}
-                    id={cell.id.toString()} 
-                    checked={false} 
-                    label="" 
-                    onChange={(t: boolean) => {console.log(cell.id)}} 
-                />
-                <div 
-                    key={cell.id}
-                    className="grid-column-data"
-                >
-                    {cell.value}
-                </div>
-                </>
+                <React.Fragment key={cell.id}>
+                    <Checkbox 
+                        key={cell.id + 3}
+                        id={cell.id.toString()} 
+                        checked={false} 
+                        label="" 
+                        onChange={(t: boolean) => {console.log(cell.id)}} 
+                    />
+                    <div 
+                        key={cell.id}
+                        className="grid-column-data"
+                    >
+                        {cell.value}
+                    </div>
+                </React.Fragment>
             )
         }
         return(    
