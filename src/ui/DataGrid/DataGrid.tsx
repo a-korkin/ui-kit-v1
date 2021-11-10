@@ -102,9 +102,39 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         setDataColumns(orderRows(sortedCols));
     }
 
+    const createDataCell = (cell: ICell) => {
+        if (cell.col === 1) {
+            return (
+                <>
+                <Checkbox 
+                    key={cell.id + 3}
+                    id={cell.id.toString()} 
+                    checked={false} 
+                    label="" 
+                    onChange={(t: boolean) => {console.log(cell.id)}} 
+                />
+                <div 
+                    key={cell.id}
+                    className="grid-column-data"
+                >
+                    {cell.value}
+                </div>
+                </>
+            )
+        }
+        return(    
+            <div 
+                key={cell.id}
+                className="grid-column-data"
+            >
+                {cell.value}
+            </div>
+        )
+    }
+
     return (
         <div className="grid">
-            {/* <Checkbox id="1" checked={false} label="" onChange={(t: boolean) => {console.log("test")}} /> */}
+            <Checkbox id="1" checked={false} label="" onChange={(t: boolean) => {console.log("main")}} />
             {
                 columns.sort(sortColumns).map((column) => (
                     <Column 
@@ -120,14 +150,9 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                 ))
             }
             {
-                dataColumns.sort(sortDataColumns).map((column) => (
-                    <div 
-                        key={column.id}
-                        className="grid-column-data"
-                    >
-                        {column.value}
-                    </div>
-                ))
+                dataColumns.sort(sortDataColumns).map((cell) =>
+                    createDataCell(cell)
+                )
             }
         </div>
     );

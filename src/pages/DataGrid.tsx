@@ -1,7 +1,7 @@
 import React from "react";
 import { ICell } from "../models";
-// import DataGrid from "../ui/DataGrid";
-import DataGrid from "../ui/DataGrid2";
+import DataGrid from "../ui/DataGrid";
+// import DataGrid from "../ui/DataGrid2";
 
 const DataGridPage: React.FC = () => {
     const headers: ICell[] = [
@@ -73,8 +73,8 @@ const DataGridPage: React.FC = () => {
 
     return (
         <div className="pages-grid">
-            {/* <DataGrid headers={headers} data={data} /> */}
-            <DataGrid />
+            <DataGrid headers={headers} data={data} />
+            {/* <DataGrid /> */}
         </div>
     );
 }

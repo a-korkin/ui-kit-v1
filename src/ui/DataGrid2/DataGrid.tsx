@@ -23,6 +23,8 @@ const DataGrid: React.FC = () => {
     }
 
     console.log(data);
+    const obj = {name: "name11", email: "email1", phone: "phone1", birthdate: "birthdate1"};
+
     return (
         <div className="grid">
             <div className="grid-headers">
@@ -49,15 +51,17 @@ const DataGrid: React.FC = () => {
                     }
                 </div>
             </div>
-
             <div className="grid-data">
-                {
-                    data.rows.map((row) => 
-                        Object.keys(row).map((key, index) => 
-                            <div key={key}>{row.email}</div>
-                        )
-                    )
-                }
+            {
+                Object.values(obj).map((value) => 
+                    <div>{value}</div>
+                )
+                            // data.rows.map((row) => 
+                            //     Object.keys(row).map((key, index) => 
+                            //         <div key={key}>{row.email}</div>
+                            //     )
+                            // )
+            }
             </div>
         </div>
     );

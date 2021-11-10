@@ -58,7 +58,9 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
         <ResizableBox 
             width={width} 
             height={height} 
-            axis="x">
+            axis="x"
+            minConstraints={[width, height]}
+        >
             <div 
                 className="col-header"
                 draggable={true}
@@ -71,7 +73,8 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
             >
                 {column.value}
                 <div 
-                    className={sortable && sorted ? "col-header-sort allow" : "col-header-sort"}>
+                    className={sortable && sorted ? "col-header-sort allow" : "col-header-sort"}
+                >
                     <span 
                         className={sortDirection === SortDirections.ASC ? 
                             "col-header-sort__icon active" : "col-header-sort__icon"}
