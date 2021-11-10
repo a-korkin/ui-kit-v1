@@ -102,19 +102,21 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         setDataColumns(orderRows(sortedCols));
     }
 
+    // создание ячейки
     const createDataCell = (cell: ICell) => {
         if (cell.col === 1) {
             return (
                 <React.Fragment key={cell.id}>
-                    <Checkbox 
-                        key={cell.id + 3}
-                        id={cell.id.toString()} 
-                        checked={false} 
-                        label="" 
-                        onChange={(t: boolean) => {console.log(cell.id)}} 
-                    />
+                    <div className="grid-column-data">
+                        <Checkbox 
+                            id={cell.id.toString()} 
+                            checked={false} 
+                            label="" 
+                            onChange={(t: boolean) => {console.log(cell.id)}} 
+                        />
+                    </div>
+
                     <div 
-                        key={cell.id}
                         className="grid-column-data"
                     >
                         {cell.value}
@@ -132,27 +134,48 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         )
     }
 
+    // создание строк
+    const createRows = (cells: ICell[], rowLength: number = 6) => {
+        let rows: any[] = [];
+
+        for (let i = 0; i < cells.length; i += rowLength) {
+            const row = (
+                <div key={cells[i].row} className="grid-row">
+                    {
+                        cells.slice(i, i + rowLength).map((r) => 
+                            createDataCell(r)
+                        )
+                    }
+                </div>
+            );
+            rows = [...rows, row];
+        }
+        return rows;
+    }
+
     return (
         <div className="grid">
-            <Checkbox id="1" checked={false} label="" onChange={(t: boolean) => {console.log("main")}} />
+            <div className="grid-row">
+                <div className="grid-column-data">
+                    <Checkbox id="main" checked={false} label="" onChange={(t: boolean) => {console.log("all")}} />
+                </div>
+                {
+                    columns.sort(sortColumns).map((column) => (
+                        <Column 
+                            key={column.id} 
+                            column={column} 
+                            width={200}
+                            height={40}
+                            sorted={column.col === sortedColumn}
+                            setCurrent={setCurrentColumn}
+                            dropColumn={dropColumnHandler}
+                            sortColumn={sortColumnHandler}
+                        />
+                    ))
+                }
+            </div>
             {
-                columns.sort(sortColumns).map((column) => (
-                    <Column 
-                        key={column.id} 
-                        column={column} 
-                        width={200}
-                        height={40}
-                        sorted={column.col === sortedColumn}
-                        setCurrent={setCurrentColumn}
-                        dropColumn={dropColumnHandler}
-                        sortColumn={sortColumnHandler}
-                    />
-                ))
-            }
-            {
-                dataColumns.sort(sortDataColumns).map((cell) =>
-                    createDataCell(cell)
-                )
+                createRows(dataColumns.sort(sortDataColumns))
             }
         </div>
     );

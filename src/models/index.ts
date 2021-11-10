@@ -39,6 +39,10 @@ export interface ICell {
     value: any;
 }
 
+export interface IRow {
+    cells: ICell[];
+}
+
 export enum SortDirections {
     ASC = "ASC",
     DESC = "DESC"
