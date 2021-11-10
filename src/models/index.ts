@@ -33,7 +33,7 @@ export enum Types {
 }
 
 export interface ICell {
-    id: number;
+    id: string;
     col: number;
     row: number;
     value: any;

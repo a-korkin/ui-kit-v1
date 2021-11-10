@@ -20,6 +20,8 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     const [sortedColumn, setSotredColumn] = useState<number>();
 
+    const [selectedRows, setSelectedRows] = useState<number[]>([]);
+
     const dropColumnHandler = (column: ICell) => {
         setColumns(columns.map(c => {
             if (c.col === column.col) {
@@ -102,17 +104,30 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         setDataColumns(orderRows(sortedCols));
     }
 
+    const addSelectedRow = (isChecked: boolean, rowId: number) => {
+        if (isChecked) {
+            setSelectedRows(prevState => {
+                return [...prevState.slice(0, prevState.findIndex(a => a === rowId)), ...prevState.slice(prevState.findIndex(a => a === rowId) + 1)]
+            });
+        } else {
+            setSelectedRows(prevState => {
+                return [...prevState, rowId];
+            });
+        }
+    }
+
     // создание ячейки
     const createDataCell = (cell: ICell) => {
         if (cell.col === 1) {
+            const isChecked = selectedRows.includes(cell.row);
             return (
                 <React.Fragment key={cell.id}>
                     <div className="grid-column-data">
                         <Checkbox 
-                            id={cell.id.toString()} 
-                            checked={false} 
+                            id={cell.id} 
+                            checked={isChecked} 
                             label="" 
-                            onChange={(t: boolean) => {console.log(cell.id)}} 
+                            onChange={(t: boolean) => {addSelectedRow(isChecked, cell.row)}} 
                         />
                     </div>
 
@@ -140,7 +155,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
         for (let i = 0; i < cells.length; i += rowLength) {
             const row = (
-                <div key={cells[i].row} className="grid-row">
+                <div key={cells[i].row} className={selectedRows.includes(cells[i].row) ? "grid-row selected" : "grid-row"}>
                     {
                         cells.slice(i, i + rowLength).map((r) => 
                             createDataCell(r)
@@ -155,7 +170,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     return (
         <div className="grid">
-            <div className="grid-row">
+            <div className={"grid-row"}>
                 <div className="grid-column-data">
                     <Checkbox id="main" checked={false} label="" onChange={(t: boolean) => {console.log("all")}} />
                 </div>

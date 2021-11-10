@@ -5,12 +5,21 @@
     &-row {
         display: contents;
 
+        
+        & > .grid-column-data,
+        & > .react-resizable {
+            // transition: all .1s;
+        }
+        
+        &.selected > .grid-column-data,
+        &.selected > .react-resizable {
+            background-color: var(--clr-grey-light-0);
+        }
         &:hover {
 
-            // & >
             & > .grid-column-data, 
             & > .react-resizable {
-                background-color: orangered;
+                background-color: var(--clr-grey-light-0);
             }
         }
     }
