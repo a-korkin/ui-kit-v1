@@ -183,34 +183,50 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         return rows;
     }
 
+    const dd = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        console.log("fdsfds");
+        console.log(e.dataTransfer);
+    }
+
     return (
-        <div className="grid">
-            <div className={"grid-row"}>
-                <div className="grid-column-data">
-                    <Checkbox 
-                        id="main" 
-                        checked={mainSelect} 
-                        label="" 
-                        onChange={(t: boolean) => {selectAllRows()}} />
+        <div className="grid-wrapper">
+        <div 
+            className="group-toolbar"
+            // draggable={true}
+            // onDrop={dd}
+            // onDropCapture={dd}
+            // onDragCapture={dd}
+        ></div>
+
+            <div className="grid">
+                <div className="grid-header">
+                    <div className="grid-column-data">
+                        <Checkbox 
+                            id="main" 
+                            checked={mainSelect} 
+                            label="" 
+                            onChange={(t: boolean) => {selectAllRows()}} />
+                    </div>
+                    {
+                        columns.sort(sortColumns).map((column) => (
+                            <Column 
+                                key={column.id} 
+                                column={column} 
+                                width={200}
+                                height={40}
+                                sorted={column.col === sortedColumn}
+                                setCurrent={setCurrentColumn}
+                                dropColumn={dropColumnHandler}
+                                sortColumn={sortColumnHandler}
+                            />
+                        ))
+                    }
                 </div>
                 {
-                    columns.sort(sortColumns).map((column) => (
-                        <Column 
-                            key={column.id} 
-                            column={column} 
-                            width={200}
-                            height={40}
-                            sorted={column.col === sortedColumn}
-                            setCurrent={setCurrentColumn}
-                            dropColumn={dropColumnHandler}
-                            sortColumn={sortColumnHandler}
-                        />
-                    ))
+                    createRows(dataColumns.sort(sortDataColumns))
                 }
             </div>
-            {
-                createRows(dataColumns.sort(sortDataColumns))
-            }
         </div>
     );
 }

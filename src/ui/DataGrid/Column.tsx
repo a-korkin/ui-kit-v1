@@ -21,13 +21,22 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
     const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
         setCurrent(col);
     }
-
+    
     const dragLeaveHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
     }
-
-    const dragEndHandler = (e: React.DragEvent<HTMLDivElement>) => {
+    
+    const dragEndHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
         e.preventDefault();
+        // console.log(e.dataTransfer);
+        // console.log(col);
+        // console.log(e);
+    }
+
+    const dragEnterHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
+        e.preventDefault();
+        e.dataTransfer.effectAllowed = "all";
+        console.log("fdsafds");
     }
 
     const dragOverHandler = (e: React.DragEvent<HTMLDivElement>) => {
@@ -37,6 +46,7 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
     const dropHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
         e.preventDefault();
         dropColumn(col);
+        // console.log(e.dataTransfer);
     }
 
     const colClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -65,8 +75,9 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
                 className="col-header"
                 draggable={true}
                 onDragStart={e => dragStartHandler(e, column)}
+                onDragEnter={e => dragEnterHandler(e, column)}
                 onDragLeave={dragLeaveHandler}
-                onDragEnd={dragEndHandler}
+                onDragEnd={e => dragEndHandler(e, column)}
                 onDragOver={dragOverHandler}
                 onDrop={e => dropHandler(e, column)}
                 onClick={e => colClickHandler(e)}

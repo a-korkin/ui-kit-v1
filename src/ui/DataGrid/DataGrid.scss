@@ -1,15 +1,17 @@
+.group-toolbar {
+    height: 5rem;
+    background-color: orangered;
+}
 .grid {
     display: grid;
     grid-template-columns: repeat(7, min-content); 
 
+    &-header {
+        display: contents;
+    }
+
     &-row {
         display: contents;
-
-        
-        & > .grid-column-data,
-        & > .react-resizable {
-            // transition: all .1s;
-        }
         
         &.selected > .grid-column-data,
         &.selected > .react-resizable {
@@ -34,6 +36,7 @@
         align-items: center;
         padding: .5rem;
         cursor: pointer;
+        border: .1rem solid #000;
 
         &-sort {
             &.allow {
