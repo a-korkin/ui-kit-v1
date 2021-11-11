@@ -183,20 +183,26 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         return rows;
     }
 
-    const dd = (e: React.DragEvent<HTMLDivElement>) => {
+    const dragHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        console.log("fdsfds");
-        console.log(e.dataTransfer);
+
+    }
+
+    const dropHandler = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        console.log(currentColumn);
     }
 
     return (
         <div className="grid-wrapper">
         <div 
             className="group-toolbar"
-            // draggable={true}
-            // onDrop={dd}
-            // onDropCapture={dd}
-            // onDragCapture={dd}
+            onDragStart={e => dragHandler(e)}
+            onDragEnter={e => dragHandler(e)}
+            onDragLeave={e => dragHandler(e)}
+            onDragEnd={e => dragHandler(e)}
+            onDragOver={e => dragHandler(e)}
+            onDrop={e => dropHandler(e)}
         ></div>
 
             <div className="grid">

@@ -28,15 +28,10 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
     
     const dragEndHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
         e.preventDefault();
-        // console.log(e.dataTransfer);
-        // console.log(col);
-        // console.log(e);
     }
 
     const dragEnterHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
         e.preventDefault();
-        e.dataTransfer.effectAllowed = "all";
-        console.log("fdsafds");
     }
 
     const dragOverHandler = (e: React.DragEvent<HTMLDivElement>) => {
@@ -46,7 +41,6 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
     const dropHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
         e.preventDefault();
         dropColumn(col);
-        // console.log(e.dataTransfer);
     }
 
     const colClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
