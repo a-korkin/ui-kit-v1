@@ -4,6 +4,7 @@ import { ResizableBox } from 'react-resizable';
 import { FaSortUp, FaSortDown} from "react-icons/fa";
 
 interface ICellProps {
+    group: boolean;
     column: ICell;
     width: number;
     height: number;
@@ -13,7 +14,9 @@ interface ICellProps {
     sortColumn: (col: ICell, direction: SortDirections) => void;
 }
 
-const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent, dropColumn, sortColumn}) => {
+const Header: React.FC<ICellProps> = ({
+    column, width, height, group,
+    sorted, setCurrent, dropColumn, sortColumn}) => {
 
     const [sortable, setSortable] = useState<boolean>(false);
     const [sortDirection, setSortDirection] = useState<SortDirections>();
@@ -64,6 +67,7 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
             height={height} 
             axis="x"
             minConstraints={[width, height]}
+            className={group ? "hide": "header--resizable"}
         >
             <div 
                 className="col-header"
@@ -100,4 +104,4 @@ const Column: React.FC<ICellProps> = ({column, width, height, sorted, setCurrent
     );
 }
 
-export default Column;
+export default Header;

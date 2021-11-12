@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ICell, SortDirections } from "../../models";
-import Column from "./Column";
+import Header from "./Header";
 import Checkbox from "../Checkbox";
 import "./DataGrid.scss";
 
@@ -16,7 +16,9 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const [sortedColumn, setSotredColumn] = useState<number>();
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     const [mainSelect, setMainSelect] = useState<boolean>(false);
+    
     const [headersCount, setHeadersCount] = useState<number>(headers.length);
+    const [groupHeaders, setGroupHeaders] = useState<ICell[]>([]);
 
     const dropColumnHandler = (column: ICell) => {
         setColumns(columns.map(c => {
@@ -186,12 +188,23 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     const dragHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-
     }
 
-    const dropHandler = (e: React.DragEvent<HTMLDivElement>) => {
+    const groupHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        console.log(currentColumn);
+
+        setGroupHeaders(prevState => {
+            return [...prevState, currentColumn as ICell];
+        });
+
+        setHeadersCount(prevState => {
+            return prevState - 1;
+        });
+
+        // setDataColumns();
+
+        // console.log(currentColumn);
+        // console.log(groupHeaders);
     }
 
     return (
@@ -203,8 +216,17 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             onDragLeave={e => dragHandler(e)}
             onDragEnd={e => dragHandler(e)}
             onDragOver={e => dragHandler(e)}
-            onDrop={e => dropHandler(e)}
-        ></div>
+            onDrop={e => groupHandler(e)}
+        >
+            {
+                groupHeaders.map(head => 
+                    <div 
+                        key={head.col}
+                        className="group-toolbar__item"
+                    >{head.value}</div>
+                )
+            }
+        </div>
 
             <div className={`grid grid--${headersCount + 1}`}>
                 <div className="grid-header">
@@ -217,8 +239,9 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     </div>
                     {
                         columns.sort(sortColumns).map((column) => (
-                            <Column 
+                            <Header 
                                 key={column.id} 
+                                group={groupHeaders.includes(column)}
                                 column={column} 
                                 width={200}
                                 height={40}
