@@ -16,6 +16,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const [sortedColumn, setSotredColumn] = useState<number>();
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     const [mainSelect, setMainSelect] = useState<boolean>(false);
+    const [headersCount, setHeadersCount] = useState<number>(headers.length);
 
     const dropColumnHandler = (column: ICell) => {
         setColumns(columns.map(c => {
@@ -161,10 +162,10 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     }
 
     // создание строк
-    const createRows = (cells: ICell[], rowLength: number = 6) => {
+    const createRows = (cells: ICell[]) => {
         let rows: any[] = [];
         
-        for (let i = 0; i < cells.length; i += rowLength) {
+        for (let i = 0; i < cells.length; i += headersCount) {
             const isChecked = selectedRows.includes(cells[i].row);
             const row = (
                 <div 
@@ -172,7 +173,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     className={isChecked ? "grid-row selected" : "grid-row"}
                 >
                     {
-                        cells.slice(i, i + rowLength).map((cell) => {
+                        cells.slice(i, i + headersCount).map((cell) => {
                             return createDataCell(isChecked, cell)
                         })
                     }
@@ -205,7 +206,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             onDrop={e => dropHandler(e)}
         ></div>
 
-            <div className="grid">
+            <div className={`grid grid--${headersCount + 1}`}>
                 <div className="grid-header">
                     <div className="grid-column-data">
                         <Checkbox 

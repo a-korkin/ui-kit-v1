@@ -1,10 +1,16 @@
+@for $i from 1 through 10 {
+    $grid-template-columns: repeat($i, min-content);
+    .grid--#{$i} {
+        grid-template-columns: $grid-template-columns;
+    }
+}
+
 .group-toolbar {
     height: 5rem;
     background-color: orangered;
 }
 .grid {
     display: grid;
-    grid-template-columns: repeat(7, min-content); 
 
     &-header {
         display: contents;
