@@ -25,6 +25,13 @@
         &:not(:last-child) {
             margin-right: 1rem;
         }
+
+        & .remove {
+            display: inline-block;
+            margin-left: .5rem;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
      }
 }
 

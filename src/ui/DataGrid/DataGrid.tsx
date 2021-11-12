@@ -133,6 +133,8 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     // создание ячейки
     const createDataCell = (isChecked: boolean, cell: ICell) => {
+        // const inGroup: boolean = groupHeaders.some(a => a.col === cell.col);
+
         if (cell.col === 1) {
             return (
                 <React.Fragment key={cell.id}>
@@ -146,6 +148,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     </div>
 
                     <div 
+                        // className={inGroup ? "hide" : "grid-column-data"}
                         className="grid-column-data"
                     >
                         {cell.value}
@@ -156,6 +159,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         return(    
             <div 
                 key={cell.id}
+                // className={inGroup ? "hide" : "grid-column-data"}
                 className="grid-column-data"
             >
                 {cell.value}
@@ -169,6 +173,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         
         for (let i = 0; i < cells.length; i += headersCount) {
             const isChecked = selectedRows.includes(cells[i].row);
+            // const inGroup = groupHeaders.some(a => a.col === cells[i].col);
             const row = (
                 <div 
                     key={cells[i].row} 
@@ -193,6 +198,8 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const groupHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
 
+        // console.log(data);
+
         setGroupHeaders(prevState => {
             return [...prevState, currentColumn as ICell];
         });
@@ -201,10 +208,30 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             return prevState - 1;
         });
 
-        // setDataColumns();
+        setDataColumns(prevState => {
+            return [
+                ...prevState.filter(w => w.col !== currentColumn?.col)
+            ]
+        });
+    }
 
-        // console.log(currentColumn);
-        // console.log(groupHeaders);
+    const removeGroupHandler = (e: React.MouseEvent<HTMLSpanElement>, header: ICell) => {
+        setGroupHeaders(prevState => {
+            return [
+                ...prevState.slice(0, prevState.findIndex(a => a.col === header.col)), 
+                ...prevState.slice(prevState.findIndex(a => a.col === header.col) + 1)
+            ];
+        });
+
+        setHeadersCount(prevState => {
+            return prevState + 1;
+        });
+
+        setDataColumns(prevState => {
+            return [
+                ...prevState, ...data.filter(w => w.col === header.col)
+            ];
+        });
     }
 
     return (
@@ -223,7 +250,13 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     <div 
                         key={head.col}
                         className="group-toolbar__item"
-                    >{head.value}</div>
+                    >
+                        {head.value}
+                        <span 
+                            className="remove"
+                            onClick={e => removeGroupHandler(e, head)}
+                        >&times;</span>
+                    </div>
                 )
             }
         </div>
