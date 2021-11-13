@@ -1,22 +1,30 @@
 import React, { useState } from "react";
-import { FaAngleRight } from "react-icons/fa";
-import { IColumn } from "../../models";
+import { FaAngleDown } from "react-icons/fa";
+import { ICell, IColumn } from "../../models";
+import Rows from "./Rows";
 
 interface IGroupHeaderProps {
     column: IColumn;
     isCollapsed: boolean;
-    onChange: (col: IColumn, value: boolean) => void;
+    cells: ICell[];
+    headersCount: number;
+    selectedRows: number[];
+    groupHeaders: ICell[];
+    selectRowHandler: (check: boolean, rowNumber: number) => void;
 }
 
-const GroupHeader: React.FC<IGroupHeaderProps> = ({column, isCollapsed, onChange}) => {
+const GroupHeader: React.FC<IGroupHeaderProps> = ({
+    column, isCollapsed, cells, headersCount, 
+    selectedRows, groupHeaders, selectRowHandler}) => {
+        
     const [checked, setChecked] = useState<boolean>(isCollapsed);
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(!checked);
-        onChange(column, !checked);
     }
     
     return (
+        <>
         <div className="group-container-header">
             <input 
                 type="checkbox" 
@@ -26,12 +34,21 @@ const GroupHeader: React.FC<IGroupHeaderProps> = ({column, isCollapsed, onChange
                 onChange={onChangeHandler} 
             />
             <label htmlFor={column.value} className="icon">
-                <FaAngleRight />
+                <FaAngleDown />
             </label>
             <div>
                 {column.value}
             </div> 
-        </div>        
+        </div>
+        <Rows 
+            cells={cells} 
+            isCollapsed={checked}
+            headersCount={headersCount}
+            selectedRows={selectedRows}
+            groupHeaders={groupHeaders}
+            selectRowHandler={selectRowHandler}
+        />
+        </>        
     );
 }
 

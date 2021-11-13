@@ -5,6 +5,7 @@ import GroupToolbar from "./GroupToolbar";
 import Checkbox from "../Checkbox";
 import "./DataGrid.scss";
 import GroupHeader from "./GroupHeader";
+import Rows from "./Rows";
 
 interface IDataGridProps {
     headers: ICell[];
@@ -145,70 +146,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         );
     }
 
-    // создание ячейки
-    const createDataCell = (isChecked: boolean, cell: ICell) => {
-        if (cell.col === 1) {
-            return (
-                <React.Fragment key={cell.id}>
-                    {groupHeaders.length > 0 && 
-                        groupHeaders.map(empty => 
-                            <div key={empty.id} className="grid-column-data grid-column-data--empty">
-                                {createEmptyCell()}
-                            </div>
-                        )
-                    }
-                    <div className="grid-column-data">
-                        <Checkbox 
-                            id={cell.id} 
-                            checked={isChecked} 
-                            label="" 
-                            onChange={(b: boolean) => {selectRow(isChecked, cell.row)}}
-                        />
-                    </div>
-
-                    <div 
-                        className="grid-column-data"
-                    >
-                        {cell.value}
-                    </div>
-                </React.Fragment>
-            )
-        }
-        return(    
-            <div 
-                key={cell.id}
-                className="grid-column-data"
-            >
-                {cell.value}
-            </div>
-        )
-    }
-
-    // создание строк
-    const createRows = (cells: ICell[], isCollapsed: boolean = false) => {
-        let classes = isCollapsed ? "grid-row grid-row--collapsed" : "grid-row";
-
-        let rows: any[] = [];
-        
-        for (let i = 0; i < cells.length; i += headers.length) {
-            const isChecked = selectedRows.includes(cells[i].row);
-            const row = (
-                <div 
-                    key={cells[i].row} 
-                    className={isChecked ? `${classes} selected` : classes}
-                >
-                    {
-                        cells.slice(i, i + headers.length).map((cell) => {
-                            return createDataCell(isChecked, cell)
-                        })
-                    }
-                </div>
-            );
-            rows = [...rows, row];
-        }
-        return rows;
-    }
-
     // группировка по столбцу
     const addGroupHandler = () => {
         setGroupHeaders(prevState => {
@@ -255,11 +192,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         });
     }
 
-    const collapseGroupHandler = (col: IColumn, val: boolean) => {
-        console.log(col);
-        console.log(val);
-    }
-
     // возвращает сгруппированные строки
     const getGroupedRows = (column: IColumn) => {
         const rows = data.filter(w => w.value === column.value).map(d => d.row);
@@ -270,11 +202,12 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                 <GroupHeader 
                     column={column} 
                     isCollapsed={isCollapsed} 
-                    onChange={collapseGroupHandler} 
+                    cells={dataColumns.filter(w => rows.includes(w.row)).sort(sortDataColumns)} 
+                    headersCount={headers.length}
+                    selectedRows={selectedRows}
+                    groupHeaders={groupHeaders}
+                    selectRowHandler={selectRow}
                 />
-                {
-                    createRows(dataColumns.filter(w => rows.includes(w.row)).sort(sortDataColumns), isCollapsed)
-                }
             </React.Fragment>
         );
     }
@@ -326,14 +259,17 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                             ))
                         }
                         {uniqueHeaders.length === 0 &&
-                            createRows(dataColumns.sort(sortDataColumns))
+                            <Rows 
+                                cells={dataColumns.sort(sortDataColumns)} 
+                                isCollapsed={false}
+                                headersCount={headers.length}
+                                selectedRows={selectedRows}
+                                groupHeaders={groupHeaders}
+                                selectRowHandler={selectRow}
+                            />
                         }
                     </div>
                 }
-
-                {/* {
-                    createRows(dataColumns.sort(sortDataColumns))
-                } */}
             </div>
         </div>
     );
