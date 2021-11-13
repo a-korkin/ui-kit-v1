@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FaAngleRight } from "react-icons/fa";
 import { ICell, SortDirections, IColumn, Types } from "../../models";
 import Header from "./Header";
 import GroupToolbar from "./GroupToolbar";
 import Checkbox from "../Checkbox";
 import "./DataGrid.scss";
+import GroupHeader from "./GroupHeader";
 
 interface IDataGridProps {
     headers: ICell[];
@@ -185,7 +185,9 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     }
 
     // создание строк
-    const createRows = (cells: ICell[]) => {
+    const createRows = (cells: ICell[], isCollapsed: boolean = false) => {
+        let classes = isCollapsed ? "grid-row grid-row--collapsed" : "grid-row";
+
         let rows: any[] = [];
         
         for (let i = 0; i < cells.length; i += headers.length) {
@@ -193,7 +195,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             const row = (
                 <div 
                     key={cells[i].row} 
-                    className={isChecked ? "grid-row selected" : "grid-row"}
+                    className={isChecked ? `${classes} selected` : classes}
                 >
                     {
                         cells.slice(i, i + headers.length).map((cell) => {
@@ -253,7 +255,29 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         });
     }
 
-    console.log(uniqueHeaders);
+    const collapseGroupHandler = (col: IColumn, val: boolean) => {
+        console.log(col);
+        console.log(val);
+    }
+
+    // возвращает сгруппированные строки
+    const getGroupedRows = (column: IColumn) => {
+        const rows = data.filter(w => w.value === column.value).map(d => d.row);
+        const isCollapsed = false;
+
+        return (
+            <React.Fragment key={column.value}>
+                <GroupHeader 
+                    column={column} 
+                    isCollapsed={isCollapsed} 
+                    onChange={collapseGroupHandler} 
+                />
+                {
+                    createRows(dataColumns.filter(w => rows.includes(w.row)).sort(sortDataColumns), isCollapsed)
+                }
+            </React.Fragment>
+        );
+    }
 
     return (
         <div className="grid-wrapper">
@@ -294,21 +318,22 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     }
                 </div>
 
-                <div className="group-container">
-                    <div className="group-container-header">
-                        <input type="checkbox" name="777" id="777" />
-                        <label htmlFor="777" className="icon">
-                            <FaAngleRight />
-                        </label>
-                        <div>
-                            this is group container
-                        </div>
-                    </div>
-                </div>
-
                 {
-                    createRows(dataColumns.sort(sortDataColumns))
+                    <div className="group-container">
+                        {uniqueHeaders.length > 0 &&
+                            uniqueHeaders.map(header => (
+                                getGroupedRows(header)
+                            ))
+                        }
+                        {uniqueHeaders.length === 0 &&
+                            createRows(dataColumns.sort(sortDataColumns))
+                        }
+                    </div>
                 }
+
+                {/* {
+                    createRows(dataColumns.sort(sortDataColumns))
+                } */}
             </div>
         </div>
     );
