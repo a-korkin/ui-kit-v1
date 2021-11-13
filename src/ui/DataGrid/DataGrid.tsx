@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ICell, SortDirections } from "../../models";
 import Header from "./Header";
+import GroupToolbar from "./GroupToolbar";
 import Checkbox from "../Checkbox";
 import "./DataGrid.scss";
 
@@ -133,8 +134,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     // создание ячейки
     const createDataCell = (isChecked: boolean, cell: ICell) => {
-        // const inGroup: boolean = groupHeaders.some(a => a.col === cell.col);
-
         if (cell.col === 1) {
             return (
                 <React.Fragment key={cell.id}>
@@ -159,7 +158,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         return(    
             <div 
                 key={cell.id}
-                // className={inGroup ? "hide" : "grid-column-data"}
                 className="grid-column-data"
             >
                 {cell.value}
@@ -173,7 +171,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         
         for (let i = 0; i < cells.length; i += headersCount) {
             const isChecked = selectedRows.includes(cells[i].row);
-            // const inGroup = groupHeaders.some(a => a.col === cells[i].col);
             const row = (
                 <div 
                     key={cells[i].row} 
@@ -191,14 +188,13 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         return rows;
     }
 
-    const dragHandler = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-    }
+    // const dragHandler = (e: React.DragEvent<HTMLDivElement>) => {
+    //     e.preventDefault();
+    // }
 
-    const groupHandler = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-
-        // console.log(data);
+    // группировка по столбцу
+    const addGroupHandler = () => {
+        // e.preventDefault();
 
         setGroupHeaders(prevState => {
             return [...prevState, currentColumn as ICell];
@@ -215,7 +211,8 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         });
     }
 
-    const removeGroupHandler = (e: React.MouseEvent<HTMLSpanElement>, header: ICell) => {
+    // удаление группировки
+    const removeGroupHandler = (header: ICell) => {
         setGroupHeaders(prevState => {
             return [
                 ...prevState.slice(0, prevState.findIndex(a => a.col === header.col)), 
@@ -236,30 +233,31 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     return (
         <div className="grid-wrapper">
-        <div 
-            className="group-toolbar"
-            onDragStart={e => dragHandler(e)}
-            onDragEnter={e => dragHandler(e)}
-            onDragLeave={e => dragHandler(e)}
-            onDragEnd={e => dragHandler(e)}
-            onDragOver={e => dragHandler(e)}
-            onDrop={e => groupHandler(e)}
-        >
-            {
-                groupHeaders.map(head => 
-                    <div 
-                        key={head.col}
-                        className="group-toolbar__item"
-                    >
-                        {head.value}
-                        <span 
-                            className="remove"
-                            onClick={e => removeGroupHandler(e, head)}
-                        >&times;</span>
-                    </div>
-                )
-            }
-        </div>
+            <GroupToolbar headers={groupHeaders} addGroup={addGroupHandler} removeGroup={removeGroupHandler} />
+            {/* <div 
+                className="group-toolbar"
+                onDragStart={e => dragHandler(e)}
+                onDragEnter={e => dragHandler(e)}
+                onDragLeave={e => dragHandler(e)}
+                onDragEnd={e => dragHandler(e)}
+                onDragOver={e => dragHandler(e)}
+                onDrop={e => groupHandler(e)}
+            >
+                {
+                    groupHeaders.map(head => 
+                        <div 
+                            key={head.col}
+                            className="group-toolbar__item"
+                        >
+                            {head.value}
+                            <span 
+                                className="remove"
+                                onClick={e => removeGroupHandler(e, head)}
+                            >&times;</span>
+                        </div>
+                    )
+                }
+            </div> */}
 
             <div className={`grid grid--${headersCount + 1}`}>
                 <div className="grid-header">
