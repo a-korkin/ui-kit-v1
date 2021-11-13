@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ICell, SortDirections } from "../../models";
+import { FaAngleRight } from "react-icons/fa";
+import { ICell, SortDirections, IColumn, Types } from "../../models";
 import Header from "./Header";
 import GroupToolbar from "./GroupToolbar";
 import Checkbox from "../Checkbox";
@@ -19,8 +20,8 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const [mainSelect, setMainSelect] = useState<boolean>(false);
     
     // группировка
-    // const [headersCount, setHeadersCount] = useState<number>(headers.length);
     const [groupHeaders, setGroupHeaders] = useState<ICell[]>([]);
+    const [uniqueHeaders, setUniqueHeaders] = useState<IColumn[]>([]);
 
 
     const dropColumnHandler = (column: ICell) => {
@@ -212,14 +213,21 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             return [...prevState, currentColumn as ICell];
         });
 
-        // setHeadersCount(prevState => {
-        //     return prevState - 1;
-        // });
-
         setDataColumns(prevState => {
             return [
                 ...prevState.filter(w => w.col !== currentColumn?.col)
-            ]
+            ];
+        });
+        
+        const uniqueColumnValues: IColumn[] = Array.from(new Set(data.filter(w => w.col === currentColumn?.col).map(c => c.value)))
+            .map((val) => ({
+                id: currentColumn?.col ?? 1,
+                type: Types.string,
+                value: val
+            }));
+
+        setUniqueHeaders(prevState => {
+            return [...prevState, ...uniqueColumnValues];
         });
     }
 
@@ -232,16 +240,20 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             ];
         });
 
-        // setHeadersCount(prevState => {
-        //     return prevState + 1;
-        // });
-
         setDataColumns(prevState => {
             return [
                 ...prevState, ...data.filter(w => w.col === header.col)
             ];
         });
+
+        setUniqueHeaders(prevState => {
+            return [
+                ...prevState.filter(w => w.id !== header.col)
+            ];
+        });
     }
+
+    console.log(uniqueHeaders);
 
     return (
         <div className="grid-wrapper">
@@ -251,7 +263,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                 removeGroup={removeGroupHandler}
             />
 
-            
             <div className={`grid grid--${headers.length + 1}`}>
                 <div className="grid-header">
                     {groupHeaders &&
@@ -284,7 +295,15 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                 </div>
 
                 <div className="group-container">
-                    this is group container
+                    <div className="group-container-header">
+                        <input type="checkbox" name="777" id="777" />
+                        <label htmlFor="777" className="icon">
+                            <FaAngleRight />
+                        </label>
+                        <div>
+                            this is group container
+                        </div>
+                    </div>
                 </div>
 
                 {

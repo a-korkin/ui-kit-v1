@@ -39,6 +39,12 @@ export interface ICell {
     value: any;
 }
 
+export interface IColumn {
+    id: number;
+    type: Types;
+    value: string;
+}
+
 export interface IRow {
     cells: ICell[];
 }

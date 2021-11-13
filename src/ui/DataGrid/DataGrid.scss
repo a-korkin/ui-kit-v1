@@ -42,6 +42,31 @@
         border: .1rem solid #000;
         border-bottom: transparent;
         padding: 1rem;
+
+        &-header {
+            display: flex;
+
+            & > input {
+                display: none;
+                appearance: none;
+
+                &:checked ~ .icon {
+                    transform: rotate(90deg);
+                }
+            }
+
+            & .icon {
+                display: inline-block;
+                cursor: pointer;
+                height: 1.8rem;
+                width: 1.8rem;
+
+                & > svg {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
     }
 }
 
