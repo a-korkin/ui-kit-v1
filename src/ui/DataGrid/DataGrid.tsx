@@ -18,8 +18,10 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     const [mainSelect, setMainSelect] = useState<boolean>(false);
     
-    const [headersCount, setHeadersCount] = useState<number>(headers.length);
+    // группировка
+    // const [headersCount, setHeadersCount] = useState<number>(headers.length);
     const [groupHeaders, setGroupHeaders] = useState<ICell[]>([]);
+
 
     const dropColumnHandler = (column: ICell) => {
         setColumns(columns.map(c => {
@@ -132,11 +134,28 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         setMainSelect(!mainSelect);
     }
 
+    // создание пустой ячейки
+    const createEmptyCell = (key?: string) => {
+        if (key) {
+            return (<div key={key} className="empty"></div>);
+        } 
+        return (
+            <div className="empty"></div>
+        );
+    }
+
     // создание ячейки
     const createDataCell = (isChecked: boolean, cell: ICell) => {
         if (cell.col === 1) {
             return (
                 <React.Fragment key={cell.id}>
+                    {groupHeaders.length > 0 && 
+                        groupHeaders.map(empty => 
+                            <div key={empty.id} className="grid-column-data grid-column-data--empty">
+                                {createEmptyCell()}
+                            </div>
+                        )
+                    }
                     <div className="grid-column-data">
                         <Checkbox 
                             id={cell.id} 
@@ -147,7 +166,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     </div>
 
                     <div 
-                        // className={inGroup ? "hide" : "grid-column-data"}
                         className="grid-column-data"
                     >
                         {cell.value}
@@ -169,7 +187,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const createRows = (cells: ICell[]) => {
         let rows: any[] = [];
         
-        for (let i = 0; i < cells.length; i += headersCount) {
+        for (let i = 0; i < cells.length; i += headers.length) {
             const isChecked = selectedRows.includes(cells[i].row);
             const row = (
                 <div 
@@ -177,7 +195,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     className={isChecked ? "grid-row selected" : "grid-row"}
                 >
                     {
-                        cells.slice(i, i + headersCount).map((cell) => {
+                        cells.slice(i, i + headers.length).map((cell) => {
                             return createDataCell(isChecked, cell)
                         })
                     }
@@ -188,21 +206,15 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         return rows;
     }
 
-    // const dragHandler = (e: React.DragEvent<HTMLDivElement>) => {
-    //     e.preventDefault();
-    // }
-
     // группировка по столбцу
     const addGroupHandler = () => {
-        // e.preventDefault();
-
         setGroupHeaders(prevState => {
             return [...prevState, currentColumn as ICell];
         });
 
-        setHeadersCount(prevState => {
-            return prevState - 1;
-        });
+        // setHeadersCount(prevState => {
+        //     return prevState - 1;
+        // });
 
         setDataColumns(prevState => {
             return [
@@ -220,9 +232,9 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             ];
         });
 
-        setHeadersCount(prevState => {
-            return prevState + 1;
-        });
+        // setHeadersCount(prevState => {
+        //     return prevState + 1;
+        // });
 
         setDataColumns(prevState => {
             return [
@@ -233,34 +245,20 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     return (
         <div className="grid-wrapper">
-            <GroupToolbar headers={groupHeaders} addGroup={addGroupHandler} removeGroup={removeGroupHandler} />
-            {/* <div 
-                className="group-toolbar"
-                onDragStart={e => dragHandler(e)}
-                onDragEnter={e => dragHandler(e)}
-                onDragLeave={e => dragHandler(e)}
-                onDragEnd={e => dragHandler(e)}
-                onDragOver={e => dragHandler(e)}
-                onDrop={e => groupHandler(e)}
-            >
-                {
-                    groupHeaders.map(head => 
-                        <div 
-                            key={head.col}
-                            className="group-toolbar__item"
-                        >
-                            {head.value}
-                            <span 
-                                className="remove"
-                                onClick={e => removeGroupHandler(e, head)}
-                            >&times;</span>
-                        </div>
-                    )
-                }
-            </div> */}
+            <GroupToolbar 
+                headers={groupHeaders} 
+                addGroup={addGroupHandler} 
+                removeGroup={removeGroupHandler}
+            />
 
-            <div className={`grid grid--${headersCount + 1}`}>
+            
+            <div className={`grid grid--${headers.length + 1}`}>
                 <div className="grid-header">
+                    {groupHeaders &&
+                        groupHeaders.map((empty) => 
+                            createEmptyCell(empty.col.toString())
+                        )
+                    }
                     <div className="grid-column-data">
                         <Checkbox 
                             id="main" 
@@ -284,6 +282,11 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                         ))
                     }
                 </div>
+
+                <div className="group-container">
+                    this is group container
+                </div>
+
                 {
                     createRows(dataColumns.sort(sortDataColumns))
                 }

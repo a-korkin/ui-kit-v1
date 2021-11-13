@@ -8,7 +8,7 @@ interface IGroupToolbarProps {
 }
 
 const GroupToolbar: React.FC<IGroupToolbarProps> = ({headers, addGroup, removeGroup}) => {
-    // событие для того чтобы курсор бы enabled
+    // событие для того чтобы курсор был enabled
     const dragHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
     }
