@@ -6,6 +6,7 @@ import Checkbox from "../Checkbox";
 import "./DataGrid.scss";
 import GroupHeader from "./GroupHeader";
 import Rows from "./Rows";
+import { createTypeReferenceDirectiveResolutionCache } from "typescript";
 
 interface IDataGridProps {
     headers: IColumn[];
@@ -148,7 +149,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     // группировка по столбцу
     const addGroupHandler = () => {
-        const prevColumn = groupHeaders.filter(w => w.order === groupColumnOrder)[0];
+        let prevColumn = groupHeaders.filter(w => w.order === groupColumnOrder)[0];
         
         setGroupColumnOrder(prevState => {
             return prevState + 1;
@@ -157,10 +158,21 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         const column: IColumn = {
             ...currentColumn, 
             order: groupColumnOrder + 1, 
-            parent: prevColumn
         } as IColumn;
 
+        if (prevColumn) {
+            prevColumn = {...prevColumn, child: column} as IColumn;
+        }
+
         setGroupHeaders(prevState => {
+            if (prevColumn) {
+                return [
+                    ...prevState.slice(0, prevState.findIndex(a => a.id === prevColumn.id)),
+                    prevColumn,
+                    ...prevState.slice(prevState.findIndex(a => a.id === prevColumn.id) + 1),
+                    column
+                ];
+            } 
             return [...prevState, column];
         });
 
@@ -209,12 +221,15 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         const rows = data.filter(w => w.value === column.value).map(d => d.row);
         const isCollapsed = false;
 
+        const cells = dataColumns.filter(w => rows.includes(w.row)).sort(sortDataColumns);
+        // console.log(cells);
+
         return (
             <React.Fragment key={column.value}>
                 <GroupHeader 
                     column={column} 
                     isCollapsed={isCollapsed} 
-                    cells={dataColumns.filter(w => rows.includes(w.row)).sort(sortDataColumns)} 
+                    cells={cells} 
                     headersCount={headers.length}
                     selectedRows={selectedRows}
                     groupHeaders={groupHeaders}
@@ -224,15 +239,46 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         );
     }
 
-    // const testGrouping = () => {
-    //     // groupHeaders.map(group => console.log(group));
-    //     console.log(data.filter(w => w.col === 5));
-    // }
+    const getGroupedRowsTest = (column: IColumn) => {
+        const rows = data.filter(w => w.value === column.value).map(d => d.row);
+        const isCollapsed = false;
 
-    // testGrouping();
+        // console.log(uniqueHeaders.filter(w => w.id === column.id));
+        const cells = dataColumns.filter(w => rows.includes(w.row)).sort(sortDataColumns);
 
-    console.log(groupHeaders);
-    // console.log(uniqueHeaders);
+        console.log(cells);
+
+        return (
+            <React.Fragment key={column.value}>
+                <GroupHeader 
+                    column={column} 
+                    isCollapsed={isCollapsed} 
+                    cells={cells} 
+                    headersCount={headers.length}
+                    selectedRows={selectedRows}
+                    groupHeaders={groupHeaders}
+                    selectRowHandler={selectRow}
+                />
+            </React.Fragment>
+        );
+    }
+
+    const testGroupHeader = (column: IColumn) => {
+
+        // console.log(column);
+        let array = [];
+
+        array = uniqueHeaders.filter(w => w.id === column.id).map(u => getGroupedRowsTest(u));
+
+        // getGroupedRowsTest(column);
+
+        // if (column.child) {
+        //     testGroupHeader(column.child);
+        // }
+
+        return array;
+    }
+
 
     return (
         <div className="grid-wrapper">
@@ -260,7 +306,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                         columns.sort(sortColumns).map((column) => (
                             <Header 
                                 key={column.id} 
-                                // group={groupHeaders.includes(column)}
                                 group={groupHeaders.some(s => s.id === column.id)}
                                 column={column} 
                                 width={200}
@@ -280,6 +325,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                             uniqueHeaders.map(header => (
                                 getGroupedRows(header)
                             ))
+                            // groupHeaders.filter(w => w.order === 1).map(group => testGroupHeader(group))
                         }
                         {uniqueHeaders.length === 0 &&
                             <Rows 

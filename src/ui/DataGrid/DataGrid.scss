@@ -48,6 +48,10 @@
         border-bottom: transparent;
         padding: 1rem;
         display: contents;
+
+        &-wrapper {
+            display: contents;
+        }
     
         &-header {
             grid-column: columns-start / columns-end;
@@ -80,7 +84,7 @@
             }
         }
 
-        & > .grid-row {
+        & .grid-row {
             display: contents;
 
             &--collapsed {

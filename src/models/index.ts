@@ -44,7 +44,7 @@ export interface IColumn {
     order?: number;
     type: Types;
     value: string;
-    parent?: IColumn;
+    child?: IColumn;
 }
 
 export interface IRow {

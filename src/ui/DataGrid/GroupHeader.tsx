@@ -24,31 +24,31 @@ const GroupHeader: React.FC<IGroupHeaderProps> = ({
     }
     
     return (
-        <>
-        <div className="group-container-header">
-            <input 
-                type="checkbox" 
-                name={column.value} 
-                id={column.value} 
-                checked={checked}
-                onChange={onChangeHandler} 
+        <div className="group-container-wrapper">
+            <div className="group-container-header">
+                <input 
+                    type="checkbox" 
+                    name={column.value} 
+                    id={column.value} 
+                    checked={checked}
+                    onChange={onChangeHandler} 
+                />
+                <label htmlFor={column.value} className="icon">
+                    <FaAngleDown />
+                </label>
+                <div>
+                    {column.value}
+                </div> 
+            </div>
+            <Rows 
+                cells={cells} 
+                isCollapsed={checked}
+                headersCount={headersCount}
+                selectedRows={selectedRows}
+                groupHeaders={groupHeaders}
+                selectRowHandler={selectRowHandler}
             />
-            <label htmlFor={column.value} className="icon">
-                <FaAngleDown />
-            </label>
-            <div>
-                {column.value}
-            </div> 
-        </div>
-        <Rows 
-            cells={cells} 
-            isCollapsed={checked}
-            headersCount={headersCount}
-            selectedRows={selectedRows}
-            groupHeaders={groupHeaders}
-            selectRowHandler={selectRowHandler}
-        />
-        </>        
+        </div>        
     );
 }
 
