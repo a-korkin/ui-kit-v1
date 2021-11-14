@@ -41,9 +41,10 @@ export interface ICell {
 
 export interface IColumn {
     id: number;
+    order?: number;
     type: Types;
     value: string;
-    child?: IColumn;
+    parent?: IColumn;
 }
 
 export interface IRow {

@@ -8,15 +8,12 @@ import GroupHeader from "./GroupHeader";
 import Rows from "./Rows";
 
 interface IDataGridProps {
-    // headers: ICell[];
     headers: IColumn[];
     data: ICell[];
 }
 
 const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
-    // const [currentColumn, setCurrentColumn] = useState<ICell>();
     const [currentColumn, setCurrentColumn] = useState<IColumn>();
-    // const [columns, setColumns] = useState<ICell[]>(headers);
     const [columns, setColumns] = useState<IColumn[]>(headers);
     const [dataColumns, setDataColumns] = useState<ICell[]>(data);
     const [sortedColumn, setSotredColumn] = useState<number>();
@@ -24,54 +21,9 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const [mainSelect, setMainSelect] = useState<boolean>(false);
     
     // группировка
-    // const [groupHeaders, setGroupHeaders] = useState<ICell[]>([]);
     const [groupHeaders, setGroupHeaders] = useState<IColumn[]>([]);
     const [uniqueHeaders, setUniqueHeaders] = useState<IColumn[]>([]);
-
-
-    // const dropColumnHandler = (column: ICell) => {
-    //     setColumns(columns.map(c => {
-    //         if (c.col === column.col) {
-    //             return {...c, col: currentColumn?.col ?? 1};
-    //         }
-    //         if (c.col === currentColumn?.col ?? 1) {
-    //             return {...c, col: column.col};
-    //         }
-    //         return c;
-    //     }));
-
-    //     setDataColumns(dataColumns.map(c => {
-    //         if (c.col === column.col) {
-    //             return {...c, col: currentColumn?.col ?? 1};
-    //         }
-    //         if (c.col === currentColumn?.col ?? 1) {
-    //             return {...c, col: column.col};
-    //         }
-    //         return c;
-    //     }));
-    // }
-
-    // const dropColumnHandler = (column: ICell) => {
-    //     setColumns(columns.map(c => {
-    //         if (c.id === column.col) {
-    //             return {...c, col: currentColumn?.id ?? 1};
-    //         }
-    //         if (c.id === currentColumn?.id ?? 1) {
-    //             return {...c, col: column.col};
-    //         }
-    //         return c;
-    //     }));
-
-    //     setDataColumns(dataColumns.map(c => {
-    //         if (c.col === column.col) {
-    //             return {...c, col: currentColumn?.id ?? 1};
-    //         }
-    //         if (c.col === currentColumn?.id ?? 1) {
-    //             return {...c, col: column.col};
-    //         }
-    //         return c;
-    //     }));
-    // }
+    const [groupColumnOrder, setGroupColumnOrder] = useState<number>(0);
 
     const dropColumnHandler = (column: IColumn) => {
         setColumns(columns.map(c => {
@@ -94,13 +46,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             return c;
         }));
     }
-
-    // const sortColumns = (a: ICell, b: ICell): number => {
-    //     if (a.col > b.col)
-    //         return 1;
-    //     else
-    //         return -1;
-    // }
 
     const sortColumns = (a: IColumn, b: IColumn): number => {
         if (a.id > b.id)
@@ -140,27 +85,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
         return newDataArray;
     }
-
-    // const sortColumnHandler = (column: ICell, direction: SortDirections) => {
-    //     setSotredColumn(column.col);
-
-    //     let sortedCols: ICell[] = [];
-
-    //     switch (direction) {
-    //         case SortDirections.ASC:
-    //             sortedCols = dataColumns
-    //                 .filter(w => w.col === column.col)
-    //                 .sort(compareString);
-    //             break;
-    //         case SortDirections.DESC:
-    //             sortedCols = dataColumns
-    //                 .filter(w => w.col === column.col)
-    //                 .sort(compareString)
-    //                 .reverse();
-    //             break;
-    //     }
-    //     setDataColumns(orderRows(sortedCols));
-    // }
 
     const sortColumnHandler = (column: IColumn, direction: SortDirections) => {
         setSotredColumn(column.id);
@@ -224,15 +148,20 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
     // группировка по столбцу
     const addGroupHandler = () => {
+        const prevColumn = groupHeaders.filter(w => w.order === groupColumnOrder)[0];
+        
+        setGroupColumnOrder(prevState => {
+            return prevState + 1;
+        });
+
+        const column: IColumn = {
+            ...currentColumn, 
+            order: groupColumnOrder + 1, 
+            parent: prevColumn
+        } as IColumn;
+
         setGroupHeaders(prevState => {
-            // return [...prevState, currentColumn as ICell];
-            return [...prevState, currentColumn as IColumn];
-            // const col: IColumn = {
-            //     id: parseInt(currentColumn?.id ?? "1"),
-            //     type: Types.string,
-            //     value: currentColumn?.value
-            // };
-            // return [...prevState, col];
+            return [...prevState, column];
         });
 
         setDataColumns(prevState => {
@@ -274,26 +203,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
             ];
         });
     }
-    // const removeGroupHandler = (header: ICell) => {
-    //     setGroupHeaders(prevState => {
-    //         return [
-    //             ...prevState.slice(0, prevState.findIndex(a => a.col === header.col)), 
-    //             ...prevState.slice(prevState.findIndex(a => a.col === header.col) + 1)
-    //         ];
-    //     });
-
-    //     setDataColumns(prevState => {
-    //         return [
-    //             ...prevState, ...data.filter(w => w.col === header.col)
-    //         ];
-    //     });
-
-    //     setUniqueHeaders(prevState => {
-    //         return [
-    //             ...prevState.filter(w => w.id !== header.col)
-    //         ];
-    //     });
-    // }
 
     // возвращает сгруппированные строки
     const getGroupedRows = (column: IColumn) => {
@@ -338,7 +247,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                     {groupHeaders &&
                         groupHeaders.map((empty) => 
                             createEmptyCell(empty.id.toString())
-                            // createEmptyCell(empty.col.toString())
                         )
                     }
                     <div className="grid-column-data">
@@ -352,11 +260,11 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                         columns.sort(sortColumns).map((column) => (
                             <Header 
                                 key={column.id} 
-                                group={groupHeaders.includes(column)}
+                                // group={groupHeaders.includes(column)}
+                                group={groupHeaders.some(s => s.id === column.id)}
                                 column={column} 
                                 width={200}
                                 height={40}
-                                // sorted={column.col === sortedColumn}
                                 sorted={column.id === sortedColumn}
                                 setCurrent={setCurrentColumn}
                                 dropColumn={dropColumnHandler}

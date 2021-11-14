@@ -9,7 +9,6 @@ interface IGroupHeaderProps {
     cells: ICell[];
     headersCount: number;
     selectedRows: number[];
-    // groupHeaders: ICell[];
     groupHeaders: IColumn[];
     selectRowHandler: (check: boolean, rowNumber: number) => void;
 }
