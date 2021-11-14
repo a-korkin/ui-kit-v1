@@ -1,5 +1,5 @@
 import React from "react";
-import { ICell } from "../../models";
+import { ICell, IColumn } from "../../models";
 import Checkbox from "../Checkbox";
 
 interface IRowsProps {
@@ -7,7 +7,8 @@ interface IRowsProps {
     isCollapsed: boolean;
     headersCount: number;
     selectedRows: number[];
-    groupHeaders: ICell[];
+    // groupHeaders: ICell[];
+    groupHeaders: IColumn[];
     selectRowHandler: (check: boolean, rowNumber: number) => void;
 }
 

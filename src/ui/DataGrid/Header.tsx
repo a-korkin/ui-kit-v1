@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { ICell, SortDirections } from "../../models";
+import { ICell, IColumn, SortDirections } from "../../models";
 import { ResizableBox } from 'react-resizable';
 import { FaSortUp, FaSortDown} from "react-icons/fa";
 
 interface ICellProps {
     group: boolean;
-    column: ICell;
+    // column: ICell;
+    column: IColumn;
     width: number;
     height: number;
     sorted: boolean;
-    setCurrent: (current: ICell) => void;
-    dropColumn: (col: ICell) => void;
-    sortColumn: (col: ICell, direction: SortDirections) => void;
+    // setCurrent: (current: ICell) => void;
+    setCurrent: (current: IColumn) => void;
+    // dropColumn: (col: ICell) => void;
+    dropColumn: (col: IColumn) => void;
+    // sortColumn: (col: ICell, direction: SortDirections) => void;
+    sortColumn: (col: IColumn, direction: SortDirections) => void;
 }
 
 const Header: React.FC<ICellProps> = ({
@@ -21,7 +25,11 @@ const Header: React.FC<ICellProps> = ({
     const [sortable, setSortable] = useState<boolean>(false);
     const [sortDirection, setSortDirection] = useState<SortDirections>();
 
-    const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
+    // const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
+    //     setCurrent(col);
+    // }
+
+    const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, col: IColumn) => {
         setCurrent(col);
     }
     
@@ -29,11 +37,15 @@ const Header: React.FC<ICellProps> = ({
         e.preventDefault();
     }
     
-    const dragEndHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
+    // const dragEndHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
+    //     e.preventDefault();
+    // }
+
+    const dragEndHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
     }
 
-    const dragEnterHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
+    const dragEnterHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
     }
 
@@ -41,7 +53,12 @@ const Header: React.FC<ICellProps> = ({
         e.preventDefault();
     }
 
-    const dropHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
+    // const dropHandler = (e: React.DragEvent<HTMLDivElement>, col: ICell) => {
+    //     e.preventDefault();
+    //     dropColumn(col);
+    // }
+
+    const dropHandler = (e: React.DragEvent<HTMLDivElement>, col: IColumn) => {
         e.preventDefault();
         dropColumn(col);
     }
@@ -73,9 +90,9 @@ const Header: React.FC<ICellProps> = ({
                 className="col-header"
                 draggable={true}
                 onDragStart={e => dragStartHandler(e, column)}
-                onDragEnter={e => dragEnterHandler(e, column)}
+                onDragEnter={dragEnterHandler}
                 onDragLeave={dragLeaveHandler}
-                onDragEnd={e => dragEndHandler(e, column)}
+                onDragEnd={dragEndHandler}
                 onDragOver={dragOverHandler}
                 onDrop={e => dropHandler(e, column)}
                 onClick={e => colClickHandler(e)}

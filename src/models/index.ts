@@ -43,6 +43,7 @@ export interface IColumn {
     id: number;
     type: Types;
     value: string;
+    child?: IColumn;
 }
 
 export interface IRow {

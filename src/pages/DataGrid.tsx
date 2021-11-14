@@ -1,16 +1,25 @@
 import React from "react";
-import { ICell } from "../models";
+import { ICell, IColumn, Types } from "../models";
 import DataGrid from "../ui/DataGrid";
 // import DataGrid from "../ui/DataGrid2";
 
 const DataGridPage: React.FC = () => {
-    const headers: ICell[] = [
-        {id: "1", col: 1, row: 0, value: "Name"},
-        {id: "2", col: 2, row: 0, value: "Email"},
-        {id: "3", col: 3, row: 0, value: "Phone"},
-        {id: "4", col: 4, row: 0, value: "Date of birth"},
-        {id: "5", col: 5, row: 0, value: "Department"},
-        {id: "6", col: 6, row: 0, value: "Salary"}
+    // const headers: ICell[] = [
+    //     {id: "1", col: 1, row: 0, value: "Name"},
+    //     {id: "2", col: 2, row: 0, value: "Email"},
+    //     {id: "3", col: 3, row: 0, value: "Phone"},
+    //     {id: "4", col: 4, row: 0, value: "Date of birth"},
+    //     {id: "5", col: 5, row: 0, value: "Department"},
+    //     {id: "6", col: 6, row: 0, value: "Salary"}
+    // ];
+
+    const headers: IColumn[] = [
+        {id: 1, type: Types.string, value: "Name"},
+        {id: 2, type: Types.string, value: "Email"},
+        {id: 3, type: Types.string, value: "Phone"},
+        {id: 4, type: Types.string, value: "Date of birth"},
+        {id: 5, type: Types.string, value: "Department"},
+        {id: 6, type: Types.string, value: "Salary"},
     ];
 
     const data: ICell[] = [
@@ -45,7 +54,7 @@ const DataGridPage: React.FC = () => {
         {id: "51", col: 1, row: 5, value: "Hieronymus De la Cote"},
         {id: "52", col: 2, row: 5, value: "hieronymous.dela@dablist.com"},
         {id: "53", col: 3, row: 5, value: ""},
-        {id: "54", col: 4, row: 5, value: "02/22/1991"},
+        {id: "54", col: 4, row: 5, value: "07/03/1971"},
         {id: "55", col: 5, row: 5, value: "Research and Development"},
         {id: "56", col: 6, row: 5, value: "$ 149.687"},
 
@@ -66,7 +75,7 @@ const DataGridPage: React.FC = () => {
         {id: "69", col: 1, row: 8, value: "Paige Goodin"},
         {id: "70", col: 2, row: 8, value: "paige.goodin@dabeed.com"},
         {id: "71", col: 3, row: 8, value: "413-419-4075"},
-        {id: "72", col: 4, row: 8, value: "01/11/1984"},
+        {id: "72", col: 4, row: 8, value: "07/03/1971"},
         {id: "73", col: 5, row: 8, value: "Accounting and Finance"},
         {id: "74", col: 6, row: 8, value: "$ 75.897"},
     ];
