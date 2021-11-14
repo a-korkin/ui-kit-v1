@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { ICell, SortDirections, IColumn, Types } from "../../models";
 import Header from "./Header";
 import GroupToolbar from "./GroupToolbar";
+import GroupContainer from "./GroupContainer";
 import Checkbox from "../Checkbox";
 import "./DataGrid.scss";
-import GroupHeader from "./GroupHeader";
 import Rows from "./Rows";
-import { createTypeReferenceDirectiveResolutionCache } from "typescript";
+import { FaAngleDown } from "react-icons/fa";
 
 interface IDataGridProps {
     headers: IColumn[];
@@ -25,6 +25,14 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const [groupHeaders, setGroupHeaders] = useState<IColumn[]>([]);
     const [uniqueHeaders, setUniqueHeaders] = useState<IColumn[]>([]);
     const [groupColumnOrder, setGroupColumnOrder] = useState<number>(0);
+
+    // test
+    const [elements, setElements] = useState<JSX.Element[]>([]);
+    const test = (column: IColumn) => {
+        return (
+            <div>{column.value}</div>
+        );
+    }
 
     const dropColumnHandler = (column: IColumn) => {
         setColumns(columns.map(c => {
@@ -192,6 +200,18 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         setUniqueHeaders(prevState => {
             return [...prevState, ...uniqueColumnValues];
         });
+
+        // test 
+
+        // console.log(column);
+        // const v = uniqueHeaders.filter(u => u.id === column.id)
+        // console.log(column);
+        // console.log([...uniqueHeaders, ...uniqueColumnValues]);
+
+        const dd = [...uniqueHeaders, ...uniqueColumnValues];
+        setElements(prevState => {
+            return [...prevState,  ...dd.map(d => {return test(d)})]
+        });
     }
 
     // удаление группировки
@@ -226,7 +246,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
 
         return (
             <React.Fragment key={column.value}>
-                <GroupHeader 
+                <GroupContainer 
                     column={column} 
                     isCollapsed={isCollapsed} 
                     cells={cells} 
@@ -239,45 +259,6 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         );
     }
 
-    const getGroupedRowsTest = (column: IColumn) => {
-        const rows = data.filter(w => w.value === column.value).map(d => d.row);
-        const isCollapsed = false;
-
-        // console.log(uniqueHeaders.filter(w => w.id === column.id));
-        const cells = dataColumns.filter(w => rows.includes(w.row)).sort(sortDataColumns);
-
-        console.log(cells);
-
-        return (
-            <React.Fragment key={column.value}>
-                <GroupHeader 
-                    column={column} 
-                    isCollapsed={isCollapsed} 
-                    cells={cells} 
-                    headersCount={headers.length}
-                    selectedRows={selectedRows}
-                    groupHeaders={groupHeaders}
-                    selectRowHandler={selectRow}
-                />
-            </React.Fragment>
-        );
-    }
-
-    const testGroupHeader = (column: IColumn) => {
-
-        // console.log(column);
-        let array = [];
-
-        array = uniqueHeaders.filter(w => w.id === column.id).map(u => getGroupedRowsTest(u));
-
-        // getGroupedRowsTest(column);
-
-        // if (column.child) {
-        //     testGroupHeader(column.child);
-        // }
-
-        return array;
-    }
 
 
     return (
@@ -300,7 +281,8 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                             id="main" 
                             checked={mainSelect} 
                             label="" 
-                            onChange={(t: boolean) => {selectAllRows()}} />
+                            onChange={(t: boolean) => {selectAllRows()}} 
+                        />
                     </div>
                     {
                         columns.sort(sortColumns).map((column) => (
@@ -325,7 +307,8 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
                             uniqueHeaders.map(header => (
                                 getGroupedRows(header)
                             ))
-                            // groupHeaders.filter(w => w.order === 1).map(group => testGroupHeader(group))
+
+                            // elements
                         }
                         {uniqueHeaders.length === 0 &&
                             <Rows 

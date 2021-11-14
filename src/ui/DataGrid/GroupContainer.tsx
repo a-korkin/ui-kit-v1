@@ -3,7 +3,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { ICell, IColumn } from "../../models";
 import Rows from "./Rows";
 
-interface IGroupHeaderProps {
+interface IGroupContainerProps {
     column: IColumn;
     isCollapsed: boolean;
     cells: ICell[];
@@ -13,7 +13,7 @@ interface IGroupHeaderProps {
     selectRowHandler: (check: boolean, rowNumber: number) => void;
 }
 
-const GroupHeader: React.FC<IGroupHeaderProps> = ({
+const GroupContainer: React.FC<IGroupContainerProps> = ({
     column, isCollapsed, cells, headersCount, 
     selectedRows, groupHeaders, selectRowHandler}) => {
         
@@ -52,4 +52,4 @@ const GroupHeader: React.FC<IGroupHeaderProps> = ({
     );
 }
 
-export default GroupHeader;
+export default GroupContainer;
