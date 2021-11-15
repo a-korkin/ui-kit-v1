@@ -289,7 +289,16 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     //     }
     // }
 
-    console.log(groupedCells);
+    const reducer = (a: ICell, b: ICell): ICell => {
+        let array: number[] = [];
+        if (a.row === b.row) {
+            array.push(a.row)
+            // return dataColumns.filter(w => w.row === a.row)[0];
+        }
+        return groupedCells.filter(w => w.row === array[0])[0];
+    }
+
+    console.log(groupedCells.reduce(reducer));
 
     return (
         <div className="grid-wrapper">
