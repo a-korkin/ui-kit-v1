@@ -6,7 +6,6 @@ import GroupContainer from "./GroupContainer";
 import Checkbox from "../Checkbox";
 import "./DataGrid.scss";
 import Rows from "./Rows";
-import { FaAngleDown } from "react-icons/fa";
 
 interface IDataGridProps {
     headers: IColumn[];
@@ -27,12 +26,7 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
     const [groupColumnOrder, setGroupColumnOrder] = useState<number>(0);
 
     // test
-    const [elements, setElements] = useState<JSX.Element[]>([]);
-    const test = (column: IColumn) => {
-        return (
-            <div>{column.value}</div>
-        );
-    }
+    const [groupedCells, setGroupedCells] = useState<ICell[]>([]);
 
     const dropColumnHandler = (column: IColumn) => {
         setColumns(columns.map(c => {
@@ -202,16 +196,11 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         });
 
         // test 
-
-        // console.log(column);
-        // const v = uniqueHeaders.filter(u => u.id === column.id)
-        // console.log(column);
-        // console.log([...uniqueHeaders, ...uniqueColumnValues]);
-
-        const dd = [...uniqueHeaders, ...uniqueColumnValues];
-        setElements(prevState => {
-            return [...prevState,  ...dd.map(d => {return test(d)})]
-        });
+        [...uniqueHeaders, ...uniqueColumnValues].filter(w => w.id === column.id).map(u => 
+            setGroupedCells(prevState => {
+                return [...prevState, ...data.filter(w => w.value === u.value)];
+            })
+        )      
     }
 
     // удаление группировки
@@ -259,7 +248,48 @@ const DataGrid: React.FC<IDataGridProps> = ({headers, data}) => {
         );
     }
 
+    // prototype 1
+    // const test = () => {
+    //     groupHeaders.sort((a, b) => {return (a?.order ?? 1) > (b?.order ?? 1) ? 1 : -1}).map(g => {
+    //         console.log(g.order)
+    //         uniqueHeaders.filter(w => w.id === g.id).map(u => 
+    //             console.log(data.filter(w => w.value === u.value))
+    //         )
+    //     })
+    // }
 
+    // test();
+
+    // prototype 2
+    // const test = (column: IColumn) => {
+    //     if (column) {
+    //         console.log(column.order);
+    //         uniqueHeaders.filter(w => w.id === column.id).map(u => 
+    //             console.log(data.filter(w => w.value === u.value))
+    //         )
+    
+    //         if (column.child)
+    //             test(column.child);
+    //     }
+    // }
+
+    // test(groupHeaders.filter(w => w.order === 1)[0]);
+
+    // prototype 3
+    // const test = (column: IColumn) => {
+    //     if (column) {
+    //         uniqueHeaders.filter(w => w.id === column.id).map(u => 
+    //             setGroupedCells(prevState => {
+    //                 return [...prevState, ...data.filter(w => w.value === u.value)];
+    //             })
+    //         )
+    
+    //         if (column.child)
+    //             test(column.child);
+    //     }
+    // }
+
+    console.log(groupedCells);
 
     return (
         <div className="grid-wrapper">
